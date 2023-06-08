@@ -1,0 +1,202 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  [data-nextjs-scroll-focus-boundary] {
+    display: contents;
+  }
+}
+.flex-one-third {
+  flex: 1 1 33.3%;
+}
+.weight-100 {
+  font-weight: 100;
+}
+.weight-150 {
+  font-weight: 150;
+}
+.weight-200 {
+  font-weight: 200;
+}
+.weight-250 {
+  font-weight: 250;
+}
+.weight-300 {
+  font-weight: 300;
+}
+.weight-350 {
+  font-weight: 350;
+}
+.weight-400 {
+  font-weight: 400;
+}
+.weight-450 {
+  font-weight: 450;
+}
+.weight-500 {
+  font-weight: 500;
+}
+.weight-550 {
+  font-weight: 550;
+}
+.weight-600 {
+  font-weight: 600;
+}
+.weight-650 {
+  font-weight: 650;
+}
+.weight-700 {
+  font-weight: 700;
+}
+.weight-800 {
+  font-weight: 800;
+}
+.weight-900 {
+  font-weight: 900;
+}
+.custom-border-1{
+  border-width: 1px;
+  border-style: solid;
+  border-color: #dddddd;
+}
+.custom-border-b-0{
+  border-bottom-width: 0.5px;
+  border-style: solid;
+  border-color: #dddddd;
+}
+.custom-border-b-1{
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: #eeeeee;
+}
+.custom-border-t-1{
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+h1 {
+  display: inline-block;
+  vertical-align: top;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+strong {
+  font-weight: 700;
+}
+em {
+  font-style: italic;
+}
+.ql-container {
+  font-size: 15px !important;
+	min-height: 430px;
+  max-height: 430px;
+  width: 100vw;
+  max-width: 800px;
+	overflow: auto !important;
+  border-bottom: 0.5px solid #dddddd !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+.ql-container * {
+  word-wrap: break-word !important;
+  white-space: normal !important;
+}
+.ql-container ::before{
+  font-weight: 400 !important;
+  font-style: normal !important;
+  color: #BBBBBB !important;
+}
+.ql-toolbar {
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  background-color: rgb(248 233 237) !important;
+}
+
+/* .ql-snow .ql-picker.ql-size {
+	max-width: 60px;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-options {
+	max-width: 60px;
+} */
+
+/* .ql-snow .ql-picker.ql-size .ql-picker-label::before {
+  content: attr(data-value) !important;
+} */
+
+/* .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='normal']::before {
+  font-size: 15px !important;
+	font-weight: 349;
+}
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value='17px']::before {
+  content: '17';
+  font-size: 16px !important;
+	font-weight: 349;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value='20px']::before {
+  content: '20';
+  font-size: 16px !important;
+	font-weight: 349;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value='24px']::before {
+  content: '24';
+  font-size: 16px !important;
+	font-weight: 349;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value='28px']::before {
+  content: '28';
+  font-size: 16px !important;
+	font-weight: 349;
+} */

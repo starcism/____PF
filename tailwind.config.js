@@ -6,11 +6,52 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      sm: '480px',
+      md: '768px',
+      lg: '976px',
+      xl: '1440px',
+    },
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      colors: {
+        gray: {
+          "1": "#EEEEEE",
+          "2": "#D9D9D9",
+          "3": "#BBBBBB",
+        },
+        viva: {
+          DEFAULT: "#BB2649",
+          "1": "#C9516D",
+          "2": "#CF6780",
+          "3": "#D67D92",
+          "4": "#DD93A4",
+          "5": "#E4A8B6",
+          "6": "#EBBEC8",
+          "7": "#F1D4DB",
+          "8": "#F8E9ED",
+          "-1": "#26BB98",
+          "-2": "#44D9B6",
+          tone : {
+            DEFAULT: "#AF3854",
+            "1": "#A9415A",
+            "2": "#A34A5F",
+            "3": "#9E5365",
+            "4": "#985C6A",
+            "5": "#926570",
+            "6": "#8C6E75",
+            "7": "#86777B",
+          },
+          gray : {
+            DEFAULT: "#8C8C8C",
+            "1": "#717171",
+            "2": "#636363",
+            "3": "#575757",
+            "4": "#484848",
+          },
+          orange : {
+            DEFAULT : "#BB4E26",
+          },
+        },
       },
     },
   },
