@@ -46,7 +46,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<IPhoto
         user: {
           userid: 2,
           profile_image: 'https://avatars.githubusercontent.com/u/12345678?v=4',
-          nickname: '',
+          nickname: '아이사랑단',
         },
         likeCount: 3,
         commentCount: 1,

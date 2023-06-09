@@ -7,11 +7,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<IFreeP
   const data: IFreePost = {
     list: [
       {
-        boardid: 6,
+        boardid: 5,
         category: 'free',
         title: 'ㅎㅇㅎㅇ',
         view: 1,
-        createdAt: '2023-06-07T13:37:42.123Z',
+        createdAt: '2023-06-09T13:37:42.123Z',
         user: {
           userid: 2,
           profile_image: 'https://avatars.githubusercontent.com/u/12345678?v=4',
@@ -21,23 +21,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<IFreeP
         commentCount: 0,
       },
       {
-        boardid: 5,
-        category: 'free',
-        title: 'ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄲㄲㄲㄲㄲㄲㄲㄲ',
-        view: 10,
-        createdAt: '2023-06-05T13:15:42.123Z',
-        user: {
-          userid: 2,
-          profile_image: 'https://avatars.githubusercontent.com/u/12345678?v=4',
-          nickname: 'SWITHy',
-        },
-        likeCount: 0,
-        commentCount: 1,
-      },
-      {
         boardid: 4,
         category: 'free',
-        title: '4',
+        title: '아이사랑해',
         view: 20,
         createdAt: '2023-06-04T11:21:42.123Z',
         user: {
@@ -65,7 +51,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<IFreeP
       {
         boardid: 2,
         category: 'free',
-        title: '123123',
+        title: '두 번째 글',
         view: 101,
         createdAt: '2023-06-02T01:23:42.123Z',
         user: {
