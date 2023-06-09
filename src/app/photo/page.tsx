@@ -6,7 +6,7 @@ import PhotoCard from '@/components/organisms/PhotoCard'
 import { photoData } from '@/pages/api/board/photo'
 
 export default async function Page() {
-  const res = await fetch('localhost:3000/api/board/photo', { method: 'GET' })
+  const res = await fetch('https://localhost:3000/api/board/photo', { method: 'GET' })
   const postData = await res.json()
   return (
     <>

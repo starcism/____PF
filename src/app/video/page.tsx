@@ -6,7 +6,7 @@ import { IVideoBoard } from '@/types/types'
 import React, { Suspense } from 'react'
 
 export default async function Page() {
-  const res = await fetch('localhost:3000/api/board/video', { method: 'GET' })
+  const res = await fetch('https://localhost:3000/api/board/video', { method: 'GET' })
   const postData = await res.json()
   return (
     <>
