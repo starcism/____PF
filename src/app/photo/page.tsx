@@ -1,12 +1,11 @@
 import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
-import { getData } from '@/libs/getData'
 import React, { Suspense } from 'react'
 import PhotoBoardLayout from '@/components/templates/PhotoBoardLayout'
 import { IPhotoBoard } from '@/types/types'
 import PhotoCard from '@/components/organisms/PhotoCard'
 
 export default async function Page() {
-  const res = await fetch('http://localhost:3000/api/board/photo', {method:'GET'})
+  const res = await fetch('http://localhost:3000/api/board/photo', { method: 'GET' })
   const postData = await res.json()
   return (
     <>
