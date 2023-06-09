@@ -11,7 +11,6 @@ export const MainMenuContext = createContext({ mainMenu: false, handleMainMenu: 
 export function MainMenuProvider({ children }: IMainMenuProvider) {
   const [mainMenu, setMainMenu] = useState(false)
   const handleMainMenu = (e: boolean) => {
-    console.log(e)
     setMainMenu(e)
   }
   return <MainMenuContext.Provider value={{ mainMenu, handleMainMenu }}>{children}</MainMenuContext.Provider>

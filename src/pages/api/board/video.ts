@@ -31,7 +31,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<IVideo
         user: {
           userid: 2,
           profile_image: 'https://avatars.githubusercontent.com/u/12345678?v=4',
-          nickname: 'SWITHy',
+          nickname: '아이사랑단',
         },
         likeCount: 0,
         commentCount: 1,
@@ -46,7 +46,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<IVideo
         user: {
           userid: 2,
           profile_image: 'https://avatars.githubusercontent.com/u/12345678?v=4',
-          nickname: '귀여워용',
+          nickname: '귀요미',
         },
         likeCount: 3,
         commentCount: 1,
@@ -61,7 +61,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<IVideo
         user: {
           userid: 2,
           profile_image: 'https://avatars.githubusercontent.com/u/12345678?v=4',
-          nickname: '성민',
+          nickname: '깅이',
         },
         likeCount: 0,
         commentCount: 0,
@@ -76,7 +76,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<IVideo
         user: {
           userid: 2,
           profile_image: 'https://avatars.githubusercontent.com/u/12345678?v=4',
-          nickname: '신진웅',
+          nickname: '챙냥이',
         },
         likeCount: 3,
         commentCount: 2,

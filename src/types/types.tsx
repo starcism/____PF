@@ -4,7 +4,8 @@ interface IUser {
   nickname: string
 }
 
-interface IBoard {
+export interface IBoard {
+  key?: number
   boardid: number
   category: string
   title: string

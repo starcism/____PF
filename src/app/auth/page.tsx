@@ -24,13 +24,13 @@ export default function Page() {
         </button>
       </div>
       <div className="flex mt-12 items-center justify-center">
-        <h1 className="[font-size: 2rem]">SWITHy</h1>
+        <h1 className="text-[2rem]">SWITHy</h1>
       </div>
       <div className="flex w-full mt-[17.1rem] justify-center">
-        <div className="w-[19.9rem] h-[17.1rem] bg-white [border-radius: 1rem]">
+        <div className="w-[19.9rem] h-[17.1rem] bg-white rounded-[1rem]">
           <div className="flex-col w-full h-full">
             <div className="flex w-full h-[4.1rem] justify-center items-center">
-              <h2 className="[font-size: 1.2rem]">회원가입</h2>
+              <h2 className="text-[1.2rem]">회원가입</h2>
             </div>
             <div className="flex w-full h-[8.9rem] items-center">
               <div className="flex w-full h-[3.5rem] justify-center">
@@ -51,7 +51,7 @@ export default function Page() {
               </div>
             </div>
             <div className="flex items-center justify-center w-full h-[4.1rem]">
-              <h2 className="[font-size: 0.9rem] [color: #bbbbbb]">로그인에 문제가 있으신가요?</h2>
+              <h2 className="text-[0.9rem] text-gray-3">로그인에 문제가 있으신가요?</h2>
             </div>
           </div>
         </div>
