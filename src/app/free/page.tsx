@@ -2,12 +2,14 @@
 
 import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
 import PostItem from '@/components/organisms/PostItem'
+import { freeData } from '@/pages/api/board/free'
 import { IBoard } from '@/types/types'
 import React, { Suspense } from 'react'
 
-export default async function Page() {
-  const res = await fetch('http://3.144.135.69/v1/api/board/free', { method: 'GET' })
-  const postData = await res.json()
+export default function Page() {
+  // const res = await fetch('http://3.144.135.69/v1/api/board/free', { method: 'GET' })
+  // const postData = await res.json()
+  const postData = freeData
   return (
     <>
       <NoticeBoardHeader />
