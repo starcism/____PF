@@ -5,10 +5,9 @@ import { IPhotoBoard } from '@/types/types'
 import PhotoCard from '@/components/organisms/PhotoCard'
 import { photoData } from '@/pages/api/board/photo'
 
-export default function Page() {
-  // const res = await fetch('http://localhost:3000/api/board/photo', { method: 'GET' })
-  // const postData = await res.json()
-  const postData = photoData
+export default async function Page() {
+  const res = await fetch('localhost:3000/api/board/photo', { method: 'GET' })
+  const postData = await res.json()
   return (
     <>
       <NoticeBoardHeader />

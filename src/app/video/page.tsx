@@ -2,14 +2,12 @@ import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
 import VideoCard from '@/components/organisms/VideoCard'
 import VideoBoardLayout from '@/components/templates/VideoBoardLayout'
 import { getData } from '@/libs/getData'
-import { videoData } from '@/pages/api/board/video'
 import { IVideoBoard } from '@/types/types'
 import React, { Suspense } from 'react'
 
-export default function Page() {
-  // const res = await fetch('http://localhost:3000/api/board/video', { method: 'GET' })
-  // const postData = await res.json()
-  const postData = videoData
+export default async function Page() {
+  const res = await fetch('localhost:3000/api/board/video', { method: 'GET' })
+  const postData = await res.json()
   return (
     <>
       <NoticeBoardHeader />
