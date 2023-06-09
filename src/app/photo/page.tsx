@@ -3,12 +3,12 @@ import React, { Suspense } from 'react'
 import PhotoBoardLayout from '@/components/templates/PhotoBoardLayout'
 import { IPhotoBoard } from '@/types/types'
 import PhotoCard from '@/components/organisms/PhotoCard'
-import { photoData } from '@/pages/api/board/photo'
+// import { photoData } from '@/pages/api/board/photo'
 
-export default function Page() {
-  // const res = await fetch('http://localhost:3000/api/board/photo', { method: 'GET' })
-  // const postData = await res.json()
-  const postData = photoData
+export default async function Page() {
+  const res = await fetch('http://127.0.0.1/api/board/photo', { method: 'GET' })
+  const postData = await res.json()
+  // const postData = photoData
   return (
     <>
       <NoticeBoardHeader />
