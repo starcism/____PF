@@ -28,10 +28,11 @@ function HeaderComponent({ pathname }: TPathname) {
   return (
     <>
       {isSearchBarOpen && <SearchModal pathname={pathname} show={isSearchBarOpen} close={handleSearchBarOpen} />}
+      {mainMenu && <MainMenu />}
       <div className="z-1000 w-full h-[52px] flex items-center justify-center px-[0.5rem] bg-viva-8 shadow-sm">
         <div className="flex w-full">
           <div className="flex h-[40px] w-[40px] items-center justify-center">
-            <div className="text-[#373737] w-[40px] h-[40px] rounded-[50%] hover:bg-[rgba(0, 0, 0, 0.05)] duration-200">
+            <div className="text-[#373737] w-[40px] h-[40px] rounded-[50%] hover:bg-hover-button duration-200">
               <button onClick={() => handleMainMenu(!mainMenu)} className="flex items-center justify-center w-full h-full rounded-[50%]">
                 {mainMenu ? (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
@@ -45,14 +46,13 @@ function HeaderComponent({ pathname }: TPathname) {
               </button>
             </div>
           </div>
-          {mainMenu && <MainMenu />}
           <div className="flex w-full h-[40px] items-center justify-center">
             <Link href="/" className="flex items-center justify-center h-[40px] w-[100px]" onClick={() => handleMainMenu(false)}>
               <Image alt="logo" src={swithy_logo} width={80} priority={true} />
             </Link>
           </div>
           <div className="flex h-[40px] w-[40px] items-center justify-center">
-            <div className="text-[#373737] w-[40px] h-[40px] rounded-[50%] hover:bg-[rgba(0, 0, 0, 0.05)] duration-200">
+            <div className="text-[#373737] w-[40px] h-[40px] rounded-[50%] hover:bg-hover-button duration-200">
               <button className="flex items-center justify-center w-full h-full rounded-[50%]" onClick={() => setSearchBarOpen(true)}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -85,7 +85,7 @@ function SubHeader({ pathname }: TPathname) {
         </div>
         {pathname !== '/notice' && (
           <div className="flex items-center">
-            <div className="h-[30px] w-[40px] mr-[0.5rem] border-[0.5px] border-solid border-[#dddddd] rounded-[15px] hover:bg-[rgba(0, 0, 0, 0.05)] duration-200">
+            <div className="h-[30px] w-[40px] mr-[0.5rem] border-[0.5px] border-solid border-[#dddddd] rounded-[15px] hover:bg-hover-button duration-200">
               <button className="flex justify-center items-center w-full h-full">
                 <svg
                   className="w-6 h-6 text-viva-gray-3"
@@ -103,7 +103,7 @@ function SubHeader({ pathname }: TPathname) {
                 </svg>
               </button>
             </div>
-            <div className="h-[30px] w-[45px] mr-[0.5rem] border-[0.5px] border-solid border-[#dddddd] rounded-[17px] hover:bg-[rgba(0, 0, 0, 0.05)] duration-200">
+            <div className="h-[30px] w-[45px] mr-[0.5rem] border-[0.5px] border-solid border-[#dddddd] rounded-[17px] hover:bg-hover-button duration-200">
               <Link href={`${pathname}/write`} className="flex justify-center items-center w-full h-full">
                 <svg
                   className="w-6 h-6 text-viva-gray-3"
@@ -142,14 +142,10 @@ export default function Header({
     hideHeaderUrls: hideHeaderUrls,
     showSubHeaderUrls: showSubHeaderUrls,
   })
-  useEffect(() => {
-    console.log(`shouldHideHeader: ${shouldHideHeader}`)
-    console.log(`shouldHideSubHeader: ${shouldHideSubHeader}`)
-  }, [shouldHideHeader, shouldHideSubHeader])
 
   return (
     <>
-      <div className="top-0 fixed w-full">
+      <div className="top-0 fixed z-10 w-full">
         {!shouldHideHeader && <HeaderComponent pathname={pathname} />}
         {!shouldHideSubHeader && <SubHeader pathname={pathname} />}
       </div>

@@ -17,7 +17,7 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
   return (
     <>
       <LinkContainer href={href} size="post">
-        <div className="flex w-full h-8 items-center justify-between">
+        <div className="flex w-full h-8 items-center justify-between pt-[6px]">
           <div className="flex items-center w-[100px] h-8">
             <button onClick={handleNameClick}>
               <div className="flex items-center pl-[4px]">

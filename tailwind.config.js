@@ -13,6 +13,11 @@ module.exports = {
       xl: '1440px',
     },
     extend: {
+      backgroundColor: {
+        'hover-button': 'rgba(0, 0, 0, 0.05)',
+        'nav-button': 'rgba(0, 0, 0, 0.3)',
+        'dot-nav': 'rgba(187, 187, 187, 0.66)',
+      },
       colors: {
         gray: {
           "1": "#EEEEEE",

@@ -2,12 +2,9 @@
 
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import SWITHy_1 from '@/utils/SWITHy_logo.png'
-import SWITHy_2 from '@/utils/SWITHy_logo1.png'
-import SWITHy_3 from '@/utils/SWITHy_logo2.png'
-import SWITHy_4 from '@/utils/SWITHy_logo4.png'
+
 interface SliderProps {
-  images?: string[] // 이미지 URL 배열
+  images?: string[]
 }
 
 export default function PhotoSlider({ images = [] }: SliderProps) {
@@ -42,17 +39,62 @@ export default function PhotoSlider({ images = [] }: SliderProps) {
     setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1))
   }
 
+  const handleSwipe: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    const touchStartX = e.touches[0].clientX
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const touchCurrentX = e.touches[0].clientX
+      const deltaX = touchCurrentX - touchStartX
+
+      if (deltaX > 50) {
+        handlePrevImage()
+      } else if (deltaX < -50) {
+        handleNextImage()
+      }
+    }
+
+    const handleTouchEnd = () => {
+      document.removeEventListener('touchmove', handleTouchMove)
+      document.removeEventListener('touchend', handleTouchEnd)
+    }
+
+    document.addEventListener('touchmove', handleTouchMove)
+    document.addEventListener('touchend', handleTouchEnd)
+  }
+
   return (
-    <div className="slider-container">
-      <Image alt="이미지" src={SWITHy_1} width={width} height={height}/>
-      <div className="slider-navigation">
-        <button onClick={handlePrevImage}>{'<'}</button>
-        <div className="slider-indicators">
-          {images.map((_, index) => (
-            <div key={index} className={`slider-indicator ${index === currentImageIndex ? 'active' : ''}`} />
-          ))}
-        </div>
-        <button onClick={handleNextImage}>{'>'}</button>
+    <div className="relative z-0" onTouchStart={handleSwipe}>
+      <Image alt="이미지" src={images[currentImageIndex]} width={width} height={height} />
+      <div className="absolute top-1/2 left-0 transform -translate-y-1/2 flex items-center">
+        <button
+          className="p-2 text-white bg-nav-button rounded-full transition duration-150 ease-in-out hover:scale-125 disabled:opacity-0 disabled:select-none"
+          onClick={handlePrevImage}
+          disabled={currentImageIndex === 0}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+      </div>
+      <div className="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center">
+        <button
+          className="p-2 text-white bg-nav-button rounded-full transition duration-150 ease-in-out hover:scale-125 disabled:opacity-0 disabled:select-none"
+          onClick={handleNextImage}
+          disabled={currentImageIndex === images.length - 1}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-[6px]">
+        {images.map((_, index: number) => (
+          <button
+            key={index}
+            className={`w-[7px] h-[7px] rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-dot-nav'}`}
+            onClick={() => setCurrentImageIndex(index)}
+          />
+        ))}
       </div>
     </div>
   )

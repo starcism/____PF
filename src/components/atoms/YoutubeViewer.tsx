@@ -35,7 +35,7 @@ export default function YoutubeViewer({ url, hasBorderRadius = false }: IYoutube
   const videoId = match && match[7]
 
   return (
-    <div className="flex justify-center items-center pb-[6px]">
+    <div className="flex justify-center items-center">
       {videoId ? (
         <iframe
           className={`rounded-lg ${hasBorderRadius && 'border-radius-18px'}`}
