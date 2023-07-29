@@ -1,16 +1,17 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
 import ProfileLinkOnMenu from '../organisms/ProfileLinkOnMenu'
 import PageLinkOnMenu from '../organisms/PageLinkOnMenu'
 import FootLinkOnMenu from '../organisms/FootLinkOnMenu'
 import Footer from '../molecules/Footer'
+import { useAccessTokenState } from '@/libs/AccessTokenProvider'
 
 type BlockInteractionEvent = MouseEvent | TouchEvent | WheelEvent;
 
 export default function MainMenu() {
-  const { data: session } = useSession()
+  const { accessToken } = useAccessTokenState()
+
   useEffect(() => {
     const blockInteraction = (e: BlockInteractionEvent) => {
       e.preventDefault()
@@ -31,9 +32,9 @@ export default function MainMenu() {
   return (
     <>
       <div className="fixed left-0 top-[52px] h-[calc(100vh-52px)] w-[100vw] bg-white z-[1002]">
-        <ProfileLinkOnMenu session={session} />
+        <ProfileLinkOnMenu session={accessToken} />
         <PageLinkOnMenu />
-        <FootLinkOnMenu session={session} />
+        <FootLinkOnMenu session={accessToken} />
         <Footer />
       </div>
     </>

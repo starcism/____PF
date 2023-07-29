@@ -1,14 +1,32 @@
 'use client'
 
-import { Session } from 'next-auth'
-import { signOut } from 'next-auth/react'
+import checkEnvironment from '@/libs/checkEnvironment'
 import Divider from '../atoms/Divider'
 import ConditionalLink from '../molecules/ConditionalLink'
+import { useAccessTokenState } from '@/libs/AccessTokenProvider'
 
-export default function FootLinkOnMenu({ session }: { session: Session | null }) {
+export default function FootLinkOnMenu({ session }: { session: string | null }) {
+  const { setAccessToken } = useAccessTokenState()
+  const getLogOut = async (session: string | null) => {
+    if (session) {
+      try {
+        const res = await fetch(checkEnvironment().concat('/api/auth/logout'), {
+          method: 'POST',
+          headers: {
+            Authorization: session,
+          },
+        })
+        setAccessToken(null)
+      } catch (error) {
+        return
+      }
+    } else {
+      return
+    }
+  }
   return (
     <>
-      <ConditionalLink hrefLoggedIn="" hrefLoggedOut="/auth" size="m_menu_footer" session={session} onClickLoggedIn={() => signOut()}>
+      <ConditionalLink hrefLoggedIn="/" hrefLoggedOut="/auth" size="m_menu_footer" session={session} onClickLoggedIn={() => getLogOut(session)}>
         {(session) => (
           <div className="flex w-full h-full">
             {session ? (

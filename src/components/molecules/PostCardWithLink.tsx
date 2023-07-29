@@ -28,7 +28,7 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
           </div>
           <div className="flex items-center justify-center h-8">
             <div>
-              <button className="pl-[6px] pr-[8px] h-8 text-viva-4" onClick={handleLikeClick}>
+              <button className="pl-[6px] pr-[8px] h-8 text-pinkish" onClick={handleLikeClick}>
                 {liked ? (
                   <svg
                     className="w-10 h-10 inline-block [vertical-align: middle] mb-[2px] mr-[2px] w-[24px] h-[24px]"
@@ -58,7 +58,7 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
               </button>
             </div>
             <div>
-              <button className="pl-[6px] pr-[8px] h-8 text-[rgba(38,187,152,0.9)]">
+              <button className="pl-[6px] pr-[8px] h-8 text-turquoise">
                 <svg
                   className="inline-block align-middle mb-[1px] mr-[2px] w-[24px] h-[24px]"
                   xmlns="http://www.w3.org/2000/svg"

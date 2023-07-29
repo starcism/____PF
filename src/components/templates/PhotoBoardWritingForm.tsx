@@ -1,27 +1,7 @@
 'use client'
 
 import React, { useRef, useState } from 'react'
-import dynamic from 'next/dynamic'
-import ReactQuill from 'react-quill'
 import { useRouter } from 'next/navigation'
-
-const QuillEditor = dynamic(() => import('@/libs/QuillEditor'), {
-  ssr: false,
-  loading: () => (
-    <>
-      <div className="h-[470px] w-[100vw] max-w-[800px]">
-        <div className="flex items-center h-[40px] w-[100vw] py-[12px] px-[9px] max-w-[800px] bg-viva-8">
-          <div className="bg-viva-6 w-[98px] h-[19px] ml-[4px] rounded-[5px]"></div>
-          <div className="bg-viva-7 w-[108px] h-[19px] ml-[24px] rounded-[5px]"></div>
-          <div className="bg-viva-6 w-[22px] h-[19px] ml-[24px] rounded-[5px]"></div>
-        </div>
-        <div className="h-[430px] w-[100vw] max-w-[800px] py-[12px] px-[9px] custom-border-b-0">
-          <div className="bg-gray-1 w-[112px] h-[19px] ml-[4px] rounded-[5px]"></div>
-        </div>
-      </div>
-    </>
-  ),
-})
 
 export default function PhotoBoardWritingForm() {
   const router = useRouter()
@@ -36,11 +16,9 @@ export default function PhotoBoardWritingForm() {
     console.log(e.target.value)
   }
   const titleRef = useRef<HTMLInputElement>(null) // useRef에 대한 타입 지정
-  const editorRef = useRef<ReactQuill>(null)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const title = titleRef.current?.value ?? ''
-    const content = editorRef.current?.getEditor().getContents() ?? ''
 
     // try {
     //   const response = await axios.post('/api/posts', { title, content })
@@ -55,13 +33,20 @@ export default function PhotoBoardWritingForm() {
     <>
       <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-screen overflow-auto">
         <div className="flex-col items-center justify-center">
-          <div className="w-[100vw] h-[3.5rem] custom-border-b-1">
+          <div className="w-[100vw] h-[53px] custom-border-b-1 bg-white">
             <div className="flex justify-between items-center">
-              <div className="h-[3.5rem] w-[3.5rem] flex justify-center items-center">
-                <button onClick={handleWritingForm}>X</button>
+              <div className="h-[53px] w-[53px] flex justify-center items-center">
+                <button className="justify-center items-center" onClick={handleWritingForm}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                  </svg>
+                </button>
               </div>
-              <div>사진게시판</div>
-              <div className="h-[3.5rem] w-[3.5rem]"></div>
+              <div className="grid place-items-center gap-1">
+                <h1 className="text-[16px] select-none">글쓰기</h1>
+                <h1 className="text-[13px] text-gray-3 select-none">PHOTO</h1>
+              </div>
+              <div className="h-[53px] w-[53px] flex justify-center items-center select-none">등록</div>
             </div>
           </div>
           <form onSubmit={handleSubmit}>
@@ -75,26 +60,46 @@ export default function PhotoBoardWritingForm() {
               ></input>
             </div>
             <div className="flex w-[100vw] justify-center">
-              <QuillEditor quillRef={editorRef} value={value} onChange={setValue} placeholder="내용을 입력하세요." />
+              <>
+                <div className="h-[470px] w-[100vw] max-w-[800px]">
+                  <div className="flex items-center h-[100px] flex-nowrap overflow-x-scroll py-[12px] px-[9px] bg-white">
+                  <div className="h-[80px] w-[60px] bg-green-400 ml-3"></div>
+                  <div className="h-[80px] w-[60px] bg-green-400 ml-3"></div>
+                  <div className="h-[80px] w-[60px] bg-green-400 ml-3"></div>
+
+                    <div className="w-[48px] h-[48px] rounded-full border-solid border border-lightgold justify-center items-center flex">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-gray-4">
+                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="h-[430px] w-[100vw] max-w-[800px] py-[12px] px-[9px] custom-border-b-0">
+                    <div className="bg-gray-1 w-[112px] h-[19px] ml-[4px] rounded-[5px]"></div>
+                    <div className="flex">
+                      <div className="flex items-center justify-center bg-white w-[60px] h-[24px] ml-[4px] rounded-[10px] border border-solid border-gray-2">
+                        <span className="text-[14px] text-gray-4">#태그</span>
+                      </div>
+                      <div className="flex items-center justify-center bg-white w-[60px] h-[24px] ml-[12px] rounded-[10px] border border-solid border-gray-2">
+                        <span className="text-[14px] text-gray-4">#태그</span>
+                      </div>
+                      <div className="flex items-center justify-center bg-white w-[60px] h-[24px] ml-[12px] rounded-[10px] border border-solid border-gray-2">
+                        <span className="text-[14px] text-gray-4">#태그</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
             </div>
-            <div className="flex justify-center h-[3rem] px-[11px] pt-[18px] pb-[14px] mb-[200px]">
+            {/* <div className="flex justify-center h-[3rem] px-[11px] pt-[18px] pb-[14px] mb-[200px]">
               <div className="flex w-[100vw] max-w-[800px]">
-                <button
-                  className="flex-one-third h-[40px] mx-[5px] px-[15px] rounded-[6px] bg-gray-1"
-                  onClick={() => setOnChange('')}
-                  type="submit"
-                >
-                  <h1 className="text-viva-gray-4">취소</h1>
+                <button className="flex-one-third h-[40px] mx-[5px] px-[15px] rounded-[6px] bg-gray-1" onClick={() => setOnChange('')} type="submit">
+                  <h1 className="text-gray-3">취소</h1>
                 </button>
-                <button
-                  onClick={(e) => handleSubmit(e)}
-                  className="flex-one-third h-[40px] mx-[5px] px-[15px] rounded-[6px] bg-viva-6"
-                  type="submit"
-                >
-                  <h1 className="text-viva-gray-4">등록</h1>
+                <button onClick={(e) => handleSubmit(e)} className="flex-one-third h-[40px] mx-[5px] px-[15px] rounded-[6px] bg-gray-2" type="submit">
+                  <h1 className="text-black">등록</h1>
                 </button>
               </div>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

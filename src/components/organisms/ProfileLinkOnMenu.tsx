@@ -1,12 +1,11 @@
 'use client'
 
-import { MainMenuContext } from '@/libs/ContextProvider'
-import { Session } from 'next-auth'
+import { MainMenuContext } from '@/libs/MainMenuProvider'
 import { useContext } from 'react'
 import UserIcon from '../atoms/UserIcon'
 import ConditionalLink from '../molecules/ConditionalLink'
 
-export default function ProfileLinkOnMenu({ session }: { session: Session | null }) {
+export default function ProfileLinkOnMenu({ session }: { session: string | null }) {
   const { handleMainMenu } = useContext(MainMenuContext)
   return (
     <>

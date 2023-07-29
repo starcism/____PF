@@ -1,14 +1,14 @@
 'use client'
 
 import React, { useContext, useEffect, useState } from 'react'
-import useHideHeader from '@/libs/useHideHeader'
 import Link from 'next/link'
 import SearchModal from '../templates/SearchModal'
 import MainMenu from '../templates/MainMenu'
-import { MainMenuContext } from '@/libs/ContextProvider'
-import { usePathname } from 'next/navigation'
+import { MainMenuContext } from '@/libs/MainMenuProvider'
+import { useParams, usePathname } from 'next/navigation'
 import Image from 'next/image'
 import swithy_logo from '@/utils/SWITHy_logo.png'
+import getPathname from '@/libs/getPathname'
 
 type TPathname = {
   pathname: string | null
@@ -29,7 +29,7 @@ function HeaderComponent({ pathname }: TPathname) {
     <>
       {isSearchBarOpen && <SearchModal pathname={pathname} show={isSearchBarOpen} close={handleSearchBarOpen} />}
       {mainMenu && <MainMenu />}
-      <div className="z-1000 w-full h-[52px] flex items-center justify-center px-[0.5rem] bg-viva-8 shadow-sm">
+      <div className="z-1000 w-full h-[52px] flex items-center justify-center px-[0.5rem] bg-lightgold shadow-sm">
         <div className="flex w-full">
           <div className="flex h-[40px] w-[40px] items-center justify-center">
             <div className="text-[#373737] w-[40px] h-[40px] rounded-[50%] hover:bg-hover-button duration-200">
@@ -48,7 +48,8 @@ function HeaderComponent({ pathname }: TPathname) {
           </div>
           <div className="flex w-full h-[40px] items-center justify-center">
             <Link href="/" className="flex items-center justify-center h-[40px] w-[100px]" onClick={() => handleMainMenu(false)}>
-              <Image alt="logo" src={swithy_logo} width={80} priority={true} />
+              LVD
+              {/* <Image alt="logo" src={swithy_logo} width={80} priority={true} /> */}
             </Link>
           </div>
           <div className="flex h-[40px] w-[40px] items-center justify-center">
@@ -128,34 +129,28 @@ function SubHeader({ pathname }: TPathname) {
   )
 }
 
-export default function Header({
-  children,
-  hideHeaderUrls,
-  showSubHeaderUrls,
-}: {
-  children: React.ReactNode
-  hideHeaderUrls: string[]
-  showSubHeaderUrls: string[]
-}) {
+export default function Header() {
   const pathname = usePathname()
-  const [shouldHideHeader, shouldHideSubHeader] = useHideHeader({
-    hideHeaderUrls: hideHeaderUrls,
-    showSubHeaderUrls: showSubHeaderUrls,
-  })
+  const params = useParams()
+  const paths = getPathname(pathname)
+  const props = '/'+paths[0]
+
+  const hideHeaderUrls = ['auth']
+  const showSubHeaderUrls = ['/free', '/notice', '/photo', '/video']
+
+  const showHeader = !paths.some((path)=> path === 'write') && !hideHeaderUrls.some((path)=> path === paths[0])
+  const showSubHeader = showSubHeaderUrls.some((path)=> path === pathname)
 
   return (
     <>
       <div className="top-0 fixed z-10 w-full">
-        {!shouldHideHeader && <HeaderComponent pathname={pathname} />}
-        {!shouldHideSubHeader && <SubHeader pathname={pathname} />}
+        {pathname && showHeader && <HeaderComponent pathname={props} />}
+        {pathname && showSubHeader && <SubHeader pathname={props} />}
       </div>
-      {shouldHideHeader ? (
-        <div>{children}</div>
-      ) : shouldHideSubHeader ? (
-        <div className="mt-[52px]">{children}</div>
-      ) : (
-        <div className="mt-[96px]">{children}</div>
-      )}
+      {pathname && showHeader && <div className='h-[52px] w-full bg-gray-1' />}
+      {pathname && showSubHeader &&  <div className='h-[44px] w-full bg-gray-1' />}
     </>
   )
 }
+
+

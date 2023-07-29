@@ -23,48 +23,84 @@ const QuillEditor = dynamic(() => import('@/libs/QuillEditor'), {
   ),
 })
 
-export default function FreeBoardWritingForm() {
-  const router = useRouter()
-  const handleWritingForm: React.MouseEventHandler<HTMLButtonElement> = () => {
-    router.back()
-  }
-  const [inputValue, setInputValue] = useState('')
-  const [value, setValue] = useState('')
-  const [onChange, setOnChange] = useState('')
-  const handleInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-    console.log(e.target.value)
-  }
-  const titleRef = useRef<HTMLInputElement>(null) // useRef에 대한 타입 지정
-  const editorRef = useRef<ReactQuill>(null)
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const title = titleRef.current?.value ?? ''
-    const content = editorRef.current?.getEditor().getContents() ?? ''
+type TonSubmit = {
+  onSubmit: (title: string, content: string) => void
+}
 
-    // try {
-    //   const response = await axios.post('/api/posts', { title, content })
-    //   console.log(response.data) // 성공적으로 저장된 데이터 확인
-    //   // 여기서 필요한 추가 작업을 수행하세요 (예: 리다이렉션)
-    // } catch (error) {
-    //   console.error(error)
-    // }
+export default function FreeBoardWritingForm({ onSubmit }: TonSubmit) {
+  const router = useRouter()
+
+  const [value, setValue] = useState('')
+  const [close, setClose] = useState(false)
+  const titleRef = useRef<HTMLInputElement>(null)
+  const editorRef = useRef<ReactQuill>(null)
+  const title = titleRef.current?.value.trim() ?? ''
+  const content = editorRef.current?.getEditor().getText().trim() ?? ''
+  const handleFormClose: React.MouseEventHandler<HTMLButtonElement> = () => {
+    setClose(true)
+  }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (close) {
+      if (title || content) {
+        const confirmed = window.confirm('작성중인 내용은 저장되지 않습니다. 계속할까요?')
+        if (confirmed) {
+          router.back()
+          setClose(false)
+          return
+        }
+        else {
+          setClose(false)
+          return
+        }
+      } else {
+        router.back()
+        setClose(false)
+        return
+      }
+    }
+    if (!title) {
+      alert('제목을 입력해주세요.')
+      return
+    }
+
+    if (!content) {
+      alert('내용을 입력해주세요.')
+      return
+    }
+
+    if (title.length > 40) {
+      alert('제목은 최대 40글자까지 입력할 수 있습니다.')
+      return
+    }
+
+    if (content.length > 2000) {
+      alert('내용은 최대 2000글자까지 입력할 수 있습니다.')
+      return
+    }
+
+    // 폼 데이터를 onSubmit 콜백 함수로 전달
+    onSubmit(title, content)
   }
 
   return (
     <>
       <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-screen overflow-auto">
         <div className="flex-col items-center justify-center">
-          <div className="w-[100vw] h-[3.5rem] custom-border-b-1">
-            <div className="flex justify-between items-center">
-              <div className="h-[3.5rem] w-[3.5rem] flex justify-center items-center">
-                <button onClick={handleWritingForm}>X</button>
-              </div>
-              <div>자유게시판</div>
-              <div className="h-[3.5rem] w-[3.5rem]"></div>
-            </div>
-          </div>
           <form onSubmit={handleSubmit}>
+            <div className="flex items-center justify-between w-[100vw] h-[3.5rem] custom-border-b-1">
+              <div className="flex items-center justify-center w-[3.5rem] h-[3.5rem]">
+                <button className="p-[4px]" onClick={handleFormClose}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="flex items-center justify-center h-[3.5rem]">
+                <div className="text-[17px] mt-1 select-none">자유게시판</div>
+              </div>
+              <div className="flex items-center justify-center w-[3.5rem] h-[3.5rem]"></div>
+            </div>
             <div className="flex justify-center w-[100vw] h-[3rem] my-[0.2rem]">
               <input
                 className="w-[100vw] max-w-[800px] h-[3rem] py-[12px] px-[15px] outline-none overflow-auto text-[17px] weight-700 placeholder:text-gray-3"
@@ -79,18 +115,10 @@ export default function FreeBoardWritingForm() {
             </div>
             <div className="flex justify-center h-[3rem] px-[11px] pt-[18px] pb-[14px] mb-[200px]">
               <div className="flex w-[100vw] max-w-[800px]">
-                <button
-                  className="flex-one-third h-[40px] mx-[5px] px-[15px] rounded-[6px] bg-gray-1"
-                  onClick={() => setOnChange('')}
-                  type="submit"
-                >
+                <button className="flex-one-third h-[40px] mx-[5px] px-[15px] rounded-[6px] bg-gray-1" onClick={handleFormClose} type="submit">
                   <h1 className="text-viva-gray-4">취소</h1>
                 </button>
-                <button
-                  onClick={(e) => handleSubmit(e)}
-                  className="flex-one-third h-[40px] mx-[5px] px-[15px] rounded-[6px] bg-viva-6"
-                  type="submit"
-                >
+                <button onClick={(e) => handleSubmit(e)} className="flex-one-third h-[40px] mx-[5px] px-[15px] rounded-[6px] bg-viva-6" type="submit">
                   <h1 className="text-viva-gray-4">등록</h1>
                 </button>
               </div>

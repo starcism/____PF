@@ -1,6 +1,6 @@
 'use client'
 
-import { MainMenuContext } from '@/libs/ContextProvider'
+import { MainMenuContext } from '@/libs/MainMenuProvider'
 import { useContext } from 'react'
 import LinkContainer from '../atoms/LinkContainer'
 

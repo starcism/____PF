@@ -1,14 +1,33 @@
 import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
 import VideoCard from '@/components/organisms/VideoCard'
 import VideoBoardLayout from '@/components/templates/VideoBoardLayout'
-import { videoData } from '@/pages/api/board/video'
 import { IVideoBoard } from '@/types/types'
 import React, { Suspense } from 'react'
 
 export default function Page() {
   // const res = await fetch('http://localhost:3000/api/board/video', { method: 'GET' })
   // const postData = await res.json()
-  const postData = videoData
+  const postData = {
+    list: [
+      {
+        boardid: 1,
+        category: 'photo',
+        youtubeUrl: '',
+        title: '#풍경',
+        view: 430,
+        createdAt: '2023-06-01T19:43:18.576Z',
+        user: {
+          userid: 1,
+          profile_image: 'https://avatars.githubusercontent.com/u/76847245?v=4',
+          nickname: 'SWITHy',
+        },
+        likeCount: 100,
+        commentCount: 1,
+      },
+    ],
+    listTotalPage: 1,
+    listTotalCount: 6,
+  }
   return (
     <>
       <NoticeBoardHeader />

@@ -5,13 +5,18 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import login_kakao from '@/utils/login_kakao.png'
 import login_naver from '@/utils/login_naver.png'
-import { signIn } from 'next-auth/react'
+import axios from 'axios'
+import checkEnvironment from '@/libs/checkEnvironment'
 
 export default function Page() {
   const router = useRouter()
-
   const handleSignIn = async (loginMethod: string) => {
-    await signIn(loginMethod, { callbackUrl: '/' })
+    try {
+      const response = await axios.get(checkEnvironment().concat('/api/auth/login'))
+      window.open(response.data.authUrl, '카카오계정으로 로그인', 'width=400px,height=600px,scrollbars=yes');
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -24,7 +29,7 @@ export default function Page() {
         </button>
       </div>
       <div className="flex mt-12 items-center justify-center">
-        <h1 className="text-[2rem]">SWITHy</h1>
+        <h1 className="text-[2rem]"></h1>
       </div>
       <div className="flex w-full mt-[17.1rem] justify-center">
         <div className="w-[19.9rem] h-[17.1rem] bg-white rounded-[1rem]">

@@ -1,14 +1,14 @@
 import React from 'react'
 import '@/styles/global.css'
 import Header from '@/components/organisms/Header'
-import AuthContext from '@/libs/AuthContext'
-import { MainMenuProvider } from '@/libs/ContextProvider'
+import AccessTokenProvider from '@/libs/AccessTokenProvider'
+import MainMenuProvider from '@/libs/MainMenuProvider'
 
 export const metadata = {
   title: {
-    default: 'SWITHy',
+    default: 'BOARD',
   },
-  description: '스테이씨 팬 커뮤니티, 스윗을 위한 공간',
+  description: '설명',
 }
 
 interface RootLayoutProps {
@@ -20,13 +20,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="ko">
       <head />
       <body>
-        <AuthContext>
+        <AccessTokenProvider>
           <MainMenuProvider>
-            <Header hideHeaderUrls={['/auth']} showSubHeaderUrls={['/free', '/notice', '/photo', '/video']}>
-              {children}
-            </Header>
+            <Header hideHeaderUrls={['/auth']} showSubHeaderUrls={['/free', '/notice', '/photo', '/video']} />
+            {children}
           </MainMenuProvider>
-        </AuthContext>
+        </AccessTokenProvider>
       </body>
     </html>
   )

@@ -7,19 +7,21 @@ interface SliderProps {
   images?: string[]
 }
 
+//그렇다면 일반적인 서비스에서 허용하는 확장자를 포함해서 유효성 검사를 하고, 썸네일용 이미지는 width가 468이, height는 width에 맞춰서 조정되도록 
+
 export default function PhotoSlider({ images = [] }: SliderProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [width, setWidth] = useState(440)
-  const [height, setHeight] = useState(247.5)
+  const [height, setHeight] = useState(585)
 
   const handleResize = () => {
     const screenWidth = window.innerWidth
-    if (screenWidth <= 454) {
+    if (screenWidth <= 472) {
       setWidth(screenWidth - 14)
-      setHeight((screenWidth / 440) * 247.5)
+      setHeight((screenWidth / 468) * 585)
     } else {
-      setWidth(440)
-      setHeight(247.5)
+      setWidth(468)
+      setHeight(585)
     }
   }
 
