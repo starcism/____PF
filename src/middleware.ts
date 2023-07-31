@@ -27,19 +27,19 @@ export default async function middleware(request: NextRequest) {
 
   let cookie = request.cookies.get('_Authv4')
   let isAuthorized = false
-  let setCookies
 
   if (cookie) {
     const refreshToken = cookie.value
     try {
       const decoded = await verifyToken(refreshToken, secretKey)//리프레시 토큰 검증
       if (!decoded) {
-        setCookies = {
+        response.cookies.set({
           name: '_Authv4',
           value: '',
+          httpOnly: true,
           maxAge: 0,
           path: '/', // For all paths
-        }
+        })
       } else {
         const nowDate = Date.now()
         const toSilentRefresh = nowDate + 60 * 60 * 24 * 30 * 1000
@@ -53,35 +53,30 @@ export default async function middleware(request: NextRequest) {
             }
           })
           const newRefreshToken = await res.json()
-          setCookies = {//새 리프레시 토큰으로 갱신
+          response.cookies.set({//새 리프레시 토큰으로 갱신
             name: '_Authv4',
             value: newRefreshToken,
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 60,
             path: '/', // For all paths
-          }
+          })
           isAuthorized = true
         }
       }
     } catch (error) {//토큰 검증 실패시 리프레시 토큰 만료
-      setCookies = {
+      response.cookies.set({
         name: '_Authv4',
         value: '',
+        httpOnly: true,
         maxAge: 0,
         path: '/', // For all paths
-      }
+      })
     }
   }
   if (isAuthorized && limitPageWithAuth.some(path => request.nextUrl.pathname.startsWith(path))) {
-    if (setCookies) {
-      return NextResponse.redirect(new URL('/', request.url)).cookies.set(setCookies)
-    }
     return NextResponse.redirect(new URL('/', request.url))
   }
   else if (!isAuthorized && limitPageWithoutAuth.some(path => request.nextUrl.pathname.startsWith(path))) {
-    if (setCookies) {
-    return NextResponse.redirect(new URL('/auth', request.url)).cookies.set(setCookies)
-    }
     return NextResponse.redirect(new URL('/auth', request.url))
   }
   return response
