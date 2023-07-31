@@ -22,7 +22,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         <AccessTokenProvider>
           <MainMenuProvider>
-            <Header hideHeaderUrls={['/auth']} showSubHeaderUrls={['/free', '/notice', '/photo', '/video']} />
+            <Header />
             {children}
           </MainMenuProvider>
         </AccessTokenProvider>

@@ -5,7 +5,7 @@ import { useState } from 'react'
 export type ContainerVariant = keyof typeof containerVariants
 export type InputVariant = keyof typeof InputVariants
 
-interface IInput {
+interface Props {
   size: ContainerVariant | InputVariant
   type: string
   placeholder: string
@@ -51,7 +51,7 @@ const styles = {
   ].filter(Boolean).join(' '),
 };
 
-export default function Input({ size, type, placeholder, inputBorder = undefined, isClearButton = false }: IInput) {
+export default function Input({ size, type, placeholder, inputBorder = undefined, isClearButton = false }: Props) {
   const [inputValue, setInputValue] = useState('')
   const handleInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
