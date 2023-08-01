@@ -1,22 +1,37 @@
 'use client'
 
-interface IButton {
+import Image from 'next/image'
+
+interface CIProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>
+  src: string
+  selected: boolean
 }
 
-export function ClearButton({ onClick }: IButton) {
+interface OBProps {
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+  width: string
+  text: string
+  selected: boolean
+}
+
+export function CircleImageButton({ onClick, src, selected }: CIProps) {
   return (
-    <button
-      onClick={onClick}
-      className="h-[2rem] w-[2rem] flex items-center justify-center mr-1 text-[#373737] rounded-[50%] hover:bg-[rgba(0, 0, 0, 0.05)] duration-200"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-viva-gray-1">
-        <path
-          fillRule="evenodd"
-          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-          clipRule="evenodd"
-        />
-      </svg>
+    <button type="button" onClick={onClick}>
+      <div
+        className={`min-w-[52px] max-w-[56px] w-[15vw] h-full rounded-full aspect-square ${
+          selected ? 'ring-[3px] ring-lightblue' : 'ring-[1.5px] ring-white'
+        } transform-gpu transition-all duration-150`}
+      >
+        <Image src={src} width={100} height={100} priority={true} alt="tag" className="w-full h-full rounded-full select-none" />
+      </div>
+    </button>
+  )
+}
+export function OptionalButton({ onClick, width, text, selected }: OBProps) {
+  return (
+    <button className={`w-[${width}] flex flex-shrink-0 items-center justify-center bg-white border border-gray-1 h-[28px] my-1 rounded-[20px] transition-transform transform-gpu active:scale-95`}>
+      <span className="text-gray-2 text-[12px]">{text}</span>
     </button>
   )
 }

@@ -47,6 +47,7 @@ module.exports = {
         pinkish: '#fe929f',
         lightgold: '#ece4e2',
         lightpurple: '#e4e2ec',
+        lightblue: '#56cdfa',
         viva: {
           DEFAULT: '#BB2649',
           1: '#C9516D',

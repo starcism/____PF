@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import checkEnvironment from '@/libs/checkEnvironment'
 import Image from 'next/image'
+import { CircleImageButton, OptionalButton } from '../atoms/Button'
+import Tag from '../atoms/Tag'
 
 export default function PhotoBoardWritingForm() {
   const router = useRouter()
@@ -16,11 +18,22 @@ export default function PhotoBoardWritingForm() {
   }
 
   const [selectedIndex, setSelectedIndex] = useState([0, 0, 0, 0, 0, 0])
-  const tags = ['단체샷', '가을', '유진', '레이', '원영', '리즈', '이서']
+  const [selectAll, setSelectAll] = useState(false)
+  const nameTags = ['가을', '유진', '레이', '원영', '리즈', '이서']
+  const postTags = []
   const setTagByIndex = (index: number) => {
+    if (selectAll) {
+      setSelectAll(false)
+    }
     const updatedSelectedIndex = [...selectedIndex]
     updatedSelectedIndex[index] = updatedSelectedIndex[index] ? 0 : 1
     setSelectedIndex(updatedSelectedIndex)
+  }
+  const handleSelectAll = (e: boolean) => {
+    if (e === false) {
+      setSelectedIndex([0, 0, 0, 0, 0, 0])
+    }
+    setSelectAll(!e)
   }
 
   const [images, setImages] = useState<{ file: File[]; blob: string[] }>({
@@ -129,8 +142,8 @@ export default function PhotoBoardWritingForm() {
 
   return (
     <>
-      <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-screen overflow-auto">
-        <div className="flex-col items-center justify-center">
+      <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-[54px]">
+        <div className="flex-col justify-center">
           <div className="w-[100vw] h-[53px] custom-border-b-1 bg-white">
             <div className="flex justify-between items-center">
               <div className="h-[53px] w-[53px] flex justify-center items-center">
@@ -147,128 +160,129 @@ export default function PhotoBoardWritingForm() {
               <div className="h-[53px] w-[53px] flex justify-center items-center select-none">등록</div>
             </div>
           </div>
-          <form onSubmit={submitPost}>
-            <div className="flex w-[100vw] justify-center">
-              <>
-                <div className="flex-col w-[100vw] max-w-[800px]">
-                  <div className="flex items-center h-[120px] w-[100vw] max-w-[800px] overflow-x-auto flex-nowrap scrollbar-hide py-[12px] px-[0px] bg-white">
-                    {/* 이미지 미리보기 추가 */}
-                    {images.blob &&
-                      images.blob.map((blobUrl, index) => (
-                        <div key={index} className="relative flex-shrink-0 h-[95px] w-[85px] ml-[20px] rounded-[10px]">
-                          <button
-                            type="button"
-                            className="absolute top-0 right-0 text-gray-6 w-9 h-9 flex items-center justify-center"
-                            onClick={() => deleteImage(index)}
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 ml-[3px] mb-[3px]">
-                              <path
-                                fillRule="evenodd"
-                                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          </button>
-                          <Image src={blobUrl} alt={`Image Preview`} width={0} height={0} sizes="100vh" className="h-full w-full rounded-[10px]" />
-                        </div>
-                      ))}
-                    {/* 이미지 추가 버튼 */}
-                    {images.blob && images.blob.length < 4 && (
-                      <label className="cursor-pointer" htmlFor="imageInput">
-                        <div className="flex-shrink-0 ml-4 w-[48px] h-[48px] rounded-full border-solid border border-lightgold justify-center items-center flex">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-gray-4 cursor-pointer">
-                            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+        </div>
+      </div>
+      <div className='w-screen mt-[54px] bg-white'>
+        <form onSubmit={submitPost}>
+          <div className="flex w-[100vw] justify-center">
+            <>
+              <div className="flex-col w-[100vw] max-w-[800px]">
+                <div className="flex items-center h-[120px] w-[100vw] max-w-[800px] overflow-x-auto flex-nowrap scrollbar-hide py-[12px] px-[0px] bg-white">
+                  {/* 이미지 미리보기 추가 */}
+                  {images.blob &&
+                    images.blob.map((blobUrl, index) => (
+                      <div key={index} className="relative flex-shrink-0 h-[95px] w-[85px] ml-[20px] rounded-[10px]">
+                        <button
+                          type="button"
+                          className="absolute top-0 right-0 text-gray-6 w-9 h-9 flex items-center justify-center"
+                          onClick={() => deleteImage(index)}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 ml-[3px] mb-[3px]">
+                            <path
+                              fillRule="evenodd"
+                              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
+                              clipRule="evenodd"
+                            />
                           </svg>
-                          <input id="imageInput" type="file" accept="image/*" multiple className="hidden" onChange={uploadImage} ref={fileInputRef} />
-                        </div>
-                      </label>
-                    )}
-                  </div>
-                  <div className="flex overflow-hidden justify-center w-[100vw] my-[0.2rem]">
-                    <textarea
-                      className="flex w-[100vw] h-[100px] leading-[26px] max-w-[800px] px-[15px] outline-none resize-none text-[16px] scrollbar-hide font-350 placeholder:text-gray-3"
-                      placeholder="코멘트를 남겨보세요"
-                      maxLength={100}
-                      onKeyDown={PreventKeyDown}
-                      ref={commentRef}
-                    />
-                  </div>
-                  <div className="flex w-[calc(100vw-13px)] max-w-[800px] py-[12px] pl-[13px] custom-border-b-0">
-                    <div className="flex min-h-[32px] items-center space-x-2 flex-wrap">
-                      {tags.map(
-                        (tag, index) =>
-                          selectedIndex[index] === 1 && (
-                            <div
-                              key={index}
-                              className="flex items-center justify-center bg-white w-[60px] h-[24px] my-1 rounded-[10px] border border-solid border-gray-2"
-                            >
-                              <span className="text-[12px] text-gray-4">{`#${tags[index]}`}</span>
-                            </div>
-                          ),
-                      )}
-                    </div>
+                        </button>
+                        <Image src={blobUrl} alt={`Image Preview`} width={0} height={0} sizes="100vh" className="h-full w-full rounded-[10px]" />
+                      </div>
+                    ))}
+                  {/* 이미지 추가 버튼 */}
+                  {images.blob && images.blob.length < 4 && (
+                    <label className="cursor-pointer" htmlFor="imageInput">
+                      <div className="flex-shrink-0 ml-4 w-[48px] h-[48px] rounded-full border-solid border border-lightgold justify-center items-center flex transition-transform transform-gpu active:scale-95">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-gray-4 cursor-pointer">
+                          <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                        </svg>
+                        <input id="imageInput" type="file" accept="image/*" multiple className="hidden" onChange={uploadImage} ref={fileInputRef} />
+                      </div>
+                    </label>
+                  )}
+                </div>
+                <div className="flex overflow-hidden max-w-[800px] justify-center w-[100vw] my-[0.2rem]">
+                  <textarea
+                    className="flex w-[100vw] h-[100px] leading-[26px] max-w-[800px] px-[15px] outline-none resize-none text-[16px] scrollbar-hide font-350 placeholder:text-gray-3"
+                    placeholder="코멘트를 남겨보세요"
+                    maxLength={100}
+                    onKeyDown={PreventKeyDown}
+                    ref={commentRef}
+                  />
+                </div>
+                <div className="flex w-[100vw] max-w-[800px] py-[12px] custom-border-b-0">
+                  <div className="flex min-h-[32px] ml-[13px] items-center space-x-2 flex-wrap">
+                    {selectAll && <Tag text="단체샷" />}
+                    {nameTags.map((tag, index) => selectedIndex[index] === 1 && <Tag key={index} text={nameTags[index]} />)}
                   </div>
                 </div>
-              </>
+              </div>
+            </>
+          </div>
+        </form>
+        <div className="flex-col justify-center items-center w-[100vw] h-[70vh]">
+          <div className="ml-[17px] mt-[3px] w-[calc(100vw-17px)] h-[33px] flex items-center">
+            <span className="text-[13px] font-600 select-none">태그설정</span>
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="ml-1 mb-[2px] w-4 h-4 text-white bg-gray-3 rounded-full"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </span>
+          </div>
+          <div className="flex py-[12px] pl-[13px] pr-[36px] items-center w-[calc(100vw)] overflow-x-auto flex-nowrap scrollbar-hide space-x-[10px]">
+            {selectedIndex.map((_, i) => (
+              <div key={i}>
+                <CircleImageButton src="/images/1.jpeg" onClick={() => setTagByIndex(i)} selected={selectedIndex[i] === 1 ? true : false} />
+              </div>
+            ))}
+            <div
+              className="fixed right-0 min-h-[48px] max-h-[60px] h-[16vh] w-10 bg-gradient-to-r from-transparent to-[#ffffff]"
+              style={{ filter: 'blur(4px)' }}
+            ></div>
+          </div>
+          <div className="flex h-[24px] my-[6px] w-[80px] ml-[13px] items-center" onClick={() => handleSelectAll(selectAll)}>
+            <span
+              className={`material-symbols-outlined cursor-pointer select-none ${
+                selectAll ? 'text-turquoise' : 'text-gray-1'
+              } transform transition-colors duration-100`}
+            >
+              {selectAll ? 'check_box' : 'check_box_outline_blank'}
+            </span>
+            <div
+              className={`text-[14px] mt-[2px] cursor-pointer select-none ${
+                selectAll ? 'weight-500 text-turquoise' : 'weight-400 text-gray-3'
+              } transform transition-colors duration-100`}
+            >
+              전체 선택
             </div>
-          </form>
-          <div className="pl-[13px] flex-col w-[calc(100vw-13px)]">
-            <div className="w-[calc(100vw-13px)] h-[36px] flex items-center">
-              <span className="text-[13px] font-600">태그설정</span>
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="ml-1 mb-[2px] w-4 h-4 text-white bg-gray-3 rounded-full"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </span>
-            </div>
-            <div className="flex pl-[4px] py-[12px] items-center w-[calc(100vw-13px)] overflow-x-auto flex-nowrap scrollbar-hide space-x-4">
-              <button type="button" onClick={() => setTagByIndex(0)}>
-                <div className="min-w-[36px] max-w-[48px] w-[16vw] h-full bg-blue-200 rounded-full aspect-square"></div>
-              </button>
-              <button type="button" onClick={() => setTagByIndex(1)}>
-                <div className="min-w-[36px] max-w-[48px] w-[16vw] h-full bg-blue-200 rounded-full aspect-square"></div>
-              </button>
-              <button type="button" onClick={() => setTagByIndex(2)}>
-                <div className="min-w-[36px] max-w-[48px] w-[16vw] h-full bg-blue-200 rounded-full aspect-square"></div>
-              </button>
-              <button type="button" onClick={() => setTagByIndex(3)}>
-                <div className="min-w-[36px] max-w-[48px] w-[16vw] h-full bg-blue-200 rounded-full aspect-square"></div>
-              </button>
-              <button type="button" onClick={() => setTagByIndex(4)}>
-                <div className="min-w-[36px] max-w-[48px] w-[16vw] h-full bg-blue-200 rounded-full aspect-square"></div>
-              </button>
-              <button type="button" onClick={() => setTagByIndex(5)}>
-                <div className="min-w-[36px] max-w-[48px] w-[16vw] h-full bg-blue-200 rounded-full aspect-square"></div>
-              </button>
-              <button type="button" onClick={() => setTagByIndex(6)}>
-                <div className="min-w-[36px] max-w-[48px] w-[16vw] h-full bg-blue-200 rounded-full aspect-square"></div>
-              </button>
-            </div>
+          </div>
+          <div className="ml-[17px] h-[36px] mt-[17px] flex items-center">
+            <span className="text-[13px] font-600 text-gray-4 select-none">공식사진</span>
+          </div>
+          <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2">
+            <OptionalButton onClick={() => {}} width="60px" text="트위터" selected={false} />
+            <OptionalButton onClick={() => {}} width="60px" text="인스타" selected={false} />
+            <OptionalButton onClick={() => {}} width="75px" text="공식카페" selected={false} />
+            <OptionalButton onClick={() => {}} width="48px" text="SNS" selected={false} />
+          </div>
+          <div className="ml-[17px] h-[36px] mt-[13px] flex items-center">
+            <span className="text-[13px] font-600 text-gray-4 select-none">팬사진</span>
+          </div>
+          <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2">
+            <OptionalButton onClick={() => {}} width="53px" text="직찍" selected={false} />
+            <OptionalButton onClick={() => {}} width="53px" text="타팬" selected={false} />
+            <OptionalButton onClick={() => {}} width="53px" text="기타" selected={false} />
           </div>
         </div>
       </div>
     </>
   )
-}
-
-{
-  /* <div className="flex justify-center h-[3rem] px-[11px] pt-[18px] pb-[14px] mb-[200px]">
-              <div className="flex w-[100vw] max-w-[800px]">
-                <button className="flex-one-third h-[40px] mx-[5px] px-[15px] rounded-[6px] bg-gray-1" onClick={() => setOnChange('')} type="submit">
-                  <h1 className="text-gray-3">취소</h1>
-                </button>
-                <button onClick={(e) => handleSubmit(e)} className="flex-one-third h-[40px] mx-[5px] px-[15px] rounded-[6px] bg-gray-2" type="submit">
-                  <h1 className="text-black">등록</h1>
-                </button>
-              </div>
-            </div> */
 }

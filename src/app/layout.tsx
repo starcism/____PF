@@ -18,8 +18,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko">
-      <head />
-      <body>
+      <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0" />
+      </head>
+      <body className='overflow-y-auto scrollbar-hide'>
         <AccessTokenProvider>
           <MainMenuProvider>
             <Header />
