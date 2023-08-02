@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  important: true,
   content: ['./src/pages/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     screens: {
@@ -45,6 +46,7 @@ module.exports = {
         },
         turquoise: '#85b8cb',
         pinkish: '#fe929f',
+        lightpinkish: 'rgb(255, 201, 207)',
         lightgold: '#ece4e2',
         lightpurple: '#e4e2ec',
         lightblue: '#56cdfa',

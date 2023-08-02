@@ -23,7 +23,7 @@ export function CircleImageButton({ onClick, src, selected }: CIProps) {
           selected ? 'ring-[3px] ring-lightblue' : 'ring-[1.5px] ring-white'
         } transform-gpu transition-all duration-150`}
       >
-        <Image src={src} width={100} height={100} priority={true} alt="tag" className="w-full h-full rounded-full select-none" />
+        <Image src={src} fill priority={true} alt="tag" className="w-full h-full rounded-full select-none" />
       </div>
     </button>
   )

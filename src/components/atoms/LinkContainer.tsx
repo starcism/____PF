@@ -13,30 +13,32 @@ interface ILinkContainer {
 }
 
 const containerVariants = {
-  m_menu_footer: "h-[3.5rem]",
-  m_menu_footer_small: "h-[2.5rem]",
-  m_menu_page: "h-[2.8rem]",
-  m_menu_profile: "h-[5rem]",
-  post: "w-full h-[8rem]",
-  sm: "",
-  m: "",
-  lg: "",
+  m_menu_footer: 'h-[3.5rem]',
+  m_menu_footer_small: 'h-[2.5rem]',
+  m_menu_page: 'h-[2.8rem]',
+  m_menu_profile: 'h-[5rem]',
+  post_photo: 'w-full h-[8rem] px-[22px]',
+  post_video: 'w-full h-[8rem] px-[51px]',
+  sm: '',
+  m: '',
+  lg: '',
 }
 
 const linkVariants = {
-  m_menu_footer: "flex items-center",
-  m_menu_footer_small: "flex items-center",
-  m_menu_page: "flex items-center",
-  m_menu_profile: "flex items-center",
-  post: "",
-  sm: "flex items-center",
-  m: "flex items-center",
-  lg: "flex items-center",
+  m_menu_footer: 'flex items-center',
+  m_menu_footer_small: 'flex items-center',
+  m_menu_page: 'flex items-center',
+  m_menu_profile: 'flex items-center',
+  post_photo: '',
+  post_video: '',
+  sm: 'flex items-center',
+  m: 'flex items-center',
+  lg: 'flex items-center',
 }
 
 const styles = {
-  container: ({ size }: { size: ContainerVariant }) => [containerVariants[size], "bg-white"].filter(Boolean).join(' '),
-  link: ({ size }: { size: LinkVariant }) => [linkVariants[size], "w-full h-full bg-white"].filter(Boolean).join(' '),
+  container: ({ size }: { size: ContainerVariant }) => [containerVariants[size], 'bg-white'].filter(Boolean).join(' '),
+  link: ({ size }: { size: LinkVariant }) => [linkVariants[size], 'w-full h-full bg-white'].filter(Boolean).join(' '),
 }
 
 export default function LinkContainer({ children, href, size, onClick = undefined }: ILinkContainer) {

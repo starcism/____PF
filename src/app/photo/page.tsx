@@ -12,7 +12,7 @@ export default function Page() {
       {
         boardid: 1,
         category: 'photo',
-        images: ['/images/1.jpeg', '/images/2.jpeg', '/images/3.jpeg', '/images/4.jpeg'],
+        images: ['/images/liz.jpeg'],
         title: '#풍경',
         view: 430,
         createdAt: '2023-06-01T19:43:18.576Z',

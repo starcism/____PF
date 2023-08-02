@@ -252,14 +252,14 @@ export default function PhotoBoardWritingForm() {
             <span
               className={`material-symbols-outlined cursor-pointer select-none ${
                 selectAll ? 'text-turquoise' : 'text-gray-1'
-              } transform transition-colors duration-100`}
+              } transform-gpu transition-colors duration-100`}
             >
               {selectAll ? 'check_box' : 'check_box_outline_blank'}
             </span>
             <div
               className={`text-[14px] mt-[2px] cursor-pointer select-none ${
                 selectAll ? 'weight-500 text-turquoise' : 'weight-400 text-gray-3'
-              } transform transition-colors duration-100`}
+              } transform-gpu transition-colors duration-100`}
             >
               전체 선택
             </div>
