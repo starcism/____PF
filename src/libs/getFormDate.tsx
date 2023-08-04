@@ -11,11 +11,16 @@ export default function formatDate(dateString: string) {
     const hours = ('0' + localDate.getHours()).slice(-2) // HH 형식
     const minutes = ('0' + localDate.getMinutes()).slice(-2) // MM 형식
     return `${hours}:${minutes}` //HH:MM
+  } else if (localDate.getFullYear() === today.getFullYear()) {
+    // 올해인 경우 MM.DD 형식으로 표시
+    const month = ('0' + (localDate.getMonth() + 1)).slice(-2); // MM 형식
+    const day = ('0' + localDate.getDate()).slice(-2); // DD 형식
+    return `${month}.${day}`; // MM.DD
   } else {
-    // 오늘이 아닌 경우 YY.MM.DD 형식으로 표시
-    const year = localDate.getFullYear().toString().substring(2) // YY 형식
-    const month = ('0' + (localDate.getMonth() + 1)).slice(-2) // MM 형식
-    const day = ('0' + localDate.getDate()).slice(-2) // DD 형식
-    return `${year}.${month}.${day}` //YY.MM.DD
+    // 작년 이전인 경우 YY.MM.DD 형식으로 표시
+    const year = localDate.getFullYear().toString().substring(2); // YY 형식
+    const month = ('0' + (localDate.getMonth() + 1)).slice(-2); // MM 형식
+    const day = ('0' + localDate.getDate()).slice(-2); // DD 형식
+    return `${year}.${month}.${day}`; // YY.MM.DD
   }
 }

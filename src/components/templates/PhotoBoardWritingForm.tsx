@@ -221,7 +221,7 @@ export default function PhotoBoardWritingForm() {
         </form>
         <div className="flex-col justify-center items-center w-[100vw] h-[70vh]">
           <div className="ml-[17px] mt-[3px] w-[calc(100vw-17px)] h-[33px] flex items-center">
-            <span className="text-[13px] font-600 select-none">태그설정</span>
+            <span className="text-[13px] font-700 select-none">태그설정</span>
             <span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -250,22 +250,22 @@ export default function PhotoBoardWritingForm() {
           </div>
           <div className="flex h-[24px] my-[6px] w-[80px] ml-[13px] items-center" onClick={() => handleSelectAll(selectAll)}>
             <span
-              className={`material-symbols-outlined cursor-pointer select-none ${
+              className={`material-symbols-outlined pt-[3px] cursor-pointer select-none ${
                 selectAll ? 'text-turquoise' : 'text-gray-1'
               } transform-gpu transition-colors duration-100`}
             >
               {selectAll ? 'check_box' : 'check_box_outline_blank'}
             </span>
-            <div
-              className={`text-[14px] mt-[2px] cursor-pointer select-none ${
+            <span
+              className={`text-[14px] cursor-pointer select-none ${
                 selectAll ? 'weight-500 text-turquoise' : 'weight-400 text-gray-3'
               } transform-gpu transition-colors duration-100`}
             >
               전체 선택
-            </div>
+            </span>
           </div>
           <div className="ml-[17px] h-[36px] mt-[17px] flex items-center">
-            <span className="text-[13px] font-600 text-gray-4 select-none">공식사진</span>
+            <span className="text-[13px] font-700 text-gray-4 select-none">공식사진</span>
           </div>
           <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2">
             <OptionalButton onClick={() => {}} width="60px" text="트위터" selected={false} />
@@ -274,7 +274,7 @@ export default function PhotoBoardWritingForm() {
             <OptionalButton onClick={() => {}} width="48px" text="SNS" selected={false} />
           </div>
           <div className="ml-[17px] h-[36px] mt-[13px] flex items-center">
-            <span className="text-[13px] font-600 text-gray-4 select-none">팬사진</span>
+            <span className="text-[13px] font-700 text-gray-4 select-none">팬사진</span>
           </div>
           <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2">
             <OptionalButton onClick={() => {}} width="53px" text="직찍" selected={false} />

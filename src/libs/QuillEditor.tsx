@@ -1,5 +1,5 @@
 'use client'
-import ReactQuill, { Quill } from 'react-quill'
+import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { useMemo } from 'react'
 
@@ -65,8 +65,8 @@ export default function QuillEditor({ quillRef, value, onChange, placeholder }: 
   const modules = useMemo(
     () => ({
       toolbar: {
-        container: [['bold', 'italic', 'underline', 'strike'], [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }], ['image']],
-        handlers: { image: imageHandler },
+        container: [['bold', 'italic', 'underline', 'strike'], [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }]],
+        // handlers: { image: imageHandler },
       },
     }),
     [],

@@ -16,7 +16,7 @@ export default function ProfileLinkOnMenu({ session }: { session: string | null 
               <div className="flex w-full justify-between mx-[1rem]">
                 <div className="flex items-center">
                   <UserIcon />
-                  <span className="pt-[0.1rem] ml-4 text-[1rem] weight-600 leading-[0.8]">SWITHy</span>
+                  <span className="font-sans ml-4 text-[1rem] weight-600 leading-[0.8]">LVD</span>
                 </div>
                 <div className="flex items-center">
                   <span>

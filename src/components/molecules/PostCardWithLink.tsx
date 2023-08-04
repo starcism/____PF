@@ -4,14 +4,14 @@ import { useState } from 'react'
 import formatDate from '@/libs/getFormDate'
 
 export default function PostLink({ href, title, view, createdAt, profile_image, nickname, likeCount = 0, commentCount = 0 }: ICard) {
-  const [liked, setLiked] = useState(false)
+  const [like, setLike] = useState(false)
   const createdDate = createdAt && formatDate(createdAt)
   const handleNameClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
   }
   const handleLikeClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    setLiked(!liked)
+    setLike(!like)
   }
 
   return (
@@ -21,8 +21,8 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
           <div className="flex items-center w-[100px] h-[40px]">
             <button onClick={handleNameClick}>
               <div className="flex items-center pl-[4px]">
-                <div className="min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] mb-[2px] bg-blue-200 rounded-full"></div>
-                <span className="ml-2 text-[14px] weight-350 text-viva-gray-1 select-none">{nickname}</span>
+                <div className="min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] bg-blue-200 rounded-full"></div>
+                <span className="ml-2 text-[14px] mb-[2px] font-700 text-gray-4 select-none">{nickname}</span>
               </div>
             </button>
           </div>
@@ -31,7 +31,7 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
               <button className="flex items-center justify-center rounded-[50%] w-[32px] h-[32px] ml-[6px] text-pinkish" onClick={handleLikeClick}>
                 <svg
                   className={`inline-block align-middle w-[24px] h-[24px] ${
-                    liked ? 'fill-pinkish' : 'fill-none hover:text-lightpinkish'
+                    like ? 'fill-pinkish' : 'fill-none hover:text-lightpinkish'
                   } transition-transform transform-gpu active:scale-125`}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -44,7 +44,7 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
               </button>
               <span className="text-[14px] weight-350 select-none text-pinkish">{likeCount}</span>
             </div>
-            <div className='mr-[6px] flex items-center'>
+            <div className="mr-[6px] flex items-center">
               <button className="flex items-center justify-center  ml-[6px] rounded-[50%] w-[32px] h-[32px] text-turquoise">
                 <svg
                   className="inline-block align-middle mb-[1px] w-[24px] h-[24px]"
@@ -65,10 +65,15 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
             </div>
           </div>
         </div>
-        <div className="flex w-full p-[4px] text-[16px] weight-500 select-none">{title}</div>
-        <div className="flex w-full p-[4px] text-[16px] weight-500">
+        <div className="flex w-full px-[4px] select-none">
+          <span className="text-[14px] weight-400 text-gray-6 leading-[22px]">{title}</span>
+        </div>
+        <div className="flex w-full px-[4px] pt-[12px] select-none">
+          <span className="text-[14px] weight-700 text-gray-6 leading-[26px]">#단체샷</span>
+        </div>
+        <div className="flex w-full p-[4px] text-[13px] weight-500">
           <span className="text-[13px] weight-500 text-gray-3 select-none">{createdDate}</span>
-          <span className="ml-[8px] text-[13px] weight-500 text-gray-3 select-none">{`조회 ${view}`}</span>
+          {view && <span className="ml-[8px] text-[13px] weight-500 text-gray-3 select-none">{`조회 ${view}`}</span>}
         </div>
       </LinkContainer>
     </>

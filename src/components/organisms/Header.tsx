@@ -48,7 +48,7 @@ function HeaderComponent({ pathname }: TPathname) {
           </div>
           <div className="flex w-full h-[40px] items-center justify-center">
             <Link href="/" className="flex items-center justify-center h-[40px] w-[100px]" onClick={() => handleMainMenu(false)}>
-              LVD
+              <span className='font-sans text-[16px] font-700'>LVD</span>
               {/* <Image alt="logo" src={swithy_logo} width={80} priority={true} /> */}
             </Link>
           </div>
@@ -138,7 +138,7 @@ export default function Header() {
   const hideHeaderUrls = ['auth']
   const showSubHeaderUrls = ['/free', '/notice', '/photo', '/video']
 
-  const showHeader = !paths.some((path)=> path === 'write') && !hideHeaderUrls.some((path)=> path === paths[0])
+  const showHeader = !paths.some((path)=> path === 'write') && !hideHeaderUrls.some((path)=> path === paths[0]) && !paths[1]
   const showSubHeader = showSubHeaderUrls.some((path)=> path === pathname)
 
   return (

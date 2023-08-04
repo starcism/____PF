@@ -13,7 +13,6 @@ export default function PhotoCard({ key, images, href, title, view, createdAt, p
           key={key}
           href={href}
           title={title}
-          view={view}
           createdAt={createdAt}
           nickname={nickname}
           likeCount={likeCount}

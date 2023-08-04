@@ -13,48 +13,19 @@
 .weight-100 {
   font-weight: 100;
 }
-.weight-150 {
-  font-weight: 150;
-}
-.weight-200 {
-  font-weight: 200;
-}
-.weight-250 {
-  font-weight: 250;
-}
 .weight-300 {
   font-weight: 300;
-}
-.weight-350 {
-  font-weight: 350;
 }
 .weight-400 {
   font-weight: 400;
 }
-.weight-450 {
-  font-weight: 450;
-}
 .weight-500 {
   font-weight: 500;
-}
-.weight-550 {
-  font-weight: 550;
-}
-.weight-600 {
-  font-weight: 600;
-}
-.weight-650 {
-  font-weight: 650;
 }
 .weight-700 {
   font-weight: 700;
 }
-.weight-800 {
-  font-weight: 800;
-}
-.weight-900 {
-  font-weight: 900;
-}
+
 .custom-border-1{
   border-width: 1px;
   border-style: solid;
@@ -71,6 +42,11 @@
   border-color: #eeeeee;
 }
 .custom-border-t-1{
+  border-top-width: 1px;
+  border-style: solid;
+  border-color: #eeeeee;
+}
+.custom-border-t-2{
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -166,11 +142,11 @@ em {
   color: #BBBBBB !important;
 }
 .ql-toolbar {
-  border-top: none !important;
-  border-bottom: none !important;
+  border-top: 1px solid #eeeeee !important;
+  border-bottom: 1px solid #eeeeee !important;
   border-left: none !important;
   border-right: none !important;
-  background-color: rgb(248 233 237) !important;
+  background-color: white !important;
 }
 
 /* .ql-snow .ql-picker.ql-size {
