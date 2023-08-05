@@ -1,8 +1,7 @@
 'use client'
 
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useLayoutEffect, useMemo, useState } from 'react'
 import checkEnvironment from './checkEnvironment'
-import { verifyToken } from './verifyToken'
 
 interface Props {
   children: React.ReactNode
@@ -23,7 +22,7 @@ export function useAccessTokenState() {
 export default function AccessTokenProvider({ children }: Props) {
   const [accessToken, setAccessToken] = useState<string | null>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchData = async () => {
       const res = await fetch(checkEnvironment().concat('/api/auth/verification/authv4'), {
         method: 'POST',

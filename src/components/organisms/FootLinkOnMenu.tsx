@@ -31,11 +31,11 @@ export default function FootLinkOnMenu({ session }: { session: string | null }) 
           <div className="flex w-full h-full">
             {session ? (
               <div className="flex w-full justify-center items-center">
-                <span className="text-[1.1rem] weight-400">로그아웃</span>
+                <span className="text-[1.1rem] text-gray-5 weight-400">로그아웃</span>
               </div>
             ) : (
               <div className="flex w-full justify-center items-center">
-                <span className="text-[1.1rem] weight-400 text-viva-gray-2">회원가입</span>
+                <span className="text-[1.1rem] weight-400 text-gray-5">회원가입</span>
               </div>
             )}
           </div>

@@ -36,7 +36,7 @@ export default function Page(prop: TProps) {
       nickname: '유저',
     },
     title: '첫 글을 썼어요',
-    content: '음...음....음....음 흠흠흠\nㅇㅇ 그렇지',
+    content: '안녕하세요\n반가워요\n저에요\n저',
     commentCount: 0,
     liked: false,
     likeCount: 0,

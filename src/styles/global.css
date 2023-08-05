@@ -25,7 +25,9 @@
 .weight-700 {
   font-weight: 700;
 }
-
+.text-outlined {
+  text-shadow: -0.5px 0 #000, 0 0.5px #000, 0.5px 0 #000, 0 -0.5px #000;
+}
 .custom-border-1{
   border-width: 1px;
   border-style: solid;

@@ -2,7 +2,8 @@
 
 import formatDate from '@/libs/getFormDate'
 import UserIcon from '../atoms/UserIcon'
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
+import UserComment from '../molecules/UserComment'
 
 interface Props {
   user: {
@@ -28,6 +29,17 @@ export default function FreeBoard({ user, title, content, commentCount, liked, l
     e.preventDefault()
     setLike(!like)
   }
+
+  const [textareaValue, setTextareaValue] = useState<string>('')
+
+  const textRef = useRef<HTMLTextAreaElement>(null)
+  useLayoutEffect(() => {
+    if (textRef.current) {
+      textRef.current.style.height = 'auto'
+      const newHeight = textRef.current.scrollHeight + 'px'
+      textRef.current.style.height = newHeight
+    }
+  }, [])
   return (
     <>
       <div className="w-full px-[13px] pt-[17px]">
@@ -36,12 +48,12 @@ export default function FreeBoard({ user, title, content, commentCount, liked, l
             <UserIcon />
             <div>
               <div className="flex mt-[4px] mb-[6px] ml-[12px] mr-[12px] overflow-hidden max-h-[40px]">
-                <h1 className="font-600 leading-[22px] text-[16px]">{`${title}`}</h1>
+                <h1 className="font-700 leading-[22px] text-[16px]">{`${title}`}</h1>
               </div>
               <div className="flex items-center">
                 <div className="ml-[12px] flex items-center">
                   <span className="text-[14px] font-600 text-gray-4">{user.nickname}</span>
-                  <span className="text-[11px] px-[3px] text-gray-3">&bull;</span>
+                  <span className="text-[11px] px-[6px] text-gray-3">&bull;</span>
                   <span className="text-[14px] text-gray-4 font-500">{createdDate}</span>
                 </div>
               </div>
@@ -57,11 +69,12 @@ export default function FreeBoard({ user, title, content, commentCount, liked, l
             </svg>
           </div>
         </div>
-        <div className="px-[11px] mt-[17px]">
+        <div className="px-[11px] mt-[17px] h-full">
           <textarea
             readOnly
-            className="flex w-[100vw] leading-[26px] max-w-[800px] outline-none resize-none text-[16px] scrollbar-hide font-350 placeholder:text-gray-3"
-            value={content}
+            className="flex w-[100vw] leading-[26px] max-w-[800px] outline-none resize-none text-[16px] scrollbar-hide font-400 placeholder:text-gray-3"
+            defaultValue={content}
+            ref={textRef}
           />
         </div>
         <div className="flex items-center h-[40px]">
@@ -102,7 +115,9 @@ export default function FreeBoard({ user, title, content, commentCount, liked, l
             <span className="text-[14px] weight-350 select-none text-turquoise">{commentCount}</span>
           </div>
         </div>
-        <div className=''>여기</div>
+        <form>
+          <UserComment value={textareaValue} setValue={setTextareaValue} />
+        </form>
       </div>
     </>
   )

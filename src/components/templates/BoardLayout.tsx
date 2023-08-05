@@ -23,7 +23,7 @@ export default function BoardLayout({ boardType, children, onClick }: Props) {
                 </button>
               </div>
               <div className="flex items-center">
-                <h1 className="text-[16px] select-none">{boardType}</h1>
+                <h1 className="text-[16px] font-500 text-gray-4 select-none">{boardType}</h1>
               </div>
               <div className="h-[53px] w-[53px] flex justify-center items-center select-none" />
             </div>

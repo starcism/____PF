@@ -11,7 +11,7 @@ export default function LinkWithCloseMenu({ pageHref, pageName }: { pageHref: st
     <>
       <div>
         <LinkContainer href={pageHref} size="m_menu_page" onClick={() => handleMainMenu(false)}>
-        <span className="ml-4 text-[1rem] weight-500 leading-[0.8] text-viva-gray-2">{pageName}</span>
+        <span className="ml-4 text-[1rem] weight-500 leading-[0.8] text-gray-4">{pageName}</span>
         </LinkContainer>
       </div>
     </>
