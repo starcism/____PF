@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import ReactQuill from 'react-quill'
 import { useRouter } from 'next/navigation'
+import checkEnvironment from '@/libs/checkEnvironment'
+import axios from 'axios'
 
 const QuillEditor = dynamic(() => import('@/libs/QuillEditor'), {
   ssr: false,
@@ -27,7 +29,7 @@ type TonSubmit = {
   onSubmit: (title: string, content: string) => void
 }
 
-export default function FreeBoardWritingForm({ onSubmit }: TonSubmit) {
+export default function FreeBoardWritingForm({}) {
   const router = useRouter()
 
   const [value, setValue] = useState('')
@@ -45,7 +47,7 @@ export default function FreeBoardWritingForm({ onSubmit }: TonSubmit) {
       if (title || content) {
         const confirmed = window.confirm('작성중인 내용은 저장되지 않습니다. 계속할까요?')
         if (confirmed) {
-          router.replace('/free')
+          router.replace('/forum')
           setClose(false)
           return
         } else {
@@ -53,7 +55,7 @@ export default function FreeBoardWritingForm({ onSubmit }: TonSubmit) {
           return
         }
       } else {
-        router.replace('/free')
+        router.replace('/forum')
         setClose(false)
         return
       }
@@ -78,8 +80,24 @@ export default function FreeBoardWritingForm({ onSubmit }: TonSubmit) {
       return
     }
 
-    // 폼 데이터를 onSubmit 콜백 함수로 전달
-    onSubmit(title, content)
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('content', content)
+
+    const fetchData = async () => {
+      try {
+        const res = await fetch(checkEnvironment().concat('/api/board/forum'), {
+          method: 'POST',
+          // credentials: 'include',
+          // next: {
+          //   revalidate: 3600 * 6 - 1800,
+          // },
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
   }
 
   return (
@@ -98,9 +116,13 @@ export default function FreeBoardWritingForm({ onSubmit }: TonSubmit) {
                 </div>
                 <div className="grid place-items-center gap-1">
                   <h1 className="text-[16px] select-none">글쓰기</h1>
-                  <h1 className="text-[13px] text-gray-3 select-none">PHOTO</h1>
+                  <h1 className="text-[13px] text-gray-3 select-none">포럼</h1>
                 </div>
-                <div className="h-[53px] w-[53px] flex justify-center items-center select-none">등록</div>
+                <div className="h-[53px] w-[53px] flex justify-center items-center select-none">
+                  <button onClick={handleSubmit}>
+                    <span>등록</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

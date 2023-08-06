@@ -62,7 +62,7 @@ export default function UserComment({ value, setValue }: Props) {
           <textarea
             className={`w-full max-h-[150px] rounded-[20px] leading-[22px] max-w-[800px] pl-[15px] py-[10px] outline-none resize-none text-[14px] overflow-y-auto scrollbar-hide font-400 placeholder:text-gray-3`}
             style={{ height: '44px' }}
-            placeholder="답글 달기"
+            placeholder="댓글 달기"
             maxLength={500}
             onKeyDown={PreventKeyDown}
             ref={commentRef}

@@ -10,7 +10,7 @@ export default function PostItem({ boardid, title, view, likeCount, commentCount
   const createdDate = createdAt && formatDate(createdAt)
   return (
     <>
-      <Link href={`/free/${boardid}`}>
+      <Link href={`/forum/${boardid}`}>
         <div className="flex w-full h-[72px] justify-between items-center py-[12px] px-[11px] cursor-pointer">
           <div className="flex items-center">
             <UserIcon />

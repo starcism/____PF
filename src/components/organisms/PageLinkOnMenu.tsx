@@ -12,7 +12,7 @@ export default function PageLinkOnMenu() {
         <Label size="m_menu_pagelink" text1='LOVED' text2='IVE'/>
         <LinkWithCloseMenu pageHref="/notice" pageName="공지사항" />
         <Divider size="m_sm" my="4px" />
-        <LinkWithCloseMenu pageHref="/free" pageName="포럼" />
+        <LinkWithCloseMenu pageHref="/forum" pageName="포럼" />
       </div>
       <Divider size="m_m" my="4px" />
       <div>

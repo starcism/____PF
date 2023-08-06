@@ -70,9 +70,9 @@ function HeaderComponent({ pathname }: TPathname) {
 function SubHeader({ pathname }: TPathname) {
   const boardTypeObj: TBoardTypeObj = {
     '/notice': '공지사항',
-    '/free': '자유게시판',
-    '/photo': '사진게시판',
-    '/video': '영상게시판',
+    '/forum': '포럼',
+    '/photo': '갤러리',
+    '/video': '영상',
   }
 
   const boardType = pathname ? boardTypeObj[pathname] : '전체글'
@@ -136,7 +136,7 @@ export default function Header() {
   const props = '/'+paths[0]
 
   const hideHeaderUrls = ['auth']
-  const showSubHeaderUrls = ['/free', '/notice', '/photo', '/video']
+  const showSubHeaderUrls = ['/forum', '/notice', '/photo', '/video']
 
   const showHeader = !paths.some((path)=> path === 'write') && !hideHeaderUrls.some((path)=> path === paths[0]) && !paths[1]
   const showSubHeader = showSubHeaderUrls.some((path)=> path === pathname)
