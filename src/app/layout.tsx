@@ -5,6 +5,7 @@ import Header from '@/components/organisms/Header'
 import AccessTokenProvider from '@/libs/AccessTokenProvider'
 import MainMenuProvider from '@/libs/MainMenuProvider'
 import { cls } from '@/libs/cls'
+import Head from 'next/head'
 
 export const metadata = {
   title: {
@@ -31,9 +32,6 @@ const inter = Inter({
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko" className={cls(notoSansKR.className, inter.variable)}>
-      <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0" />
-      </head>
       <body className="overflow-y-auto scrollbar-hide">
         <AccessTokenProvider>
           <MainMenuProvider>

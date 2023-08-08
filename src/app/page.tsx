@@ -3,6 +3,7 @@
 import PhotoViewer from '@/components/molecules/PhotoViwer'
 
 export default function Home() {
+
   return (
     <>
       <div className="flex pl-4 pt-8">

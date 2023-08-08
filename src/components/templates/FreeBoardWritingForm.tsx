@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import ReactQuill from 'react-quill'
 import { useRouter } from 'next/navigation'
 import checkEnvironment from '@/libs/checkEnvironment'
-import axios from 'axios'
 
 const QuillEditor = dynamic(() => import('@/libs/QuillEditor'), {
   ssr: false,
@@ -37,12 +36,14 @@ export default function FreeBoardWritingForm({}) {
   const titleRef = useRef<HTMLInputElement>(null)
   const editorRef = useRef<ReactQuill>(null)
   const title = titleRef.current?.value.trim() ?? ''
-  const content = editorRef.current?.getEditor().getText().trim() ?? ''
+
   const handleFormClose: React.MouseEventHandler<HTMLButtonElement> = () => {
     setClose(true)
   }
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const editor = editorRef.current?.getEditor()
+    const content = editor?.root.innerHTML.trim()
     if (close) {
       if (title || content) {
         const confirmed = window.confirm('작성중인 내용은 저장되지 않습니다. 계속할까요?')
@@ -84,20 +85,23 @@ export default function FreeBoardWritingForm({}) {
     formData.append('title', title)
     formData.append('content', content)
 
-    const fetchData = async () => {
-      try {
-        const res = await fetch(checkEnvironment().concat('/api/board/forum'), {
-          method: 'POST',
-          // credentials: 'include',
-          // next: {
-          //   revalidate: 3600 * 6 - 1800,
-          // },
-        })
-      } catch (error) {
-        console.log(error)
+    try {
+      // 서버로 데이터를 전송합니다.
+      const res = await fetch(checkEnvironment().concat('/api/board/forum'), {
+        method: 'POST',
+        body: formData,
+      })
+
+      // 서버 응답을 확인하고 필요한 처리를 수행합니다.
+      if (res.ok) {
+        alert('글이 성공적으로 저장되었습니다.')
+        router.replace('/forum')
+      } else {
+        alert('글 저장 중 오류가 발생했습니다.')
       }
+    } catch (error) {
+      console.error('글 저장 중 오류가 발생했습니다.', error)
     }
-    fetchData()
   }
 
   return (

@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     const data = await res.json()
     const _Authv1 = data.accessToken
     if (!_Authv1) {
-      return NextResponse.json({ status:500, message:"Internal Server Error" })
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
     return new Response('', {
       status: 200,

@@ -5,8 +5,29 @@ import { useContext } from 'react'
 import UserIcon from '../atoms/UserIcon'
 import ConditionalLink from '../molecules/ConditionalLink'
 
-export default function ProfileLinkOnMenu({ session }: { session: string | null }) {
+export default function ProfileLinkOnMenu({ session = null, loading = false }: { session?: string | null; loading?: boolean }) {
   const { handleMainMenu } = useContext(MainMenuContext)
+  if (loading) {
+    return (
+      <>
+        <div className="h-[5rem] flex items-center">
+          <div className="flex w-full justify-between mx-[1rem]">
+            <div className="flex items-center">
+              <UserIcon />
+              <div className="ml-4 text-[1rem] weight-600 leading-[0.8]" />
+            </div>
+            <div className="flex items-center">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </>
+    )
+  }
   return (
     <>
       <ConditionalLink hrefLoggedIn="/profile" hrefLoggedOut="/auth" size="m_menu_profile" session={session} onClickLoggedIn={() => handleMainMenu(false)}>

@@ -7,11 +7,10 @@ import FootLinkOnMenu from '../organisms/FootLinkOnMenu'
 import Footer from '../molecules/Footer'
 import { useAccessTokenState } from '@/libs/AccessTokenProvider'
 
-type BlockInteractionEvent = MouseEvent | TouchEvent | WheelEvent;
+type BlockInteractionEvent = MouseEvent | TouchEvent | WheelEvent
 
 export default function MainMenu() {
-  const { accessToken } = useAccessTokenState()
-
+  const { accessToken, loading } = useAccessTokenState()
   useEffect(() => {
     const blockInteraction = (e: BlockInteractionEvent) => {
       e.preventDefault()
@@ -32,9 +31,9 @@ export default function MainMenu() {
   return (
     <>
       <div className="fixed left-0 top-[52px] h-[calc(100vh-52px)] w-[100vw] bg-white z-[1002]">
-        <ProfileLinkOnMenu session={accessToken} />
+        {loading ? <ProfileLinkOnMenu loading={true} /> : <ProfileLinkOnMenu session={accessToken} />}
         <PageLinkOnMenu />
-        <FootLinkOnMenu session={accessToken} />
+        {loading ? <FootLinkOnMenu loading={true} /> : <FootLinkOnMenu session={accessToken} />}
         <Footer />
       </div>
     </>

@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useState } from 'react'
+import { createContext, useCallback, useState } from 'react'
 
 interface Props {
   children: React.ReactNode
@@ -10,8 +10,9 @@ export const MainMenuContext = createContext({ mainMenu: false, handleMainMenu: 
 
 export default function MainMenuProvider({ children }: Props) {
   const [mainMenu, setMainMenu] = useState(false)
-  const handleMainMenu = (e: boolean) => {
+  const handleMainMenu = useCallback((e: boolean) => {
     setMainMenu(e)
-  }
+  }, [])
+  
   return <MainMenuContext.Provider value={{ mainMenu, handleMainMenu }}>{children}</MainMenuContext.Provider>
 }

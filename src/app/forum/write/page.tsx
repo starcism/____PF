@@ -1,41 +1,35 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import FreeBoardWritingForm from '@/components/templates/FreeBoardWritingForm'
-
-interface IFormData {
-  title: string
-  content: string
-}
+import useAuth from '@/libs/useAuth'
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
-  const onSubmit = async (title: string, content: string) => {
-    try {
-      const formData: IFormData = { title, content }
+  const { loading, error } = useAuth()
+  const router = useRouter()
 
-      const response = await fetch('/api/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        console.log(data) // 성공적으로 저장된 데이터 확인
-        // 여기서 필요한 추가 작업을 수행하세요 (예: 리다이렉션)
-      } else {
-        console.error('API 호출이 실패했습니다.')
-      }
-    } catch (error) {
-      console.error(error)
-    }
+  if (loading) {
+    return (
+      <>
+        <div>로딩중</div>
+      </>
+    )
+  } else if (error) {
+    return (
+      <>
+        <div className="flex flex-col w-[100vw] h-[100vh] items-center justify-center">
+          <h1 className="text-[16px]">권한이 없습니다.</h1>
+          <button onClick={() => router.back()} className="flex items-center my-4 justify-center rounded-[10px] w-[80px] h-[28px] bg-lightgold">
+            <span className="text-[14px]">돌아가기</span>
+          </button>
+        </div>
+      </>
+    )
   }
-
   return (
     <>
-      <FreeBoardWritingForm onSubmit={onSubmit} />
+      <FreeBoardWritingForm />
     </>
   )
 }
