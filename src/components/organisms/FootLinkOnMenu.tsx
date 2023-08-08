@@ -5,7 +5,7 @@ import Divider from '../atoms/Divider'
 import ConditionalLink from '../molecules/ConditionalLink'
 import { useAccessTokenState } from '@/libs/AccessTokenProvider'
 
-export default function FootLinkOnMenu({ session }: { session: string | null }) {
+export default function FootLinkOnMenu({ session = null, loading = false }: { session?: string | null; loading?: boolean }) {
   const { setAccessToken } = useAccessTokenState()
   const getLogOut = async (session: string | null) => {
     if (session) {
@@ -24,6 +24,25 @@ export default function FootLinkOnMenu({ session }: { session: string | null }) 
       return
     }
   }
+
+  if (loading) {
+    return (
+      <>
+        <div className="h-[3.5rem] bg-white flex items-center">
+          <div className="flex w-full h-full">
+            <div className="flex w-full justify-center items-center">
+              <span className="text-[1.1rem] weight-400 text-gray-5 selec-none">회원가입</span>
+            </div>
+          </div>
+        </div>
+        <Divider size="m_transparent" my="4px" />
+        <div className="flex w-full h-[4rem] justify-center items-center pointer-events-none select-none">
+          <span className="text-gray-2 text-[1.1rem] weight-400">후원하기</span>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <ConditionalLink hrefLoggedIn="/" hrefLoggedOut="/auth" size="m_menu_footer" session={session} onClickLoggedIn={() => getLogOut(session)}>

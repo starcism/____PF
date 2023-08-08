@@ -1,5 +1,6 @@
 'use client'
 
+import 'react-quill/dist/quill.bubble.css'
 import formatDate from '@/libs/getFormDate'
 import UserIcon from '../atoms/UserIcon'
 import { useLayoutEffect, useRef, useState } from 'react'
