@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   const formData = await request.formData()
-  const name = formData.get('title')
-  const email = formData.get('content')
-  return NextResponse.json({ name, email })
+  const title = formData.get('title')
+  const content = formData.get('content')
+  return NextResponse.json({ title, content })
 }

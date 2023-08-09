@@ -11,12 +11,16 @@ export async function POST(request: Request) {
           Authorization: accessToken,
         },
       })
-      return new Response('', {
-        status: 200,
-        headers: {
-          'Set-Cookie': `_Authv4=; max-age:0; HttpOnly; Path=/`,
-        },
-      })
+      if (res.ok) {
+        return new Response('', {
+          status: 200,
+          headers: {
+            'Set-Cookie': `_Authv4=; max-age:0; HttpOnly; Path=/`,
+          },
+        })
+      } else {
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+      }
     } catch (error) {
       return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }

@@ -18,7 +18,7 @@ const containerVariants = {
   lg: '',
 }
 const LabelVariants = {
-  m_menu_pagelink: 'font-sans weight-500',
+  m_menu_pagelink: 'font-sans weight-700',
   m_m: '',
   m_lg: 'h-[8px] bg-[#D9D9D9]',
   sm: '',
@@ -35,8 +35,8 @@ export default function Label({ text1, text2, size }: ILabel) {
   return (
     <>
       <div className={styles.container({ size })}>
-        <span className={`${styles.label({ size })} text-[16px] text-gray-4 pr-[1px] `}>{text1}</span>
-        <span className={`${styles.label({ size })} text-[16px] tracking-wide`}>{text2}</span>
+        <span className={`${styles.label({ size })} text-[16px] text-black pr-[2px] `}>{text1}</span>
+        <span className={`${styles.label({ size })} text-[16px] text-black tracking-wide`}>{text2}</span>
       </div>
     </>
   )

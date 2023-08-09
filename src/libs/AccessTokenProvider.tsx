@@ -33,7 +33,7 @@ export default function AccessTokenProvider({ children }: Props) {
         method: 'POST',
         credentials: 'include',
         next: {
-          revalidate: 3600 * 6 - 1800,
+          revalidate: 3600 * 23,
         },
       })
 
@@ -52,11 +52,12 @@ export default function AccessTokenProvider({ children }: Props) {
 
   useEffect(() => {
     if(accessToken) {
+      console.log('여기0')
       return;
     }
     setLoading(true)
     fetchData()
-  }, [fetchData, accessToken])
+  }, [])
 
   return <AccessTokenContext.Provider value={{ accessToken, setAccessToken, loading }}>{children}</AccessTokenContext.Provider>
 }

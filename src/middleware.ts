@@ -17,7 +17,6 @@ const limitPageWithAuth = [
 
 export default async function middleware(request: NextRequest) {
   const response = NextResponse.next()
-
   if (
     !(limitPageWithAuth.some(path => request.nextUrl.pathname.startsWith(path))
     || limitPageWithoutAuth.some(path => request.nextUrl.pathname.startsWith(path)))

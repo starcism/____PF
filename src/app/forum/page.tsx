@@ -19,7 +19,7 @@ export default function Page() {
         user: {
           userid: 1,
           profile_image: 'https://avatars.githubusercontent.com/u/76847245?v=4',
-          nickname: 'SWITHy',
+          nickname: 'LVD',
         },
         likeCount: 100,
         commentCount: 1,

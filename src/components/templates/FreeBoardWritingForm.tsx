@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import ReactQuill from 'react-quill'
 import { useRouter } from 'next/navigation'
 import checkEnvironment from '@/libs/checkEnvironment'
+import { useAccessTokenState } from '@/libs/AccessTokenProvider'
 
 const QuillEditor = dynamic(() => import('@/libs/QuillEditor'), {
   ssr: false,
@@ -30,12 +31,12 @@ type TonSubmit = {
 
 export default function FreeBoardWritingForm({}) {
   const router = useRouter()
+  const { accessToken } = useAccessTokenState()
 
   const [value, setValue] = useState('')
   const [close, setClose] = useState(false)
   const titleRef = useRef<HTMLInputElement>(null)
   const editorRef = useRef<ReactQuill>(null)
-  const title = titleRef.current?.value.trim() ?? ''
 
   const handleFormClose: React.MouseEventHandler<HTMLButtonElement> = () => {
     setClose(true)
@@ -43,6 +44,7 @@ export default function FreeBoardWritingForm({}) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const editor = editorRef.current?.getEditor()
+    const title = titleRef.current?.value.trim() ?? ''
     const content = editor?.root.innerHTML.trim()
     if (close) {
       if (title || content) {
@@ -86,21 +88,42 @@ export default function FreeBoardWritingForm({}) {
     formData.append('content', content)
 
     try {
-      // 서버로 데이터를 전송합니다.
+      const verifyingRes = await fetch(checkEnvironment().concat('/api/auth/verification/authv1'), {
+        method: 'POST',
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+        next: {
+          revalidate: 3600 * 23,
+        },
+      })
+
+      if (!verifyingRes.ok) {
+        alert('권한이 만료되었어요')
+        // router.replace('/forum')
+        return
+      }
       const res = await fetch(checkEnvironment().concat('/api/board/forum'), {
         method: 'POST',
         body: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
       })
-
-      // 서버 응답을 확인하고 필요한 처리를 수행합니다.
+      console.log('res:', res)
       if (res.ok) {
-        alert('글이 성공적으로 저장되었습니다.')
-        router.replace('/forum')
+        const data = await res.json()
+        alert('글 작성 완료')
+        console.log('data:', data)
+        // router.replace('/forum')
+        return
       } else {
-        alert('글 저장 중 오류가 발생했습니다.')
+        alert('글 작성 실패1')
+        return
       }
     } catch (error) {
-      console.error('글 저장 중 오류가 발생했습니다.', error)
+      alert('글 작성 실패2')
+      return
     }
   }
 
