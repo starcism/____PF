@@ -64,61 +64,55 @@ export default function FreeBoardWritingForm({}) {
       }
     }
     if (!title) {
-      alert('제목을 입력해주세요.')
+      alert('제목을 입력해주세요')
       return
     }
 
     if (!content) {
-      alert('내용을 입력해주세요.')
+      alert('내용을 입력해주세요')
       return
     }
 
     if (title.length > 40) {
-      alert('제목은 최대 40글자까지 입력할 수 있습니다.')
+      alert('제목은 최대 40글자까지 입력할 수 있어요')
       return
     }
 
     if (content.length > 2000) {
-      alert('내용은 최대 2000글자까지 입력할 수 있습니다.')
+      alert('내용은 최대 2000글자까지 입력할 수 있어요')
       return
     }
 
-    const formData = new FormData()
-    formData.append('title', title)
-    formData.append('content', content)
+    // const formData = new FormData()
+    // formData.append('title', title)
+    // formData.append('content', content)
 
     try {
-      const verifyingRes = await fetch(checkEnvironment().concat('/api/auth/verification/authv1'), {
-        method: 'POST',
-        headers: {
-          Authorization: `${accessToken}`,
-        },
-        next: {
-          revalidate: 3600 * 23,
-        },
-      })
-
-      if (!verifyingRes.ok) {
-        alert('권한이 만료되었어요')
-        // router.replace('/forum')
-        return
-      }
       const res = await fetch(checkEnvironment().concat('/api/board/forum'), {
         method: 'POST',
-        body: formData,
+        body: JSON.stringify({ title, content }),
         headers: {
-          "Content-Type": "multipart/form-data",
+          Authorization: `${accessToken}`,
+          // "Content-Type": "multipart/form-data",
         }
       })
       console.log('res:', res)
-      if (res.ok) {
+      if (res.status === 401) {
+        alert('권한이 만료되었어요')
+        // router.replace('/forum')
+        return
+      } else if (res.status === 400) {
+        alert('제출 형식이 잘못되었어요')
+        return
+      }
+      else if (res.ok) {
         const data = await res.json()
         alert('글 작성 완료')
         console.log('data:', data)
         // router.replace('/forum')
         return
       } else {
-        alert('글 작성 실패1')
+        alert('글 작성에 실패했어요')
         return
       }
     } catch (error) {

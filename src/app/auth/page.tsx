@@ -13,9 +13,13 @@ export default function Page() {
   const handleSignIn = async (loginMethod: string) => {
     try {
       const response = await axios.get(checkEnvironment().concat('/api/auth/login'))
-      window.open(response.data.authUrl, '카카오계정으로 로그인', 'width=400px,height=600px,scrollbars=yes');
+      if (response.status === 200) {
+        window.open(response.data.authUrl, '카카오계정으로 로그인', 'width=400px,height=600px,scrollbars=yes')
+      } else {
+        return
+      }
     } catch (error) {
-      console.error(error)
+      return
     }
   }
 

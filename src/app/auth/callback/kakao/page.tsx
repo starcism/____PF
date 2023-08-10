@@ -13,17 +13,23 @@ export default function Page({ params, searchParams }: { params: { slug: string 
         const response = await axios.post(checkEnvironment().concat('/api/auth/login'), {
           code: searchParams.code,
         })
-        window.opener ? (window.opener.location.href = checkEnvironment().concat('/')) : router.replace('/')
-        window.close()
+        if (response.status === 200) {
+          window.opener ? (window.opener.location.href = checkEnvironment().concat('/')) : router.replace('/')
+          window.close()
+        } else {
+          window.opener ? (window.opener.location.href = checkEnvironment().concat('/auth')) : router.replace('/')
+          window.close()
+        }
       } catch (error) {
-        router.replace('/auth')
+        window.opener ? (window.opener.location.href = checkEnvironment().concat('/auth')) : router.replace('/')
+        window.close()
       }
     }
 
     if (searchParams.code) {
       tokenRequest()
     } else if (searchParams.error) {
-      window.opener ? (window.opener.location.href = checkEnvironment().concat('/')) : router.replace('/')
+      window.opener ? (window.opener.location.href = checkEnvironment().concat('/auth')) : router.replace('/')
       window.close()
     } else {
       router.replace('/')
