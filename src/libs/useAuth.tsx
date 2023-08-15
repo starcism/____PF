@@ -11,7 +11,6 @@ export default function useAuth() {
   const fetchData = useCallback(async () => {
     try {
       //액세스 토큰 먼저 검증
-
       const verifyingRes = await fetch(checkEnvironment().concat('/api/auth/verification/authv1'), {
         method: 'POST',
         headers: {

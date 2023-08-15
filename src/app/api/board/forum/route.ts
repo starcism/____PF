@@ -61,7 +61,7 @@ export async function POST(request: Request) {
         const verifyingData = await verifyingRes.json()
         const user_id = verifyingData.userId
 
-        const res = await fetch('https://xqxurjr5cl.execute-api.ap-northeast-2.amazonaws.com/20230810/lvdforum', {
+        const res = await fetch('https://xqxurjr5cl.execute-api.ap-northeast-2.amazonaws.com/20230810/lvd', {
           method: 'POST',
           body: JSON.stringify({ title, content: sanitizedContent, user_id, verified }),
         })
@@ -69,6 +69,8 @@ export async function POST(request: Request) {
         if (res.ok) {
           const data = await res.json()
           return NextResponse.json({ data })
+        } else {
+          return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
         }
       
       //검증 실패

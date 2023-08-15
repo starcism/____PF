@@ -10,6 +10,7 @@ export async function POST(request: Request) {
         headers: {
           Authorization: `${accessToken}`,
         },
+        body: JSON.stringify({ verified: '' })
       })
       if (res.ok) {
         return NextResponse.json({ message: '인증 완료', status: res.status })
