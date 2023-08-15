@@ -99,17 +99,15 @@ export default function FreeBoardWritingForm({}) {
       console.log('res:', res)
       if (res.status === 401) {
         alert('권한이 만료되었어요')
-        // router.replace('/forum')
+        router.replace('/forum')
         return
       } else if (res.status === 400) {
         alert('제출 형식이 잘못되었어요')
         return
-      }
-      else if (res.ok) {
+      } else if (res.ok) {
         const data = await res.json()
         alert('글 작성 완료')
-        console.log('data:', data)
-        // router.replace('/forum')
+        router.replace('/forum')
         return
       } else {
         alert('글 작성에 실패했어요')
