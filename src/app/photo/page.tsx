@@ -10,19 +10,16 @@ export default function Page() {
   const postData = {
     list: [
       {
-        boardid: 1,
+        board_id: 1,
         category: 'photo',
         images: ['/images/1.jpeg'],
         title: '#풍경',
         view: 430,
-        createdAt: '2023-06-01T19:43:18.576Z',
-        user: {
-          userid: 1,
-          profile_image: 'https://avatars.githubusercontent.com/u/76847245?v=4',
-          nickname: '관리자',
-        },
-        likeCount: 100,
-        commentCount: 1,
+        created_at: '2023-06-01T19:43:18.576Z',
+        user_id: 1,
+        nickname: '관리자',
+        liked: 100,
+        comment_count: 1,
       },
     ],
     listTotalPage: 1,
@@ -39,13 +36,13 @@ export default function Page() {
               <PhotoCard
                 key={index}
                 images={post.images}
-                href={`/photo/${post.boardid}`}
+                href={`/photo/${post.board_id}`}
                 title={post.title}
                 view={post.view}
-                createdAt={post.createdAt}
-                nickname={post.user.nickname}
-                likeCount={post.likeCount}
-                commentCount={post.commentCount}
+                createdAt={post.created_at}
+                nickname={post.nickname}
+                likeCount={post.liked}
+                commentCount={post.comment_count}
               />
             ))}
         </Suspense>

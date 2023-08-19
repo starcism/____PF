@@ -3,8 +3,8 @@ export default function formatDate(dateString: string, withTime: boolean = false
   const today = new Date()
 
   // 로컬 타임존을 한국 시간(KST)으로 설정
-  const offset = -9 * 60 // 한국은 UTC+9:00
-  const localDate = new Date(date.getTime() + offset * 60000)
+  // const offset = -9 * 60 // 한국은 UTC+9:00
+  const localDate = new Date(date.getTime())
   const hours = ('0' + localDate.getHours()).slice(-2) // HH 형식
   const minutes = ('0' + localDate.getMinutes()).slice(-2) // MM 형식
 

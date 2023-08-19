@@ -10,6 +10,7 @@ interface ILinkContainer {
   href: string
   size: ContainerVariant | LinkVariant
   onClick?: React.MouseEventHandler<HTMLAnchorElement>
+  prefetch?: boolean
 }
 
 const containerVariants = {
@@ -41,11 +42,11 @@ const styles = {
   link: ({ size }: { size: LinkVariant }) => [linkVariants[size], 'w-full h-full bg-white'].filter(Boolean).join(' '),
 }
 
-export default function LinkContainer({ children, href, size, onClick = undefined }: ILinkContainer) {
+export default function LinkContainer({ children, href, size, onClick = undefined, prefetch=true }: ILinkContainer) {
   return (
     <>
       <div className={styles.container({ size })}>
-        <Link href={href} className={styles.link({ size })} onClick={onClick}>
+        <Link href={href} className={styles.link({ size })} onClick={onClick} prefetch={prefetch}>
           {children}
         </Link>
       </div>

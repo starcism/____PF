@@ -7,6 +7,7 @@ import MainMenuProvider from '@/libs/MainMenuProvider'
 import { cls } from '@/libs/cls'
 import Head from 'next/head'
 import generateRandomSecretKey from '@/libs/generateSecretKey'
+import QuillProvider from '@/libs/QuillProvider'
 
 export const metadata = {
   title: {
@@ -31,14 +32,13 @@ const inter = Inter({
 })
 
 export default function RootLayout({ children }: RootLayoutProps) {
-
   return (
     <html lang="ko" className={cls(notoSansKR.className, inter.variable)}>
       <body className="overflow-y-auto scrollbar-hide">
         <AccessTokenProvider>
           <MainMenuProvider>
             <Header />
-            {children}
+            <QuillProvider>{children}</QuillProvider>
           </MainMenuProvider>
         </AccessTokenProvider>
       </body>

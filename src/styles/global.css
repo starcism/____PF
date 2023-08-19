@@ -126,16 +126,14 @@ em {
 }
 .ql-container {
   font-size: 15px !important;
-	min-height: 430px;
-  max-height: 430px;
   width: 100vw;
   max-width: 800px;
 	overflow: auto !important;
-  border-bottom: 0.5px solid #dddddd !important;
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
 }
+
 .ql-container * {
   word-wrap: break-word !important;
   white-space: normal !important;

@@ -11,13 +11,13 @@ const QuillEditor = dynamic(() => import('@/libs/QuillEditor'), {
   ssr: false,
   loading: () => (
     <>
-      <div className="h-[470px] w-[100vw] max-w-[800px]">
+      <div className="h-[292px] w-[100vw] max-w-[800px]">
         <div className="flex items-center h-[42px] w-[100vw] py-[12px] px-[9px] max-w-[800px] bg-white custom-border-b-1 custom-border-t-1">
           <div className="bg-gray-1 w-[98px] h-[19px] ml-[4px] rounded-[5px]"></div>
           <div className="bg-gray-2 w-[108px] h-[19px] ml-[24px] rounded-[5px]"></div>
           {/* <div className="bg-gray-2 w-[22px] h-[19px] ml-[24px] rounded-[5px]"></div> */}
         </div>
-        <div className="h-[430px] w-[100vw] max-w-[800px] py-[12px] px-[9px] custom-border-b-0">
+        <div className="h-[250px] w-[100vw] max-w-[800px] py-[12px] px-[9px] custom-border-b-0">
           <div className="bg-gray-1 w-[120px] h-[19px] ml-[4px] rounded-[5px]"></div>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default function FreeBoardWritingForm({}) {
         headers: {
           Authorization: `${accessToken}`,
           // "Content-Type": "multipart/form-data",
-        }
+        },
       })
       console.log('res:', res)
       if (res.status === 401) {
@@ -105,8 +105,11 @@ export default function FreeBoardWritingForm({}) {
         alert('제출 형식이 잘못되었어요')
         return
       } else if (res.ok) {
-        const data = await res.json()
-        alert('글 작성 완료')
+        // const revalidate = await fetch(checkEnvironment().concat('/api/revalidate'), {
+        //   method: 'GET',
+        // })
+        alert('글 작성을 완료했어요')
+        router.refresh()
         router.replace('/forum')
         return
       } else {

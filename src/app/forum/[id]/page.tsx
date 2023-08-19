@@ -1,14 +1,11 @@
-'use client'
-
-import Modal from '@/components/organisms/Modal'
-import BoardLayout from '@/components/templates/BoardLayout'
-import FreeBoard from '@/components/templates/FreeBoard'
-import { usePathname, useRouter } from 'next/navigation'
-import React from 'react'
+import FreeBoard from '@/components/organisms/FreeBoard'
+import PostLayout from '@/components/templates/PostLayout'
+import checkEnvironment from '@/libs/checkEnvironment'
+import React, { Suspense } from 'react'
 
 type TProps = {
   params: {
-    id: number | string
+    id: string
   }
 }
 
@@ -27,37 +24,50 @@ interface Props {
   createdAt: string
 }
 
-export default function Page(prop: TProps) {
-  const router = useRouter()
-  const props = {
-    user: {
-      userId: 0,
-      profileImage: '',
-      nickname: '유저',
-    },
-    title: '첫 글을 썼어요',
-    content: '안녕하세요\n반가워요\n저에요\n저',
-    commentCount: 0,
-    liked: false,
-    likeCount: 0,
-    view: 0,
-    createdAt: '2023-08-03T15:43:18.576Z',
+async function getPost(boardId: string) {
+  try {
+    const res = await fetch(checkEnvironment().concat(`/api/board/forum?boardId=${boardId}`), {
+      method: 'GET',
+      cache: 'no-store',
+    })
+    if (res.status === 200) {
+      const data = await res.json()
+      return { postData: data.post, deleted: false }
+    } else if (res.status === 204) {
+      return { postData: null, deleted: true }
+    } else {
+      return { postData: null, deleted: false, error: true }
+    }
+  } catch (error) {
+    console.log(error)
+    return { postData: null, deleted: false, error: true }
   }
+}
+
+export default async function Page(props: TProps) {
+  const boardId = props.params.id
+  const { postData, deleted } = await getPost(boardId)
+  const post = postData ? postData.post : null
 
   return (
     <>
-      <BoardLayout boardType="포럼" onClick={() => router.back()}>
-        <FreeBoard
-          user={props.user}
-          title={props.title}
-          content={props.content}
-          commentCount={props.commentCount}
-          liked={props.liked}
-          likeCount={props.likeCount}
-          view={props.view}
-          createdAt={props.createdAt}
-        />
-      </BoardLayout>
+      <Suspense fallback={<></>}>
+        <PostLayout boardType="포럼">
+          {post && (
+            <FreeBoard
+              boardId={boardId}
+              nickname={post.nickname}
+              title={post.title}
+              content={post.content}
+              commentCount={post.comment_count}
+              liked={post.liked}
+              view={post.view}
+              createdAt={post.created_at}
+              updatedAt={post.updated_at}
+            />
+          )}
+        </PostLayout>
+      </Suspense>
     </>
   )
 }

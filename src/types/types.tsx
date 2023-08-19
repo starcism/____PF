@@ -1,19 +1,19 @@
 interface IUser {
-  userid: number
+  user_id: number
   profile_image: string
   nickname: string
 }
 
 export interface IBoard {
   key?: number
-  boardid: number
-  category: string
+  board_id: number
   title: string
   view: number
-  createdAt: string
-  user: IUser
-  likeCount: number
-  commentCount: number
+  created_at: string
+  updated_at?: string
+  nickname: string
+  liked: number
+  comment_count: number
 }
 
 export interface IVideoBoard extends IBoard {
@@ -27,20 +27,17 @@ export interface IPhotoBoard extends IBoard {
 
 export interface IFreePost {
   list: IBoard[]
-  listTotalPage: number
-  listTotalCount: number
+  totalPage: number
 }
 
 export interface IVideoPost {
   list: IVideoBoard[]
-  listTotalPage: number
-  listTotalCount: number
+  totalPage: number
 }
 
 export interface IPhotoPost {
   list: IPhotoBoard[]
-  listTotalPage: number
-  listTotalCount: number
+  totalPage: number
 }
 
 export interface IPost {
@@ -51,6 +48,8 @@ export interface IPost {
   likeCount?: number
   commentCount?: number
   createdAt?: string
+  updatedAt?: string
+  nickname?: string
 }
 
 export interface ICard {

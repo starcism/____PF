@@ -76,5 +76,15 @@ export default function QuillEditor({ quillRef, value, onChange, placeholder }: 
     [],
   )
 
-  return <ReactQuill ref={quillRef} onChange={onChange} modules={modules} value={value} placeholder={placeholder} theme="snow" />
+  return (
+    <ReactQuill
+      style={{ minHeight: '250px', maxHeight: 'calc(100vh - 150px)' }}
+      ref={quillRef}
+      onChange={onChange}
+      modules={modules}
+      value={value}
+      placeholder={placeholder}
+      theme="snow"
+    />
+  )
 }

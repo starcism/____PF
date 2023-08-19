@@ -5,12 +5,13 @@ import Divider from '../atoms/Divider'
 import Link from 'next/link'
 import formatDate from '@/libs/getFormDate'
 import { IPost } from '@/types/types'
+import { useLayoutEffect, useState } from 'react'
 
 export default function PostItem({ boardid, title, view, likeCount, commentCount, createdAt }: IPost) {
   const createdDate = createdAt && formatDate(createdAt)
   return (
     <>
-      <Link href={`/forum/${boardid}`}>
+      <Link href={`/forum/${boardid}`} prefetch={false}>
         <div className="flex w-full h-[72px] justify-between items-center py-[12px] px-[11px] cursor-pointer">
           <div className="flex items-center">
             <UserIcon />

@@ -1,14 +1,12 @@
-import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
-import React, { Suspense } from 'react'
-import checkEnvironment from '@/libs/checkEnvironment'
 import { IBoard } from '@/types/types'
-import PostItem from '@/components/organisms/PostItem'
+import PostItem from '../organisms/PostItem'
+import checkEnvironment from '@/libs/checkEnvironment'
 
 async function getPost(pageIndex: number) {
   try {
     const res = await fetch(checkEnvironment().concat(`/api/board/forum?pageIndex=${pageIndex}`), {
       method: 'GET',
-      cache: 'no-store'
+      cache: 'no-store',
     })
     if (res.status === 200) {
       const { posts, totalPages } = await res.json()
@@ -24,16 +22,12 @@ async function getPost(pageIndex: number) {
   }
 }
 
-export default async function Page() {
+export default async function Forum() {
   const { posts, totalPages } = await getPost(1)
-  // console.log('posts:', posts)
-  // const nextPosts = await getPost(2)
-  // const nextData = nextPosts.posts
 
   return (
     <>
-      <div className="bg-white z-[1]">
-        <NoticeBoardHeader />
+      <div>
         {posts &&
           posts.map((post: IBoard, index: number) => (
             <PostItem
@@ -47,7 +41,6 @@ export default async function Page() {
               updatedAt={post.updated_at}
             />
           ))}
-        <Suspense fallback={<></>}></Suspense>
       </div>
     </>
   )
