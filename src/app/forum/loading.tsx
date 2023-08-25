@@ -1,3 +1,5 @@
+import LoadingSpinner from "@/components/atoms/LoadingSpinner";
+
 export default function Loading() {
-  return <div>로딩중</div>
+  return <LoadingSpinner />
 }

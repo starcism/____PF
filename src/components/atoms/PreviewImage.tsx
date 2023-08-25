@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { VoidExpression } from "typescript"
 
 interface Props {
   key: number

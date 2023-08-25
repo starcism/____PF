@@ -1,32 +1,28 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import FreeBoardWritingForm from '@/components/templates/FreeBoardWritingForm'
 import useAuth from '@/libs/useAuth'
 import { useRouter } from 'next/navigation'
 import UnauthorizedPage from '@/components/templates/UnauthorizedPage'
-import LoadingSpinner from '@/components/templates/LoadingSpinner'
+import LoadingSpinner from '@/components/atoms/LoadingSpinner'
 
 export default function Page() {
-  const { loading, error } = useAuth()
+  const { isLoading, error } = useAuth()
   const router = useRouter()
-
-  if (loading) {
+  if (isLoading) {
     return (
       <>
         <LoadingSpinner />
       </>
     )
   } else if (error) {
+    router.push('/auth')
+  } else {
     return (
       <>
-        <UnauthorizedPage />
+        <FreeBoardWritingForm />
       </>
     )
   }
-  return (
-    <>
-      <FreeBoardWritingForm />
-    </>
-  )
 }

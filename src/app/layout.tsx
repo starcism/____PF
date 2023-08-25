@@ -5,9 +5,8 @@ import Header from '@/components/organisms/Header'
 import AccessTokenProvider from '@/libs/AccessTokenProvider'
 import MainMenuProvider from '@/libs/MainMenuProvider'
 import { cls } from '@/libs/cls'
-import Head from 'next/head'
-import generateRandomSecretKey from '@/libs/generateSecretKey'
 import QuillProvider from '@/libs/QuillProvider'
+import Head from 'next/head'
 
 export const metadata = {
   title: {

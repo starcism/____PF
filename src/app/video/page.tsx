@@ -10,19 +10,16 @@ export default function Page() {
   const postData = {
     list: [
       {
-        boardid: 1,
+        board_id: 1,
         category: 'photo',
         youtubeUrl: '',
         title: '#풍경',
         view: 430,
-        createdAt: '2023-06-01T19:43:18.576Z',
-        user: {
-          userid: 1,
-          profile_image: 'https://avatars.githubusercontent.com/u/76847245?v=4',
-          nickname: 'SWITHy',
-        },
-        likeCount: 100,
-        commentCount: 1,
+        created_at: '2023-06-01T19:43:18.576Z',
+        nickname: '관리자',
+        user_id: '1',
+        liked: 100,
+        comment_count: 1,
       },
     ],
     listTotalPage: 1,
@@ -37,14 +34,14 @@ export default function Page() {
             postData.list.map((post: IVideoBoard, index: number) => (
               <VideoCard
                 key={index}
-                href={`/video/${post.boardid}`}
+                href={`/video/${post.board_id}`}
                 url={post.youtubeUrl}
                 title={post.title}
                 view={post.view}
-                createdAt={post.createdAt}
-                nickname={post.user.nickname}
-                likeCount={post.likeCount}
-                commentCount={post.commentCount}
+                createdAt={post.created_at}
+                nickname={post.nickname}
+                likeCount={post.liked}
+                commentCount={post.comment_count}
               />
             ))}
         </Suspense>

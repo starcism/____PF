@@ -1,5 +1,3 @@
-'use client'
-
 type LabelVariant = keyof typeof LabelVariants
 type ContainerVariant = keyof typeof containerVariants
 
@@ -35,7 +33,7 @@ export default function Label({ text1, text2, size }: ILabel) {
   return (
     <>
       <div className={styles.container({ size })}>
-        <span className={`${styles.label({ size })} text-[16px] text-black pr-[2px] `}>{text1}</span>
+        <span className={`${styles.label({ size })} text-[16px] text-black pr-[4px] `}>{text1}</span>
         <span className={`${styles.label({ size })} text-[16px] text-black tracking-wide`}>{text2}</span>
       </div>
     </>

@@ -1,31 +1,24 @@
 'use client'
 
+import LoadingSpinner from '@/components/atoms/LoadingSpinner'
 import PhotoBoardWritingForm from '@/components/templates/PhotoBoardWritingForm'
+import UnauthorizedPage from '@/components/templates/UnauthorizedPage'
 import useAuth from '@/libs/useAuth'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export default function Page() {
-  const { loading, error } = useAuth()
+  const { isLoading, error } = useAuth()
   const router = useRouter()
 
-  if (loading) {
+  if (isLoading) {
     return (
       <>
-        <div>로딩중</div>
+        <LoadingSpinner />
       </>
     )
   } else if (error) {
-    return (
-      <>
-        <div className="flex flex-col w-[100vw] h-[100vh] items-center justify-center">
-          <h1 className="text-[16px]">권한이 없습니다.</h1>
-          <button onClick={() => router.back()} className="flex items-center my-4 justify-center rounded-[10px] w-[80px] h-[28px] bg-lightgold">
-            <span className="text-[14px]">돌아가기</span>
-          </button>
-        </div>
-      </>
-    )
+    router.push('/auth')
   }
   return (
     <>

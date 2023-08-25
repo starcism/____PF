@@ -18,13 +18,11 @@ export default function MainMenu() {
     }
 
     document.addEventListener('mousedown', blockInteraction)
-    document.addEventListener('touchstart', blockInteraction)
-    document.addEventListener('wheel', blockInteraction, { passive: false })
+    // document.addEventListener('wheel', blockInteraction, { passive: false })
 
     return () => {
       document.removeEventListener('mousedown', blockInteraction)
-      document.removeEventListener('touchstart', blockInteraction)
-      document.removeEventListener('wheel', blockInteraction)
+      // document.removeEventListener('wheel', blockInteraction)
     }
   }, [])
 

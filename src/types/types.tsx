@@ -11,6 +11,7 @@ export interface IBoard {
   view: number
   created_at: string
   updated_at?: string
+  deleted_at?: string | null
   nickname: string
   liked: number
   comment_count: number
@@ -25,22 +26,27 @@ export interface IPhotoBoard extends IBoard {
   images?: string[]
 }
 
-export interface IFreePost {
-  list: IBoard[]
+export interface IFreeBoard {
+  posts: IBoard[]
+  totalPages: number
+}
+
+export interface IFreePost extends IBoard {
+  content: string
+  user_id: number
+}
+
+export interface IVideoBoard {
+  posts: IVideoBoard[]
   totalPage: number
 }
 
-export interface IVideoPost {
-  list: IVideoBoard[]
+export interface IPhotoBoard {
+  posts: IPhotoBoard[]
   totalPage: number
 }
 
-export interface IPhotoPost {
-  list: IPhotoBoard[]
-  totalPage: number
-}
-
-export interface IPost {
+export interface IPostItem {
   key: number
   boardid: number
   title?: string

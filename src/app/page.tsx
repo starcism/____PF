@@ -1,11 +1,22 @@
 'use client'
 
+import LoadingSpinner from '@/components/atoms/LoadingSpinner'
 import PhotoViewer from '@/components/molecules/PhotoViwer'
-import { useAccessTokenState } from '@/libs/AccessTokenProvider'
-import useAuth from '@/libs/useAuth'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
-
+  // const [data, setData] = useState()
+  
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/free?pageIndex=2`, {
+  //       method: 'GET',
+  //     })
+  //     const data = await res.json()
+  //     console.log(data)
+  //   }
+  //   fetchData()
+  // }, [])
   return (
     <>
       <div className="flex pl-4 pt-8">

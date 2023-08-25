@@ -38,6 +38,8 @@ module.exports = {
         pinkish: '#fe929f',
         lightpinkish: 'rgb(255, 201, 207)',
         lightgold: '#ece4e2',
+        semigold: '#d0c4c1',
+        darkgold: '#b5a5a1',
         lightpurple: '#e4e2ec',
         lightblue: '#56cdfa',
         viva: {

@@ -20,9 +20,7 @@ export default function LinkWithCloseMenu({ pageHref, pageName }: { pageHref: st
           size="m_menu_page"
           onClick={() => {
             handleMainMenu(false)
-            router.refresh()
           }}
-          prefetch={false}
         >
           <span className={`ml-4 text-[1rem] leading-[0.8] ${fontStyle}`}>{pageName}</span>
         </LinkContainer>

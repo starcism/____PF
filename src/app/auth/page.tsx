@@ -11,22 +11,26 @@ import checkEnvironment from '@/libs/checkEnvironment'
 export default function Page() {
   const router = useRouter()
   const handleSignIn = async (loginMethod: string) => {
-    try {
-      const response = await axios.get(checkEnvironment().concat('/api/auth/login'))
-      if (response.status === 200) {
-        window.open(response.data.authUrl, '카카오계정으로 로그인', 'width=400px,height=600px,scrollbars=yes')
-      } else {
+    if (loginMethod === 'kakao') {
+      try {
+        const response = await axios.get(checkEnvironment().concat('/api/auth/login'))
+        if (response.status === 200) {
+          window.open(response.data.authUrl, '카카오계정으로 로그인', 'width=400px,height=600px,scrollbars=yes')
+        } else {
+          return
+        }
+      } catch (error) {
         return
       }
-    } catch (error) {
-      return
-    }
+    } else if (loginMethod === 'naver') {
+      return alert('카카오 로그인을 이용해 주세요')
+    }   
   }
 
   return (
-    <div className="h-screen w-screen bg-[#F8E9ED]">
+    <div className="h-screen w-screen bg-lightgold">
       <div className="p-2">
-        <button onClick={() => router.back()}>
+        <button onClick={() => router.push('/')}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.2} stroke="currentColor" className="w-10 h-10">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>

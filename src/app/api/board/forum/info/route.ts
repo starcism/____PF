@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     }
 
     const url = userId
-      ? `https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/free/info?boardId=${boardId}&${userId}`
+      ? `https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/free/info?boardId=${boardId}&userId=${userId}`
       : `https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/free/info?boardId=${boardId}`
 
     const res = await fetch(url, {

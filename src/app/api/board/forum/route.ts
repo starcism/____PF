@@ -1,4 +1,3 @@
-import { revalidatePath } from 'next/cache'
 import { headers } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -20,19 +19,23 @@ function sanitizeHtml(inputHtml: string) {
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
+  // const path = request.nextUrl.pathname
   const pageIndex = searchParams.get('pageIndex')
   const boardId = searchParams.get('boardId')
 
   if (pageIndex) {
+
     try {
+      // revalidatePath(path)
+
       const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/free?pageIndex=${pageIndex}`, {
         method: 'GET',
-        cache: 'no-store'
+        cache: 'no-store',
       })
       if (res.status === 200) {
         const { posts, totalPages } = await res.json()
-        
-        return NextResponse.json({ posts, totalPages })
+
+        return NextResponse.json({ revalidated: true, now: Date.now(), posts, totalPages })
       } else if (res.status === 204) {
         return NextResponse.json({ message: '게시물 없음' }, { status: 204 })
       } else {
@@ -42,14 +45,19 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
   } else if (boardId) {
+
     try {
+      // const asPath = `${path}/${boardId}`
+      // revalidatePath(asPath)
+
       const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/free?boardId=${boardId}`, {
         method: 'GET',
-        cache: 'no-store'
+        cache: 'no-store',
       })
 
       if (res.status === 200) {
-        const post = await res.json()
+        const { post } = await res.json()
+
         return NextResponse.json({ post })
       } else if (res.status === 204) {
         return NextResponse.json({ message: '삭제된 게시물입니다.' }, { status: 204 })
@@ -63,10 +71,10 @@ export async function GET(request: NextRequest) {
 }
 export async function POST(request: Request) {
   let accessToken = headers().get('Authorization')
-  const { title, content } = await request.json()
+  const { title, content, contentValue } = await request.json()
 
   //유효성 검사
-  if (!title || !content || title.length < 1 || content.length < 1) {
+  if (!title || !contentValue || title.length < 1 || contentValue <= 1) {
     return NextResponse.json({ error: '제출 형식이 잘못되었어요' }, { status: 400 })
   }
 

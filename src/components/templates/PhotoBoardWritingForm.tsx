@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import '@/styles/checkbox.css'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import checkEnvironment from '@/libs/checkEnvironment'
@@ -21,16 +22,24 @@ export default function PhotoBoardWritingForm() {
   const [selectAll, setSelectAll] = useState(false)
   const nameTags = ['가을', '유진', '레이', '원영', '리즈', '이서']
   const postTags = []
+  const tagButtonUrl = ['/images/gaeul.jpeg', '/images/yujin.jpeg', '/images/rei.jpeg', '/images/wonyo.jpeg', '/images/liz.jpeg', '/images/leeseo.jpeg']
   const setTagByIndex = (index: number) => {
     if (selectAll) {
       setSelectAll(false)
     }
     const updatedSelectedIndex = [...selectedIndex]
     updatedSelectedIndex[index] = updatedSelectedIndex[index] ? 0 : 1
+    const isAllSelected = updatedSelectedIndex.every((element) => element === 1)
     setSelectedIndex(updatedSelectedIndex)
+
+    if (isAllSelected) {
+      return setSelectAll(true)
+    }
   }
   const handleSelectAll = (e: boolean) => {
     if (e === false) {
+      setSelectedIndex([1, 1, 1, 1, 1, 1])
+    } else {
       setSelectedIndex([0, 0, 0, 0, 0, 0])
     }
     setSelectAll(!e)
@@ -162,7 +171,7 @@ export default function PhotoBoardWritingForm() {
           </div>
         </div>
       </div>
-      <div className='w-screen mt-[54px] bg-white'>
+      <div className="w-screen mt-[54px] bg-white">
         <form onSubmit={submitPost}>
           <div className="flex w-[100vw] justify-center">
             <>
@@ -211,8 +220,14 @@ export default function PhotoBoardWritingForm() {
                 </div>
                 <div className="flex w-[100vw] max-w-[800px] py-[12px] custom-border-b-0">
                   <div className="flex min-h-[32px] ml-[13px] items-center space-x-2 flex-wrap">
-                    {selectAll && <Tag text="단체샷" />}
-                    {nameTags.map((tag, index) => selectedIndex[index] === 1 && <Tag key={index} text={nameTags[index]} />)}
+                    {nameTags.map(
+                      (tag, index) =>
+                        selectedIndex[index] === 1 && (
+                          <div key={index}>
+                            <Tag text={nameTags[index]} />
+                          </div>
+                        ),
+                    )}
                   </div>
                 </div>
               </div>
@@ -237,10 +252,10 @@ export default function PhotoBoardWritingForm() {
               </svg>
             </span>
           </div>
-          <div className="flex py-[12px] pl-[13px] pr-[36px] items-center w-[calc(100vw)] overflow-x-auto flex-nowrap scrollbar-hide space-x-[10px]">
+          <div className="flex py-[10px] pl-[13px] pr-[36px] items-center w-[calc(100vw)] overflow-x-auto flex-nowrap scrollbar-hide">
             {selectedIndex.map((_, i) => (
               <div key={i}>
-                <CircleImageButton src="/images/1.jpeg" onClick={() => setTagByIndex(i)} selected={selectedIndex[i] === 1 ? true : false} />
+                <CircleImageButton src={tagButtonUrl[i]} onClick={() => setTagByIndex(i)} selected={selectedIndex[i] === 1 ? true : false} />
               </div>
             ))}
             <div
@@ -248,16 +263,25 @@ export default function PhotoBoardWritingForm() {
               style={{ filter: 'blur(4px)' }}
             ></div>
           </div>
-          <div className="flex h-[24px] my-[6px] w-[80px] ml-[13px] items-center" onClick={() => handleSelectAll(selectAll)}>
+          <div className="flex h-[24px] my-[6px] ml-[13px] items-center">
+            <div className="checkbox-wrapper-4">
+              <input className="inp-cbx" id="selectAll" type="checkbox" checked={selectAll} onChange={() => handleSelectAll(selectAll)} />
+              <label className="cbx" htmlFor="selectAll">
+                <span>
+                  <svg width="12px" height="10px">
+                    <use xlinkHref="#check-4"></use>
+                  </svg>
+                </span>
+              </label>
+              <svg className="inline-svg">
+                <symbol id="check-4" viewBox="0 0 12 10">
+                  <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                </symbol>
+              </svg>
+            </div>
             <span
-              className={`material-symbols-outlined pt-[3px] cursor-pointer select-none ${
-                selectAll ? 'text-turquoise' : 'text-gray-1'
-              } transform-gpu transition-colors duration-100`}
-            >
-              {selectAll ? 'check_box' : 'check_box_outline_blank'}
-            </span>
-            <span
-              className={`text-[14px] cursor-pointer select-none ${
+              onClick={() => handleSelectAll(selectAll)}
+              className={`text-[14px] ml-1 mb-[2.5px] cursor-pointer select-none ${
                 selectAll ? 'weight-500 text-turquoise' : 'weight-400 text-gray-3'
               } transform-gpu transition-colors duration-100`}
             >
@@ -267,7 +291,7 @@ export default function PhotoBoardWritingForm() {
           <div className="ml-[17px] h-[36px] mt-[17px] flex items-center">
             <span className="text-[13px] font-700 text-gray-4 select-none">공식사진</span>
           </div>
-          <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2">
+          <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2 overflow-x-auto flex-nowrap scrollbar-hide">
             <OptionalButton onClick={() => {}} width="60px" text="트위터" selected={false} />
             <OptionalButton onClick={() => {}} width="60px" text="인스타" selected={false} />
             <OptionalButton onClick={() => {}} width="75px" text="공식카페" selected={false} />
@@ -276,7 +300,7 @@ export default function PhotoBoardWritingForm() {
           <div className="ml-[17px] h-[36px] mt-[13px] flex items-center">
             <span className="text-[13px] font-700 text-gray-4 select-none">팬사진</span>
           </div>
-          <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2">
+          <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2 overflow-x-auto flex-nowrap scrollbar-hide">
             <OptionalButton onClick={() => {}} width="53px" text="직찍" selected={false} />
             <OptionalButton onClick={() => {}} width="53px" text="타팬" selected={false} />
             <OptionalButton onClick={() => {}} width="53px" text="기타" selected={false} />

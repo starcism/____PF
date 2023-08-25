@@ -55,7 +55,7 @@ export default function UserComment({ value, setValue }: Props) {
   return (
     <>
       <div className="flex w-full py-[8px] pr-[8px]">
-        <div className="h-full w-[40px] pt-[6px] mr-[8px] flex">
+        <div className="h-full w-[40px] pt-[4px] mr-[8px] flex">
           <UserIcon />
         </div>
         <div className="flex border border-solid border-gray-3 rounded-[20px] w-[100vw]">

@@ -1,5 +1,3 @@
-'use client'
-
 type DividerVariant = keyof typeof DividerVariants
 
 const DividerVariants = {

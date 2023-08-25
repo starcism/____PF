@@ -5,8 +5,8 @@ import { useAccessTokenState } from './AccessTokenProvider'
 import checkEnvironment from './checkEnvironment'
 
 export default function useAuth() {
-  const { accessToken, setAccessToken } = useAccessTokenState()
-  const [loading, setLoading] = useState<boolean>(true)
+  const { accessToken, setAccessToken, loading } = useAccessTokenState()
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<boolean>(false)
   const fetchData = useCallback(async () => {
     try {
@@ -35,8 +35,8 @@ export default function useAuth() {
         if (tokenRefreshRes.ok) {
           const newAccessToken = tokenRefreshRes.headers.get('Authorization')
           setAccessToken(newAccessToken)
-        
-        //검증 및 재발급 실패
+
+          //검증 및 재발급 실패
         } else {
           setAccessToken(null)
           setError(true)
@@ -48,19 +48,21 @@ export default function useAuth() {
         setError(true)
       }
     } catch (err) {
-      console.log(err)
       setAccessToken(null)
       setError(true)
     } finally {
-      setLoading(false)
+      setIsLoading(false)
     }
   }, [accessToken, setAccessToken])
 
   useEffect(() => {
-    if (accessToken) {
+    if (!loading && accessToken) {
       fetchData()
+    } else if (!loading && !accessToken) {
+      setIsLoading(false)
+      setError(true)
     }
-  }, [accessToken, fetchData])
+  }, [loading, fetchData])
 
-  return { loading, error }
+  return { isLoading, error }
 }

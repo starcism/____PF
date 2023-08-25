@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 
 interface CIProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>
@@ -18,15 +17,13 @@ interface OBProps {
 
 export function CircleImageButton({ onClick, src, selected }: CIProps) {
   return (
-    <button type="button" onClick={onClick}>
-      <div
-        className={`min-w-[52px] max-w-[56px] w-[15vw] h-full rounded-full aspect-square ${
-          selected ? 'ring-[3px] ring-lightblue' : 'ring-[1.5px] ring-white'
-        } transform-gpu transition-all duration-150`}
-      >
-        <Image src={src} fill priority={true} alt="tag" className="w-full h-full rounded-full select-none" />
-      </div>
-    </button>
+    <div className="h-[68px] w-[68px] flex justify-center items-center">
+      <button type="button" onClick={onClick}>
+        <div className={`w-[54px] h-[54px] rounded-[100%] aspect-square ${selected ? 'tagButton' : 'unTagButton'} transform-gpu transition-all duration-100`}>
+          <Image draggable={false} src={src} width={54} height={54} priority={true} alt="tag" className="w-full h-full rounded-full select-none" />
+        </div>
+      </button>
+    </div>
   )
 }
 export function OptionalButton({ onClick, width, text, selected }: OBProps) {
@@ -36,20 +33,6 @@ export function OptionalButton({ onClick, width, text, selected }: OBProps) {
     >
       <span className="text-gray-2 text-[12px]">{text}</span>
     </button>
-  )
-}
-
-export function ButtonToBackPage() {
-  const router = useRouter()
-  
-  return (
-    <>
-      <button className="justify-center items-center" onClick={() => router.back()}>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-        </svg>
-      </button>
-    </>
   )
 }
 

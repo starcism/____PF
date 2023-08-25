@@ -1,19 +1,11 @@
 'use client'
 
+import LoadingSpinner from '@/components/atoms/LoadingSpinner'
 import dynamic from 'next/dynamic'
 import React, { createContext, useState } from 'react'
 
 const QuillReader = dynamic(() => import('@/libs/QuillReader'), {
-  ssr: false,
-  loading: () => (
-    <>
-      <div className="h-[150px] w-[100vw] max-w-[800px]">
-        <div className="h-[20px] w-[40px] bg-gray-3" />
-        <div className="h-[20px] w-[40px] bg-gray-3" />
-        <div className="h-[20px] w-[40px] bg-gray-3" />
-      </div>
-    </>
-  ),
+  loading: () => <LoadingSpinner isPost={true} />,
 })
 
 interface Context {

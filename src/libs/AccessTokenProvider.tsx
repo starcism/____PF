@@ -25,7 +25,7 @@ export function useAccessTokenState() {
 
 export default function AccessTokenProvider({ children }: Props) {
   const [accessToken, setAccessToken] = useState<string | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
 
   const fetchData = useCallback(async () => {
     try {
@@ -51,11 +51,10 @@ export default function AccessTokenProvider({ children }: Props) {
   }, [])
 
   useEffect(() => {
-    if(accessToken) {
-      console.log('여기0')
-      return;
+    if (accessToken) {
+      setLoading(false)
+      return
     }
-    setLoading(true)
     fetchData()
   }, [])
 
