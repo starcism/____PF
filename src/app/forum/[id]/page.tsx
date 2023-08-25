@@ -1,73 +1,51 @@
-import FreeBoard from '@/components/organisms/FreeBoard'
-import PostLayout from '@/components/templates/PostLayout'
-import checkEnvironment from '@/libs/checkEnvironment'
-import React, { Suspense } from 'react'
+'use client'
 
-type TProps = {
+import LoadingSpinner from '@/components/atoms/LoadingSpinner'
+import CommentArea from '@/components/organisms/CommentArea'
+import FreeBoard from '@/components/templates/FreeBoard'
+import LoadingCommentArea from '@/components/templates/LoadingCommentArea'
+import PostLayout from '@/components/templates/PostLayout'
+import useAuth from '@/libs/useAuth'
+import usePost from '@/libs/usePost'
+import React from 'react'
+
+type Props = {
   params: {
     id: string
   }
 }
 
-interface Props {
-  user: {
-    userId: number
-    profileImage?: string
-    nickname: string
-  }
-
-  title: string
-  content: string
-  commentCount: number
-  liked: number
-  view: number
-  createdAt: string
-}
-
-async function getPost(boardId: string) {
-  try {
-    const res = await fetch(checkEnvironment().concat(`/api/board/forum?boardId=${boardId}`), {
-      method: 'GET',
-      cache: 'no-store',
-    })
-    if (res.status === 200) {
-      const data = await res.json()
-      return { postData: data.post, deleted: false }
-    } else if (res.status === 204) {
-      return { postData: null, deleted: true }
-    } else {
-      return { postData: null, deleted: false, error: true }
-    }
-  } catch (error) {
-    console.log(error)
-    return { postData: null, deleted: false, error: true }
-  }
-}
-
-export default async function Page(props: TProps) {
+export default function Page(props: Props) {
   const boardId = props.params.id
-  const { postData, deleted } = await getPost(boardId)
-  const post = postData ? postData.post : null
+  const { post } = usePost(boardId)
 
+  if (!post) {
+    return (
+      <PostLayout boardType="포럼">
+        <LoadingSpinner isBeforePost={true} />
+      </PostLayout>
+    )
+  }
   return (
     <>
-      <Suspense fallback={<></>}>
-        <PostLayout boardType="포럼">
-          {post && (
-            <FreeBoard
-              boardId={boardId}
-              nickname={post.nickname}
-              title={post.title}
-              content={post.content}
-              commentCount={post.comment_count}
-              liked={post.liked}
-              view={post.view}
-              createdAt={post.created_at}
-              updatedAt={post.updated_at}
-            />
-          )}
-        </PostLayout>
-      </Suspense>
+      <PostLayout boardType="포럼">
+        <FreeBoard
+          nickname={post.nickname}
+          title={post.title}
+          content={post.content}
+          view={post.view}
+          createdAt={post.created_at}
+          updatedAt={post.updated_at}
+        />
+        {loading ? (
+          <>
+            <LoadingCommentArea liked={post.liked} commentCount={post.comment_count} />
+            <LoadingSpinner isBeforePost={true} />
+          </>
+        ) : (
+          <CommentArea boardId={boardId} commentCount={post.comment_count} liked={post.liked} />
+        )}
+      </PostLayout>
     </>
   )
 }
