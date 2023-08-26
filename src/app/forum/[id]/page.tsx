@@ -1,11 +1,13 @@
 'use client'
 
 import LoadingSpinner from '@/components/atoms/LoadingSpinner'
-import CommentArea from '@/components/organisms/CommentArea'
+import CommentInput from '@/components/organisms/CommentInput'
+import Comments from '@/components/organisms/Comments'
+import PostInfo from '@/components/organisms/PostInfo'
 import FreeBoard from '@/components/templates/FreeBoard'
-import LoadingCommentArea from '@/components/templates/LoadingCommentArea'
+import LoadingCommentInput from '@/components/templates/LoadingCommentInput'
 import PostLayout from '@/components/templates/PostLayout'
-import useAuth from '@/libs/useAuth'
+import useComment from '@/libs/useComment'
 import usePost from '@/libs/usePost'
 import React from 'react'
 
@@ -18,6 +20,7 @@ type Props = {
 export default function Page(props: Props) {
   const boardId = props.params.id
   const { post } = usePost(boardId)
+  const { userInfoLoading, commentAreaLoading, loggedIn, like, commentList, accessToken } = useComment(boardId)
 
   if (!post) {
     return (
@@ -37,14 +40,13 @@ export default function Page(props: Props) {
           createdAt={post.created_at}
           updatedAt={post.updated_at}
         />
-        {loading ? (
-          <>
-            <LoadingCommentArea liked={post.liked} commentCount={post.comment_count} />
-            <LoadingSpinner isBeforePost={true} />
-          </>
+        {commentAreaLoading ? (
+          <PostInfo commentCount={post.comment_count} liked={post.liked} />
         ) : (
-          <CommentArea boardId={boardId} commentCount={post.comment_count} liked={post.liked} />
+          <PostInfo commentCount={post.comment_count} liked={post.liked} userLike={like} />
         )}
+        {userInfoLoading ? <LoadingCommentInput /> : <CommentInput accessToken={accessToken} loggedIn={loggedIn} />}
+        {commentAreaLoading && !post ? <></> : commentAreaLoading && post ? <LoadingSpinner isBeforePost={true} /> : <Comments commentList={commentList} />}
       </PostLayout>
     </>
   )

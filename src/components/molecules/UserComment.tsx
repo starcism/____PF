@@ -45,12 +45,12 @@ export default function UserComment({ value, setValue }: Props) {
       e.currentTarget.setSelectionRange(selectionStart + 4, selectionStart + 4) // 커서 위치 조정
     }
     //줄바꿈 20개이상 제한
-    if (e.key === 'Enter') {
-      const lines = e.currentTarget.value.split('\n')
-      if (lines.length >= 20) {
-        e.preventDefault()
-      }
-    }
+    // if (e.key === 'Enter') {
+    //   const lines = e.currentTarget.value.split('\n')
+    //   if (lines.length >= 20) {
+    //     e.preventDefault()
+    //   }
+    // }
   }
   return (
     <>

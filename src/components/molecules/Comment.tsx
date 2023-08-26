@@ -4,7 +4,8 @@ import formatDate from '@/libs/getFormDate'
 import UserIcon from '../atoms/UserIcon'
 
 interface Props {
-  comment: { created_at: string; reply: string; nickname: string; user_id: string; icon: string }
+  key: number | string
+  comment: { created_at: string; reply: string; nickname?: string; user_id: number; icon?: string }
 }
 
 export default function Comment({ comment }: Props) {

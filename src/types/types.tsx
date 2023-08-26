@@ -74,3 +74,13 @@ export interface ICard {
 export interface IPhotoCard extends ICard {
   images?: string[]
 }
+
+export interface Comments {
+  board_id: number;
+  comment_id: string;
+  created_at: string;
+  deleted_at: string | null;
+  reply: string;
+  updated_at: string;
+  user_id: number;
+}
