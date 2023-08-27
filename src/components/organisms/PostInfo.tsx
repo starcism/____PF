@@ -15,7 +15,7 @@ export default function PostInfo({ commentCount, liked, userLike = false }: Prop
 
   return (
     <>
-      <div className="px-[13px]">
+      <div className="px-[13px] w-[calc(100vw-26px)]">
         <div className="flex items-center h-[40px]">
           <div className="flex items-center">
             <button className="flex items-center justify-center rounded-[50%] w-[24px] h-[24px] ml-[8px] text-pinkish" onClick={handleLikeClick}>

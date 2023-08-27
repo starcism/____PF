@@ -56,9 +56,9 @@ export default function FreeBoard({ nickname, title, content, view, createdAt, u
               </div>
               <div className="flex items-center">
                 <div className="ml-[12px] flex items-center">
-                  <span className="text-[14px] font-600 text-gray-4">{nickname}</span>
+                  <span className="text-[14px] font-500 text-gray-4">{nickname}</span>
                   <span className="text-[11px] px-[6px] text-gray-3">&bull;</span>
-                  <span className="text-[14px] text-gray-4 font-500">{createdDate}</span>
+                  <span className="text-[14px] text-gray-3 font-400">{createdDate}</span>
                 </div>
               </div>
             </div>

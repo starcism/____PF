@@ -10,14 +10,14 @@ import Image from 'next/image'
 import swithy_logo from '@/utils/SWITHy_logo.png'
 import getPathname from '@/libs/getPathname'
 
-type TPathname = {
+interface Props {
   pathname: string | null
 }
 type TBoardTypeObj = {
   [key: string]: string
 }
 
-function HeaderComponent({ pathname }: TPathname) {
+function HeaderComponent({ pathname }: Props) {
   const { mainMenu, handleMainMenu } = useContext(MainMenuContext)
   const [isSearchBarOpen, setSearchBarOpen] = useState(false)
   const handleSearchBarOpen = (e: boolean) => {
@@ -67,7 +67,7 @@ function HeaderComponent({ pathname }: TPathname) {
   )
 }
 
-function SubHeader({ pathname }: TPathname) {
+function SubHeader({ pathname }: Props) {
   const boardTypeObj: TBoardTypeObj = {
     '/notice': '공지사항',
     '/forum': '포럼',

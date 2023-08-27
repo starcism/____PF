@@ -76,11 +76,14 @@ export interface IPhotoCard extends ICard {
 }
 
 export interface Comments {
-  board_id: number;
-  comment_id: string;
-  created_at: string;
-  deleted_at: string | null;
-  reply: string;
-  updated_at: string;
-  user_id: number;
+  board_id: number
+  comment_id: string
+  created_at: string
+  deleted_at: string | null
+  reply: string
+  updated_at: string
+  user_id?: number
+  is_author?: boolean | undefined
+  icon: string
+  nickname: string
 }

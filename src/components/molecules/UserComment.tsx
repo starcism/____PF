@@ -58,7 +58,7 @@ export default function UserComment({ value, setValue }: Props) {
         <div className="h-full w-[40px] pt-[4px] mr-[8px] flex">
           <UserIcon />
         </div>
-        <div className="flex border border-solid border-gray-3 rounded-[20px] w-[100vw]">
+        <div className="flex border border-solid border-gray-3 rounded-[20px] w-full">
           <textarea
             className={`w-full max-h-[150px] rounded-[20px] leading-[22px] max-w-[800px] pl-[15px] py-[10px] outline-none resize-none text-[14px] overflow-y-auto scrollbar-hide font-400 placeholder:text-gray-3`}
             style={{ height: '44px' }}
