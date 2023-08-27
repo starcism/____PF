@@ -1,7 +1,5 @@
 'use client'
 
-import Divider from '../atoms/Divider'
-
 export default function NoticeBoardHeader() {
   return (
     <>
