@@ -47,12 +47,12 @@ export async function GET(request: NextRequest) {
   } else if (boardId) {
 
     try {
-      // const asPath = `${path}/${boardId}`
-      // revalidatePath(asPath)
 
       const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/free?boardId=${boardId}`, {
         method: 'GET',
-        cache: 'no-store',
+        next: {
+          revalidate: 10,
+        }
       })
 
       if (res.status === 200) {
