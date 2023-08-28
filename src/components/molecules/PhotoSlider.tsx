@@ -3,101 +3,191 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
-interface SliderProps {
-  images?: string[]
-}
+const imagePaths = [
+  '/images/yujin_login.jpeg',
+  '/images/gaeul_login_.jpeg',
+  '/images/rei_login.jpeg',
+  '/images/wonyoung_login.jpeg',
+  '/images/liz_login_.jpeg',
+  '/images/leeseo_login.jpeg',
+  '/images/yujin_login.jpeg',
+  '/images/gaeul_login_.jpeg',
+  '/images/rei_login.jpeg',
+  '/images/wonyoung_login.jpeg',
+  '/images/liz_login_.jpeg',
+  '/images/leeseo_login.jpeg',
+  '/images/yujin_login.jpeg',
+  '/images/gaeul_login_.jpeg',
+  '/images/rei_login.jpeg',
+  '/images/wonyoung_login.jpeg',
+  '/images/liz_login_.jpeg',
+  '/images/leeseo_login.jpeg',
+  '/images/yujin_login.jpeg',
+  '/images/gaeul_login_.jpeg',
+  '/images/rei_login.jpeg',
+  '/images/wonyoung_login.jpeg',
+  '/images/liz_login_.jpeg',
+  '/images/leeseo_login.jpeg',
+  '/images/yujin_login.jpeg',
+  '/images/gaeul_login_.jpeg',
+  '/images/rei_login.jpeg',
+  '/images/wonyoung_login.jpeg',
+  '/images/liz_login_.jpeg',
+  '/images/leeseo_login.jpeg',
+  '/images/yujin_login.jpeg',
+  '/images/gaeul_login_.jpeg',
+  '/images/rei_login.jpeg',
+  '/images/wonyoung_login.jpeg',
+  '/images/liz_login_.jpeg',
+  '/images/leeseo_login.jpeg',
+  '/images/yujin_login.jpeg',
+  '/images/gaeul_login_.jpeg',
+  '/images/rei_login.jpeg',
+  '/images/wonyoung_login.jpeg',
+  '/images/liz_login_.jpeg',
+  '/images/leeseo_login.jpeg',
+  '/images/yujin_login.jpeg',
+  '/images/gaeul_login_.jpeg',
+  '/images/rei_login.jpeg',
+  '/images/wonyoung_login.jpeg',
+  '/images/liz_login_.jpeg',
+  '/images/leeseo_login.jpeg',
+  '/images/yujin_login.jpeg',
+  '/images/gaeul_login_.jpeg',
+  '/images/rei_login.jpeg',
+  '/images/wonyoung_login.jpeg',
+  '/images/liz_login_.jpeg',
+  '/images/leeseo_login.jpeg',
+  '/images/yujin_login.jpeg',
+  '/images/gaeul_login_.jpeg',
+  '/images/rei_login.jpeg',
+  '/images/wonyoung_login.jpeg',
+  '/images/liz_login_.jpeg',
+  '/images/leeseo_login.jpeg',
+]
 
-//그렇다면 일반적인 서비스에서 허용하는 확장자를 포함해서 유효성 검사를 하고, 썸네일용 이미지는 width가 468이, height는 width에 맞춰서 조정되도록 
+const alts = [
+  'yujin',
+  'gaeul',
+  'rei',
+  'wonyo',
+  'liz',
+  'leeseo',
+  'yujin',
+  'gaeul',
+  'rei',
+  'wonyo',
+  'liz',
+  'leeseo',
+  'yujin',
+  'gaeul',
+  'rei',
+  'wonyo',
+  'liz',
+  'leeseo',
+  'yujin',
+  'gaeul',
+  'rei',
+  'wonyo',
+  'liz',
+  'leeseo',
+  'yujin',
+  'gaeul',
+  'rei',
+  'wonyo',
+  'liz',
+  'leeseo',
+  'yujin',
+  'gaeul',
+  'rei',
+  'wonyo',
+  'liz',
+  'leeseo',
+  'yujin',
+  'gaeul',
+  'rei',
+  'wonyo',
+  'liz',
+  'leeseo',
+  'yujin',
+  'gaeul',
+  'rei',
+  'wonyo',
+  'liz',
+  'leeseo',
+  'yujin',
+  'gaeul',
+  'rei',
+  'wonyo',
+  'liz',
+  'leeseo',
+  'yujin',
+  'gaeul',
+  'rei',
+  'wonyo',
+  'liz',
+  'leeseo',
+]
 
-export default function PhotoSlider({ images = [] }: SliderProps) {
+export default function PhotoSlider() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [width, setWidth] = useState(440)
   const [height, setHeight] = useState(585)
+  const breakpointWidth = 574
+
+  const isWideViewport = width >= breakpointWidth
 
   const handleResize = () => {
     const screenWidth = window.innerWidth
-    if (screenWidth <= 472) {
-      setWidth(screenWidth - 14)
-      setHeight((screenWidth / 468) * 585)
-    } else {
-      setWidth(468)
-      setHeight(585)
-    }
+    setWidth(screenWidth)
+    setHeight((screenWidth * 1500) / 1000) // 이미지 비율 유지
   }
 
   useEffect(() => {
     handleResize()
     window.addEventListener('resize', handleResize)
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imagePaths.length)
+    }, 3000)
     return () => {
       window.removeEventListener('resize', handleResize)
+      clearInterval(interval)
     }
   }, [])
 
-  const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
-  }
-
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1))
-  }
-
-  const handleSwipe: React.TouchEventHandler<HTMLDivElement> = (e) => {
-    const touchStartX = e.touches[0].clientX
-
-    const handleTouchMove = (e: TouchEvent) => {
-      const touchCurrentX = e.touches[0].clientX
-      const deltaX = touchCurrentX - touchStartX
-
-      if (deltaX > 50) {
-        handlePrevImage()
-      } else if (deltaX < -50) {
-        handleNextImage()
-      }
-    }
-
-    const handleTouchEnd = () => {
-      document.removeEventListener('touchmove', handleTouchMove)
-      document.removeEventListener('touchend', handleTouchEnd)
-    }
-
-    document.addEventListener('touchmove', handleTouchMove)
-    document.addEventListener('touchend', handleTouchEnd)
-  }
-
   return (
-    <div className="relative z-0" onTouchStart={handleSwipe}>
-      <Image alt="이미지" src={images[currentImageIndex]} width={width} height={height} />
-      <div className="absolute top-1/2 left-0 transform -translate-y-1/2 flex items-center">
-        <button
-          className="p-2 text-white bg-nav-button rounded-full transition duration-150 ease-in-out hover:scale-125 disabled:opacity-0 disabled:select-none"
-          onClick={handlePrevImage}
-          disabled={currentImageIndex === 0}
+    <div className="relative overflow-hidden h-[100vh]">
+      {isWideViewport ? (
+        <div>하하</div>
+      ) : (
+        <div
+          className="absolute top-0 left-0 transition-transform duration-500"
+          style={{
+            width: `${width * imagePaths.length}px`,
+            transform: `translateX(-${currentImageIndex * width}px)`,
+          }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-      </div>
-      <div className="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center">
-        <button
-          className="p-2 text-white bg-nav-button rounded-full transition duration-150 ease-in-out hover:scale-125 disabled:opacity-0 disabled:select-none"
-          onClick={handleNextImage}
-          disabled={currentImageIndex === images.length - 1}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-[6px]">
-        {images.map((_, index: number) => (
-          <button
-            key={index}
-            className={`w-[7px] h-[7px] rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-dot-nav'}`}
-            onClick={() => setCurrentImageIndex(index)}
-          />
-        ))}
-      </div>
+          {imagePaths.map((imagePath, index) => (
+            <div key={index} className="relative float-left h-[100vh] w-[100vw]">
+              <Image
+                alt={alts[index]}
+                src={imagePath}
+                fill
+                className="-z-10"
+                style={{
+                  objectPosition: 'center',
+                  position: 'absolute',
+                  objectFit: 'cover',
+                  width: '100%',
+                  height: '100%',
+                  // marginLeft: 'auto', // 이미지를 수평 중앙에 위치
+                  // marginRight: 'auto', // 이미지를 수평 중앙에 위치
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

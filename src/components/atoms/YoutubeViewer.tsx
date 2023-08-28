@@ -5,14 +5,20 @@ import React, { useEffect, useState } from 'react'
 interface IYoutubeViewer {
   url?: string
   hasBorderRadius?: boolean
+  full?: boolean
 }
 
-export default function YoutubeViewer({ url, hasBorderRadius = false }: IYoutubeViewer) {
+export default function YoutubeViewer({ url, full = false, hasBorderRadius = false }: IYoutubeViewer) {
   const [width, setWidth] = useState(440)
   const [height, setHeight] = useState(247.5)
 
   const handleResize = () => {
     const screenWidth = window.innerWidth
+    if (full) {
+      setWidth(screenWidth)
+      setHeight((screenWidth / 440) * 247.5)
+      return
+    }
     if (screenWidth <= 454) {
       setWidth(screenWidth - 14)
       setHeight((screenWidth / 440) * 247.5)
@@ -38,7 +44,7 @@ export default function YoutubeViewer({ url, hasBorderRadius = false }: IYoutube
     <div className="flex justify-center items-center">
       {videoId ? (
         <iframe
-          className={`rounded-lg ${hasBorderRadius && 'border-radius-18px'}`}
+          className={`${hasBorderRadius && 'border-radius-18px'}`}
           width={width}
           height={height}
           src={`https://www.youtube.com/embed/${videoId}?fs=0&modestbranding=1`}

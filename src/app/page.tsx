@@ -1,12 +1,14 @@
 'use client'
 
 import LoadingSpinner from '@/components/atoms/LoadingSpinner'
+import YoutubeViewer from '@/components/atoms/YoutubeViewer'
 import PhotoViewer from '@/components/molecules/PhotoViwer'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
   // const [data, setData] = useState()
-  
+
   // useEffect(() => {
   //   const fetchData = async () => {
   //     const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/free?pageIndex=2`, {
@@ -31,10 +33,7 @@ export default function Home() {
       </div>
       {/* <button onClick={() => console.log(accessToken)}>버튼</button> */}
       <div className="mt-[52px] h-[100px] w-full bg-white flex items-center font-sans text-[14px] font-500 justify-center">Main</div>
-      <PhotoViewer />
-      <div className="flex items-center justify-center h-[300px] w-full bg-gray-1">
-        {/* <YoutubeViewer url={'https://youtu.be/SxHmoifp0oQ'} hasBorderRadius={true} /> */}
-      </div>
+      <YoutubeViewer url={'https://youtu.be/6ZUIwj3FgUY?si=YkHxng_JUhCpJcUI'} full={true} />
     </>
   )
 }

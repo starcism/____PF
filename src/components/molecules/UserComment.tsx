@@ -4,9 +4,12 @@ import UserIcon from '../atoms/UserIcon'
 interface Props {
   value: string
   setValue: React.Dispatch<SetStateAction<string>>
+  onSubmit?: (e: React.FormEvent) => void
+  loggedIn: boolean
+  getLogIn?: () => void
 }
 
-export default function UserComment({ value, setValue }: Props) {
+export default function UserComment({ value, setValue, onSubmit = () => {}, loggedIn, getLogIn = () => {} }: Props) {
   const handleTextareaValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value)
   }
@@ -58,11 +61,11 @@ export default function UserComment({ value, setValue }: Props) {
         <div className="h-full w-[40px] pt-[4px] mr-[8px] flex">
           <UserIcon />
         </div>
-        <div className="flex border border-solid border-gray-3 rounded-[20px] w-full">
+        <div className="flex border border-solid border-gray-3 rounded-[20px] w-full" onClick={getLogIn}>
           <textarea
             className={`w-full max-h-[150px] rounded-[20px] leading-[22px] max-w-[800px] pl-[15px] py-[10px] outline-none resize-none text-[14px] overflow-y-auto scrollbar-hide font-400 placeholder:text-gray-3`}
             style={{ height: '44px' }}
-            placeholder="댓글 달기"
+            placeholder={loggedIn ? '댓글 달기' : '로그인 후 댓글 달기'}
             maxLength={500}
             onKeyDown={PreventKeyDown}
             ref={commentRef}
@@ -73,7 +76,9 @@ export default function UserComment({ value, setValue }: Props) {
           <div className={`flex-col w-[80px] items-end justify-end max-h-[150px] rounded-[20px]`} ref={commentSideRef} style={{ height: '44px' }}>
             {value ? (
               <>
-                <button className="flex font-sans font-700 text-turquoise justify-center items-center h-[44px] w-[64px] text-[14px]">등록</button>
+                <button onClick={onSubmit} className="flex font-sans font-700 text-turquoise justify-center items-center h-[44px] w-[64px] text-[14px]">
+                  등록
+                </button>
                 {commentSideRef.current && parseInt(commentSideRef.current.style.height, 10) > 50 && (
                   <div className="flex items-end justify-center min-h-0 h-[calc(100%-44px)] pb-[4px] pr-[4px] w-[64px]">
                     <span className="leading-[28px] text-[12px] text-gray-3">{`${value.length} / 500`}</span>

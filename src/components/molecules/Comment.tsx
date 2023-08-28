@@ -5,7 +5,7 @@ import UserIcon from '../atoms/UserIcon'
 
 interface Props {
   key: number | string
-  comment: { created_at: string; reply: string; nickname?: string; user_id?: number; icon?: string; is_author?: boolean }
+  comment: { created_at: string; reply: string; nickname?: string; user_id?: number; icon?: string; is_author?: boolean, comment_id: string }
 }
 
 export default function Comment({ comment }: Props) {
@@ -21,8 +21,8 @@ export default function Comment({ comment }: Props) {
                 <span className="text-[14px] font-500 text-gray-4">{comment.nickname}</span>
                 <span className="text-[11px] px-[6px] text-gray-3">&bull;</span>
                 <span className="text-[13px] text-gray-3 font-400">{createdDate}</span>
-                {comment.is_author && <span className="text-[13px] pl-[11px] text-gray-4 font-400">수정</span>}
-                {comment.is_author && <span className="text-[13px] pl-[8px] text-gray-4 font-400">삭제</span>}
+                {comment.is_author && <span className="text-[13px] pl-[13px] text-darkgold font-400">삭제</span>}
+                {comment.comment_id && <span className="text-[13px] pl-[130px] text-turquoise font-400">{comment.comment_id}</span>}
               </div>
             </div>
             <div className="flex mb-[6px] ml-[12px]">

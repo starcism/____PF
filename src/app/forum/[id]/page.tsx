@@ -20,7 +20,7 @@ type Props = {
 export default function Page(props: Props) {
   const boardId = props.params.id
   const { post } = usePost(boardId)
-  const { userInfoLoading, commentAreaLoading, loggedIn, like, commentList, accessToken } = useComment(boardId)
+  const { userInfoLoading, commentAreaLoading, loggedIn, like, commentList, accessToken, refresh, refreshComments } = useComment(boardId)
 
   if (!post) {
     return (
@@ -29,6 +29,7 @@ export default function Page(props: Props) {
       </PostLayout>
     )
   }
+
   return (
     <>
       <PostLayout boardType="포럼">
@@ -45,8 +46,8 @@ export default function Page(props: Props) {
         ) : (
           <PostInfo commentCount={post.comment_count} liked={post.liked} userLike={like} />
         )}
-        {userInfoLoading ? <LoadingCommentInput /> : <CommentInput accessToken={accessToken} loggedIn={loggedIn} />}
-        {commentAreaLoading && !post ? <></> : commentAreaLoading && post ? <LoadingSpinner isBeforePost={true} /> : <Comments commentList={commentList} />}
+        {userInfoLoading ? <LoadingCommentInput /> : <CommentInput boardId={boardId} accessToken={accessToken} loggedIn={loggedIn} refresh={refreshComments}/>}
+        {commentAreaLoading && !post ? <></> : (commentAreaLoading || refresh) && post ? <LoadingSpinner isBeforePost={true} /> : <Comments commentList={commentList} refresh={refreshComments}/>}
       </PostLayout>
     </>
   )

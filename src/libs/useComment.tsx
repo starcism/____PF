@@ -12,9 +12,17 @@ export default function useComment(boardId: string) {
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
   const [like, setLike] = useState<boolean>(false)
   const [commentList, setCommentList] = useState<Comments[]>([])
+  const [refresh, setRefresh] = useState<boolean>(false)
+
+  const refreshComments = async () => {
+    if (!loading) {
+      setRefresh(true)
+      await getCommentArea(boardId, true);
+    }
+  };
 
   const getCommentArea = useCallback(
-    async (boardId: string) => {
+    async (boardId: string, refresh?: boolean) => {
       try {
         const res = await fetch(checkEnvironment().concat(`/api/board/forum/info?boardId=${boardId}`), {
           method: 'POST',
@@ -23,6 +31,11 @@ export default function useComment(boardId: string) {
             Authorization: `${accessToken}`,
           },
         })
+        if (refresh && res.status === 200) {
+          const { comments } = await res.json()
+          setCommentList(comments)
+          return
+        }
         if (res.status === 200) {
           const { userLike, comments } = await res.json()
           setLike(userLike)
@@ -31,10 +44,10 @@ export default function useComment(boardId: string) {
           return
         }
       } catch (error) {
-        console.log(error)
         return
       } finally {
         setCommentAreaLoading(false)
+        setRefresh(false)
       }
     },
     [accessToken],
@@ -89,10 +102,10 @@ export default function useComment(boardId: string) {
   useEffect(() => {
     if (!loading && accessToken) {
       fetchData()
-      console.log(accessToken)
     } else if (!loading && !accessToken) {
       setUserInfoLoading(false)
     }
+
   }, [loading, fetchData])
 
   useEffect(() => {
@@ -101,9 +114,5 @@ export default function useComment(boardId: string) {
     }
   }, [loading])
 
-  useEffect(() => {
-    console.log('commentList:', commentList)
-  }, [commentList])
-
-  return { userInfoLoading, commentAreaLoading, loggedIn, like, commentList, accessToken }
+  return { userInfoLoading, commentAreaLoading, loggedIn, like, commentList, accessToken, refresh, refreshComments }
 }

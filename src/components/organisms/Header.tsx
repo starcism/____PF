@@ -48,7 +48,7 @@ function HeaderComponent({ pathname }: Props) {
           </div>
           <div className="flex w-full h-[40px] items-center justify-center">
             <Link href="/" className="flex items-center justify-center h-[40px] w-[100px]" onClick={() => handleMainMenu(false)}>
-              <span className="font-sans text-[16px] font-700">LVD</span>
+              <span className="font-sans text-[16px] font-700">LOVEDIVE</span>
               {/* <Image alt="logo" src={swithy_logo} width={80} priority={true} /> */}
             </Link>
           </div>
