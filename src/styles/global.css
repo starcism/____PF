@@ -297,6 +297,10 @@ lightblue: '#56cdfa', */
   border-right: none !important;
 }
 
+.ql-bubble {
+  width: calc(100vw - 26px) !important;
+}
+
 .ql-container * {
   word-wrap: break-word !important;
   white-space: normal !important;

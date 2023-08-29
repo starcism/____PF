@@ -2,6 +2,7 @@
 
 import { Comments } from '@/types/types'
 import Comment from '../molecules/Comment'
+import { useState } from 'react'
 
 interface Props {
   commentList: Comments[]
@@ -9,13 +10,22 @@ interface Props {
 }
 
 export default function Comments({ commentList, refresh }: Props) {
+  const [nestedReply, setNestedReply] = useState<number | null>(null)
+  const handleReplyIndex = (index: number) => {
+    if (nestedReply === index) {
+      setNestedReply(null)
+    } else {
+      setNestedReply(index)
+    }
+  }
+
   return (
     <>
-      <div className='px-[13px]'>
+      <div className="px-[13px]">
         <div className="flex items-center w-full h-[30px] mt-[11px] mb-[21px]">
           <h1 className="flex items-center text-[16px] text-gray-6">{`댓글 ${commentList ? commentList.length : '0'}개`}</h1>
         </div>
-        {commentList.length > 0 && commentList.map((comment, index) => <Comment key={index} comment={comment} />)}
+        {commentList.length > 0 && commentList.map((comment, index) => <Comment key={index} comment={comment} handleReplyIndex={handleReplyIndex}/>)}
       </div>
     </>
   )

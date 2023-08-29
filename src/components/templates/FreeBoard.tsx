@@ -3,12 +3,8 @@
 import 'react-quill/dist/quill.bubble.css'
 import formatDate from '@/libs/getFormDate'
 import UserIcon from '../atoms/UserIcon'
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import UserComment from '../molecules/UserComment'
-import { useAccessTokenState } from '@/libs/AccessTokenProvider'
+import { useContext, useEffect, useLayoutEffect, useRef } from 'react'
 import { QuillContext } from '@/libs/QuillProvider'
-import checkEnvironment from '@/libs/checkEnvironment'
-import LoadingSpinner from '../atoms/LoadingSpinner'
 
 interface Props {
   profileImage?: string
@@ -27,7 +23,7 @@ interface Props {
 // })
 
 export default function FreeBoard({ nickname, title, content, view, createdAt, updatedAt }: Props) {
-  const { accessToken } = useAccessTokenState()
+  // const { accessToken } = useAccessTokenState()
   const { reader, setValue } = useContext(QuillContext)
   const createdDate = createdAt && formatDate(createdAt)
 
@@ -64,13 +60,22 @@ export default function FreeBoard({ nickname, title, content, view, createdAt, u
             </div>
           </div>
           <div className="flex items-center justify-center w-[50px] h-[50px]">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-              />
-            </svg>
+            <button className="flex items-center justify-center w-[40px] h-[40px] transition-colors duration-200 rounded-full hover:bg-gray-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className={`w-5 h-5`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                />
+              </svg>
+            </button>
           </div>
         </div>
         <div className="mt-[11px] min-h-[100px] h-full">

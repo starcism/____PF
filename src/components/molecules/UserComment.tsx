@@ -86,7 +86,7 @@ export default function UserComment({ value, setValue, onSubmit = () => {}, logg
                 )}
               </>
             ) : (
-              <button className="flex justify-center font-sans text-lightgold text-outlined items-center h-full w-[64px] text-[14px]">GIF</button>
+              <button type='button' className="flex justify-center font-sans text-lightgold text-outlined items-center h-full w-[64px] text-[14px]">GIF</button>
             )}
           </div>
         </div>
