@@ -2,11 +2,11 @@ export default function formatDate(dateString: string) {
   const date = new Date(dateString);
   const now = new Date();
   const timeDifference = now.getTime() - date.getTime();
-  const minutes = Math.floor(timeDifference / (1000 * 60));
+  const minutes = Math.floor(timeDifference / (1000 * 60)) + 1;
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
 
-  if (minutes <= 60) {
+  if (minutes < 60) {
     return `${minutes}분 전`;
   } else if (hours <= 24) {
     return `${hours}시간 전`;
