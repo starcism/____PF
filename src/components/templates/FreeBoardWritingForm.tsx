@@ -6,9 +6,6 @@ import ReactQuill from 'react-quill'
 import { useRouter } from 'next/navigation'
 import checkEnvironment from '@/libs/checkEnvironment'
 import { useAccessTokenState } from '@/libs/AccessTokenProvider'
-import LoadingSpinner from '../atoms/LoadingSpinner'
-import UnauthorizedPage from './UnauthorizedPage'
-import useAuth from '@/libs/useAuth'
 
 const QuillEditor = dynamic(() => import('@/libs/QuillEditor'), {
   ssr: false,
@@ -131,7 +128,7 @@ export default function FreeBoardWritingForm() {
         // const revalidate = await fetch(checkEnvironment().concat('/api/revalidate'), {
         //   method: 'GET',
         // })
-        alert('글 작성을 완료했어요')
+        // alert('글 작성을 완료했어요')
         setIsSubmit(false)
         router.refresh()
         router.replace('/forum')

@@ -2,6 +2,7 @@ import { SetStateAction, useRef, useState } from 'react'
 import UserIcon from '../atoms/UserIcon'
 
 interface Props {
+  nested: boolean
   value: string
   setValue: React.Dispatch<SetStateAction<string>>
   onSubmit?: (e: React.FormEvent) => void
@@ -9,7 +10,7 @@ interface Props {
   getLogIn?: () => void
 }
 
-export default function UserComment({ value, setValue, onSubmit = () => {}, loggedIn, getLogIn = () => {} }: Props) {
+export default function UserComment({ nested, value, setValue, onSubmit = () => {}, loggedIn, getLogIn = () => {} }: Props) {
   const handleTextareaValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value)
   }
@@ -55,15 +56,17 @@ export default function UserComment({ value, setValue, onSubmit = () => {}, logg
     //   }
     // }
   }
+
+  console.log(nested)
   return (
     <>
-      <div className="flex w-full py-[8px] pr-[8px]">
+      <div className={`flex w-full py-[8px] pr-[8px] ${nested && 'pl-[36px]'}`}>
         <div className="h-full w-[40px] pt-[4px] mr-[8px] flex">
           <UserIcon />
         </div>
         <div className="flex border border-solid border-gray-3 rounded-[20px] w-full" onClick={getLogIn}>
           <textarea
-            className={`w-full max-h-[150px] rounded-[20px] leading-[22px] max-w-[800px] pl-[15px] py-[10px] outline-none resize-none text-[14px] overflow-y-auto scrollbar-hide font-400 placeholder:text-gray-3`}
+            className={`w-full max-h-[150px] rounded-[20px] leading-[22px] max-w-[800px] pl-[15px] py-[10px] outline-none resize-none text-[14px] overflow-y-auto scrollbar-hide select-none font-400 placeholder:text-gray-3`}
             style={{ height: '44px' }}
             placeholder={loggedIn ? '댓글 달기' : '로그인 후 댓글 달기'}
             maxLength={500}
@@ -86,7 +89,7 @@ export default function UserComment({ value, setValue, onSubmit = () => {}, logg
                 )}
               </>
             ) : (
-              <button type='button' className="flex justify-center font-sans text-lightgold text-outlined items-center h-full w-[64px] text-[14px]">GIF</button>
+              <button type='button' className="flex justify-center font-sans text-lightgold text-outlined items-center select-none h-full w-[64px] text-[14px]">GIF</button>
             )}
           </div>
         </div>

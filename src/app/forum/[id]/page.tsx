@@ -47,7 +47,7 @@ export default function Page(props: Props) {
           <PostInfo commentCount={post.comment_count} liked={post.liked} userLike={like} />
         )}
         {userInfoLoading ? <LoadingCommentInput /> : <CommentInput boardId={boardId} accessToken={accessToken} loggedIn={loggedIn} refresh={refreshComments}/>}
-        {commentAreaLoading && !post ? <></> : (commentAreaLoading || refresh) && post ? <LoadingSpinner isBeforePost={true} /> : <Comments commentList={commentList} refresh={refreshComments}/>}
+        {commentAreaLoading && !post ? <></> : (commentAreaLoading || refresh) && post ? <LoadingSpinner isBeforePost={true} /> : <Comments commentList={commentList} refresh={refreshComments} boardId={boardId} accessToken={accessToken} loggedIn={loggedIn} />}
       </PostLayout>
     </>
   )

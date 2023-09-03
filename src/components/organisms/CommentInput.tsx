@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import checkEnvironment from '@/libs/checkEnvironment'
 
 interface Props {
+  nested?: boolean
   accessToken: string | null
   loggedIn: boolean
   boardId: string
@@ -13,7 +14,7 @@ interface Props {
   refresh: () => Promise<void>
 }
 
-export default function CommentInput({ accessToken, loggedIn, boardId, commentId = 0, refresh }: Props) {
+export default function CommentInput({ nested = false, accessToken, loggedIn, boardId, commentId = 0, refresh }: Props) {
   const [textareaValue, setTextareaValue] = useState<string>('')
   const router = useRouter()
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,10 +34,10 @@ export default function CommentInput({ accessToken, loggedIn, boardId, commentId
       } else if (res.status === 401) {
         alert('권한이 없어요')
       } else {
-        alert('글쓰기에 실패했어요')
+        alert('댓글 작성에 실패했어요')
       }
     } catch (error) {
-      alert('글쓰기에 실패했어요')
+      alert('댓글 작성에 실패했어요')
       return
     } finally {
       setTextareaValue('')
@@ -48,10 +49,10 @@ export default function CommentInput({ accessToken, loggedIn, boardId, commentId
       <div className="px-[13px]">
         {loggedIn ? (
           <form onSubmit={handleSubmit}>
-            <UserComment value={textareaValue} setValue={setTextareaValue} onSubmit={handleSubmit} loggedIn={true} />
+            <UserComment nested={nested} value={textareaValue} setValue={setTextareaValue} onSubmit={handleSubmit} loggedIn={true} />
           </form>
         ) : (
-          <UserComment value={textareaValue} setValue={setTextareaValue} loggedIn={false} getLogIn={() => router.push('/auth')} />
+          <UserComment nested={nested} value={textareaValue} setValue={setTextareaValue} loggedIn={false} getLogIn={() => router.push('/auth')} />
         )}
       </div>
     </>
