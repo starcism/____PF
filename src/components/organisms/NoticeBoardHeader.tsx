@@ -1,6 +1,6 @@
 'use client'
 
-export default function NoticeBoardHeader() {
+export default function BoardNotice() {
   return (
     <>
       <div className="flex items-center w-full h-[36px] bg-white py-[8px] mb-1 pl-[7px] mt-[6px] select-none">

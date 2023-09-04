@@ -1,13 +1,11 @@
 'use client'
 
-import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
-import React, { Suspense, useCallback, useEffect, useState } from 'react'
-import checkEnvironment from '@/libs/checkEnvironment'
-import { IBoard, IFreeBoard } from '@/types/types'
+import React, { Suspense } from 'react'
+import { IBoard } from '@/types/types'
 import PostItem from '@/components/organisms/PostItem'
 import useForum from '@/libs/useForum'
 import LoadingSpinner from '@/components/atoms/LoadingSpinner'
-import Loading from './loading'
+import BoardNotice from '@/components/organisms/NoticeBoardHeader'
 
 export default function Page() {
   const { postData, loading, totalPage } = useForum(1)
@@ -23,7 +21,7 @@ export default function Page() {
   return (
     <>
       <div className="bg-white z-[1]">
-        <NoticeBoardHeader />
+        <BoardNotice />
         {postData ? (
           postData.posts.map((post: IBoard, index: number) => (
             <PostItem

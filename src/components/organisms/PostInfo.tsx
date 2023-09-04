@@ -1,16 +1,44 @@
+import checkEnvironment from '@/libs/checkEnvironment'
 import { useState } from 'react'
 interface Props {
-  commentCount: number
+  boardType: string
+  boardId?: string
+  accessToken?: string | null
   liked: number
   userLike?: boolean
 }
 
-export default function PostInfo({ commentCount, liked, userLike = false }: Props) {
+export default function PostInfo({ boardType, boardId, accessToken, liked, userLike = false }: Props) {
   const [like, setLike] = useState(userLike)
 
-  const handleLikeClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLikeClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    setLike(!like)
+
+    if(!accessToken) {
+      return
+    }
+
+    try {
+      const res = await fetch(checkEnvironment().concat('/api/board/like'), {
+        method: 'POST',
+        body: JSON.stringify({ boardId, boardType }),
+        headers: {
+          Authorization: `${accessToken}`,
+          // "Content-Type": "multipart/form-data",
+        },
+      })
+
+      if (res.status === 200) {
+        const { userLike } = await res.json()
+        setLike(userLike)
+      } else if (res.status === 401) {
+        alert('권한이 없어요')
+      } else {
+        alert('좋아요 설정에 실패했어요1')
+      }
+    } catch (error) {
+      alert('좋아요 설정에 실패했어요2')
+    }
   }
 
   return (

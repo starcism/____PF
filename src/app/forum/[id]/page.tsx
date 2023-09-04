@@ -42,9 +42,9 @@ export default function Page(props: Props) {
           updatedAt={post.updated_at}
         />
         {commentAreaLoading ? (
-          <PostInfo commentCount={post.comment_count} liked={post.liked} />
+          <PostInfo liked={post.liked} boardType='free' />
         ) : (
-          <PostInfo commentCount={post.comment_count} liked={post.liked} userLike={like} />
+          <PostInfo liked={post.liked} userLike={like} boardType='free' boardId={boardId} accessToken={accessToken} />
         )}
         {userInfoLoading ? <LoadingCommentInput /> : <CommentInput boardId={boardId} accessToken={accessToken} loggedIn={loggedIn} refresh={refreshComments}/>}
         {commentAreaLoading && !post ? <></> : (commentAreaLoading || refresh) && post ? <LoadingSpinner isBeforePost={true} /> : <Comments commentList={commentList} refresh={refreshComments} boardId={boardId} accessToken={accessToken} loggedIn={loggedIn} />}

@@ -1,8 +1,8 @@
-import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
 import React, { Suspense } from 'react'
 import PhotoBoardLayout from '@/components/templates/PhotoBoardLayout'
 import { IPhotoBoard } from '@/types/types'
 import PhotoCard from '@/components/organisms/PhotoCard'
+import BoardNotice from '@/components/organisms/NoticeBoardHeader'
 
 export default function Page() {
   // const res = await fetch('http://127.0.0.1/api/board/photo', { method: 'GET' })
@@ -28,7 +28,7 @@ export default function Page() {
 
   return (
     <>
-      <NoticeBoardHeader />
+      <BoardNotice />
       <PhotoBoardLayout>
         <Suspense fallback={<div>로딩중</div>}>
           {postData &&

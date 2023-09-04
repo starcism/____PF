@@ -6,8 +6,6 @@ import SearchModal from '../templates/SearchModal'
 import MainMenu from '../templates/MainMenu'
 import { MainMenuContext } from '@/libs/MainMenuProvider'
 import { useParams, usePathname } from 'next/navigation'
-import Image from 'next/image'
-import swithy_logo from '@/utils/SWITHy_logo.png'
 import getPathname from '@/libs/getPathname'
 
 interface Props {
