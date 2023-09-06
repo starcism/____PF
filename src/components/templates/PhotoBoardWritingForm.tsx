@@ -218,8 +218,8 @@ export default function PhotoBoardWritingForm() {
                     ref={commentRef}
                   />
                 </div>
-                <div className="flex w-[100vw] max-w-[800px] py-[12px] custom-border-b-0">
-                  <div className="flex min-h-[32px] ml-[13px] items-center space-x-2 flex-wrap">
+                <div className="w-[100vw] max-w-[800px] h-[68px] grid place-content-center-center custom-border-b-0 overflow-x-auto scrollbar-hide flex-nowrap">
+                  <div className="flex min-h-[32px] ml-[13px] items-center space-x-2">
                     {nameTags.map(
                       (tag, index) =>
                         selectedIndex[index] === 1 && (
@@ -229,6 +229,16 @@ export default function PhotoBoardWritingForm() {
                         ),
                     )}
                   </div>
+                  {/* <div className="flex min-h-[32px] ml-[13px] items-center space-x-2">
+                    {nameTags.map(
+                      (tag, index) =>
+                        selectedIndex[index] === 1 && (
+                          <div key={index}>
+                            <Tag text={nameTags[index]} />
+                          </div>
+                        ),
+                    )}
+                  </div> */}
                 </div>
               </div>
             </>
