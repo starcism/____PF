@@ -84,7 +84,7 @@ export default function Comment({ boardId, accessToken, comment, handleReplyInde
         onClick={() => isOriginComment && handleReplyIndex(commenIndex)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`flex w-full min-h-[50px] pt-[15px] pb-[11px] items-center justify-between ${!isOriginComment && 'pl-[50px]'}`}
+        className={`flex w-full min-h-[50px] pt-[15px] pb-[11px] justify-between ${!isOriginComment && 'pl-[50px]'}`}
       >
         <div className="flex max-w-[calc(100vw-76px)] h-full">
           <div className="pt-[7px]">
@@ -108,11 +108,11 @@ export default function Comment({ boardId, accessToken, comment, handleReplyInde
               </div>
             </div>
             <div className="flex mb-[6px] ml-[12px]">
-              <h1 className="weight-400 leading-[18px] text-[14px]">{`${comment.reply}`}</h1>
+              <h1 className="weight-400 leading-[22px] text-[14px] whitespace-pre-line">{`${comment.reply}`}</h1>
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-center w-[50px] h-[50px]">
+        <div className="flex items-start justify-center w-[50px] h-[50px]">
           <button
             onClick={(e) => handleClick(e)}
             className="flex items-center justify-center w-[40px] h-[40px] transition-colors duration-200 rounded-full hover:bg-gray-1"

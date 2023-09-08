@@ -8,10 +8,12 @@ import checkEnvironment from '@/libs/checkEnvironment'
 import Image from 'next/image'
 import { CircleImageButton, OptionalButton } from '../atoms/Button'
 import Tag from '../atoms/Tag'
+import { useAccessTokenState } from '@/libs/AccessTokenProvider'
 
 export default function PhotoBoardWritingForm() {
   const router = useRouter()
-  const commentRef = useRef<HTMLTextAreaElement>(null)
+  const { accessToken } = useAccessTokenState()
+  const titleRef = useRef<HTMLTextAreaElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleWritingForm: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -20,9 +22,9 @@ export default function PhotoBoardWritingForm() {
 
   const [selectedIndex, setSelectedIndex] = useState([0, 0, 0, 0, 0, 0])
   const [selectAll, setSelectAll] = useState(false)
-  const nameTags = ['가을', '유진', '레이', '원영', '리즈', '이서']
+  const nameTags = ['유진', '가을', '레이', '원영', '리즈', '이서']
   const postTags = []
-  const tagButtonUrl = ['/images/gaeul.jpeg', '/images/yujin.jpeg', '/images/rei.jpeg', '/images/wonyo.jpeg', '/images/liz.jpeg', '/images/leeseo.jpeg']
+  const tagButtonUrl = ['/images/yujin.jpeg', '/images/gaeul.jpeg', '/images/rei.jpeg', '/images/wonyo.jpeg', '/images/liz.jpeg', '/images/leeseo.jpeg']
   const setTagByIndex = (index: number) => {
     if (selectAll) {
       setSelectAll(false)
@@ -61,6 +63,8 @@ export default function PhotoBoardWritingForm() {
   }
 
   //텍스트 영역 핸들링
+  const [value, setValue] = useState<string>('')
+
   const PreventKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     //텍스트 영역 포커스 이동 방지
     if (e.key === 'Tab') {
@@ -70,7 +74,7 @@ export default function PhotoBoardWritingForm() {
       e.currentTarget.value = newValue
       e.currentTarget.setSelectionRange(selectionStart + 4, selectionStart + 4) // 커서 위치 조정
     }
-    //줄바꿈 4개이상 제한
+    //줄바꿈 3개까지 제한
     if (e.key === 'Enter') {
       const lines = e.currentTarget.value.split('\n')
       if (lines.length >= 3) {
@@ -120,23 +124,69 @@ export default function PhotoBoardWritingForm() {
   }
 
   //폼 제출
-  const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
+  const [isSubmit, setIsSubmit] = useState<boolean>(false)
+
+  const submitPost = async (e: React.FormEvent) => {
     e.preventDefault()
+    const title = titleRef.current?.value.trim() ?? ''
+    if (isSubmit) {
+      return
+    }
+
+    setIsSubmit(true)
+
+    if (!title) {
+      alert('코멘트를 입력해주세요')
+      setIsSubmit(false)
+      return
+    }
+
+    if (images.file.length === 0) {
+      alert('사진을 업로드해주세요')
+      setIsSubmit(false)
+      return
+    }
 
     const formData = new FormData()
-    images.file.forEach((file, index) => {
-      formData.append(`image_${index}`, file)
+    images.file.forEach((file) => {
+      formData.append('images', file)
     })
 
-    const comment = commentRef.current?.value ?? ''
-    formData.append('comment', comment)
+    const tag = selectedIndex.join('')
+
+    formData.append('title', title)
+    formData.append('tag', tag)
 
     try {
-      const response = await axios.post(checkEnvironment().concat('/api/photo'), formData)
-      console.log(response.data) // 업로드 성공한 이미지 정보 확인
-      router.push('/photo')
+      const res = await fetch(checkEnvironment().concat('/api/board/photo'), {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      })
+      if (res.status === 200) {
+        const data = await res.json()
+        console.log(data)
+        // alert('글 작성 완료')
+        // router.push('/photo')
+      } else if (res.status === 401) {
+        alert('권한이 만료되었어요')
+        return
+      } else if (res.status === 400) {
+        alert('제출 형식이 잘못되었어요')
+        return
+      } else {
+        const response1 = await res.json()
+        console.log(response1)
+        alert('글 작성에 실패했어요1')
+        return
+      }
     } catch (error) {
+      alert('글 작성에 실패했어요2')
       console.error(error)
+    } finally {
+      setIsSubmit(false)
     }
   }
 
@@ -151,28 +201,32 @@ export default function PhotoBoardWritingForm() {
 
   return (
     <>
-      <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-[54px]">
-        <div className="flex-col justify-center">
-          <div className="w-[100vw] h-[53px] custom-border-b-1 bg-white">
-            <div className="flex justify-between items-center">
-              <div className="h-[53px] w-[53px] flex justify-center items-center">
-                <button className="justify-center items-center" onClick={handleWritingForm}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                  </svg>
-                </button>
+      <form onSubmit={submitPost} encType="multipart/form-data">
+        <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-[54px]">
+          <div className="flex-col justify-center">
+            <div className="w-[100vw] h-[53px] custom-border-b-1 bg-white">
+              <div className="flex justify-between items-center">
+                <div className="h-[53px] w-[53px] flex justify-center items-center">
+                  <button className="justify-center items-center" onClick={handleWritingForm}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="grid place-items-center gap-1">
+                  <h1 className="text-[16px] select-none">글쓰기</h1>
+                  <h1 className="text-[13px] text-gray-3 select-none">PHOTO</h1>
+                </div>
+                <div className="h-[53px] w-[53px] flex justify-center items-center select-none">
+                  <button type="submit">
+                    <span>등록</span>
+                  </button>
+                </div>
               </div>
-              <div className="grid place-items-center gap-1">
-                <h1 className="text-[16px] select-none">글쓰기</h1>
-                <h1 className="text-[13px] text-gray-3 select-none">PHOTO</h1>
-              </div>
-              <div className="h-[53px] w-[53px] flex justify-center items-center select-none">등록</div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="w-screen mt-[54px] bg-white">
-        <form onSubmit={submitPost}>
+        <div className="w-screen mt-[54px] bg-white">
           <div className="flex w-[100vw] justify-center">
             <>
               <div className="flex-col w-[100vw] max-w-[800px]">
@@ -204,7 +258,7 @@ export default function PhotoBoardWritingForm() {
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-gray-4 cursor-pointer">
                           <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                         </svg>
-                        <input id="imageInput" type="file" accept="image/*" multiple className="hidden" onChange={uploadImage} ref={fileInputRef} />
+                        <input id="imageInput" type="file" accept=".jpg, .jpeg, .png" multiple className="hidden" onChange={uploadImage} ref={fileInputRef} />
                       </div>
                     </label>
                   )}
@@ -215,7 +269,9 @@ export default function PhotoBoardWritingForm() {
                     placeholder="코멘트를 남겨보세요"
                     maxLength={100}
                     onKeyDown={PreventKeyDown}
-                    ref={commentRef}
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    ref={titleRef}
                   />
                 </div>
                 <div className="w-[100vw] max-w-[800px] h-[68px] grid place-content-center-center custom-border-b-0 overflow-x-auto scrollbar-hide flex-nowrap">
@@ -243,80 +299,82 @@ export default function PhotoBoardWritingForm() {
               </div>
             </>
           </div>
-        </form>
-        <div className="flex-col justify-center items-center w-[100vw] h-[70vh]">
-          <div className="ml-[17px] mt-[3px] w-[calc(100vw-17px)] h-[33px] flex items-center">
-            <span className="text-[13px] font-700 select-none">태그설정</span>
-            <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="ml-1 mb-[2px] w-4 h-4 text-white bg-gray-3 rounded-full"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-          </div>
-          <div className="flex py-[10px] pl-[13px] pr-[36px] items-center w-[calc(100vw)] overflow-x-auto flex-nowrap scrollbar-hide">
-            {selectedIndex.map((_, i) => (
-              <div key={i}>
-                <CircleImageButton src={tagButtonUrl[i]} onClick={() => setTagByIndex(i)} selected={selectedIndex[i] === 1 ? true : false} />
-              </div>
-            ))}
-            <div
-              className="fixed right-0 min-h-[48px] max-h-[60px] h-[16vh] w-10 bg-gradient-to-r from-transparent to-[#ffffff]"
-              style={{ filter: 'blur(4px)' }}
-            ></div>
-          </div>
-          <div className="flex h-[24px] my-[6px] ml-[13px] items-center">
-            <div className="checkbox-wrapper-4">
-              <input className="inp-cbx" id="selectAll" type="checkbox" checked={selectAll} onChange={() => handleSelectAll(selectAll)} />
-              <label className="cbx" htmlFor="selectAll">
-                <span>
-                  <svg width="12px" height="10px">
-                    <use xlinkHref="#check-4"></use>
-                  </svg>
-                </span>
-              </label>
-              <svg className="inline-svg">
-                <symbol id="check-4" viewBox="0 0 12 10">
-                  <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                </symbol>
-              </svg>
+          <div className="flex-col justify-center items-center w-[100vw] h-[70vh]">
+            <div className="ml-[17px] mt-[3px] w-[calc(100vw-17px)] h-[33px] flex items-center">
+              <span className="text-[13px] font-700 select-none">태그설정</span>
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="ml-1 mb-[2px] w-4 h-4 text-white bg-gray-3 rounded-full"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
             </div>
-            <span
-              onClick={() => handleSelectAll(selectAll)}
-              className={`text-[14px] ml-1 mb-[2.5px] cursor-pointer select-none ${
-                selectAll ? 'weight-500 text-turquoise' : 'weight-400 text-gray-3'
-              } transform-gpu transition-colors duration-100`}
-            >
-              전체 선택
-            </span>
-          </div>
-          <div className="ml-[17px] h-[36px] mt-[17px] flex items-center">
-            <span className="text-[13px] font-700 text-gray-4 select-none">공식사진</span>
-          </div>
-          <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2 overflow-x-auto flex-nowrap scrollbar-hide">
-            <OptionalButton onClick={() => {}} width="60px" text="트위터" selected={false} />
-            <OptionalButton onClick={() => {}} width="60px" text="인스타" selected={false} />
-            <OptionalButton onClick={() => {}} width="75px" text="공식카페" selected={false} />
-            <OptionalButton onClick={() => {}} width="48px" text="SNS" selected={false} />
-          </div>
-          <div className="ml-[17px] h-[36px] mt-[13px] flex items-center">
-            <span className="text-[13px] font-700 text-gray-4 select-none">팬사진</span>
-          </div>
-          <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2 overflow-x-auto flex-nowrap scrollbar-hide">
-            <OptionalButton onClick={() => {}} width="53px" text="직찍" selected={false} />
-            <OptionalButton onClick={() => {}} width="53px" text="타팬" selected={false} />
-            <OptionalButton onClick={() => {}} width="53px" text="기타" selected={false} />
+            <div className="flex py-[10px] pl-[13px] pr-[36px] items-center w-[calc(100vw)] overflow-x-auto flex-nowrap scrollbar-hide">
+              {selectedIndex.map((_, i) => (
+                <div key={i}>
+                  <CircleImageButton src={tagButtonUrl[i]} onClick={() => setTagByIndex(i)} selected={selectedIndex[i] === 1 ? true : false} />
+                </div>
+              ))}
+              <div
+                className="fixed right-0 min-h-[48px] max-h-[60px] h-[16vh] w-10 bg-gradient-to-r from-transparent to-[#ffffff]"
+                style={{ filter: 'blur(4px)' }}
+              ></div>
+            </div>
+            <div className="flex h-[24px] my-[6px] ml-[13px] items-center">
+              <div className="checkbox-wrapper-4">
+                <input className="inp-cbx" id="selectAll" type="checkbox" checked={selectAll} onChange={() => handleSelectAll(selectAll)} />
+                <label className="cbx" htmlFor="selectAll">
+                  <span>
+                    <svg width="12px" height="10px">
+                      <use xlinkHref="#check-4"></use>
+                    </svg>
+                  </span>
+                </label>
+                <svg className="inline-svg">
+                  <symbol id="check-4" viewBox="0 0 12 10">
+                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                  </symbol>
+                </svg>
+              </div>
+              <span
+                onClick={() => {
+                  handleSelectAll(selectAll)
+                }}
+                className={`text-[14px] ml-1 mb-[2.5px] cursor-pointer select-none ${
+                  selectAll ? 'weight-500 text-turquoise' : 'weight-400 text-gray-3'
+                } transform-gpu transition-colors duration-100`}
+              >
+                전체 선택
+              </span>
+            </div>
+            <div className="ml-[17px] h-[36px] mt-[17px] flex items-center">
+              <span className="text-[13px] font-700 text-gray-4 select-none">공식사진</span>
+            </div>
+            <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2 overflow-x-auto flex-nowrap scrollbar-hide">
+              <OptionalButton onClick={() => {}} width="60px" text="트위터" selected={false} />
+              <OptionalButton onClick={() => {}} width="60px" text="인스타" selected={false} />
+              <OptionalButton onClick={() => {}} width="75px" text="공식카페" selected={false} />
+              <OptionalButton onClick={() => {}} width="48px" text="SNS" selected={false} />
+            </div>
+            <div className="ml-[17px] h-[36px] mt-[13px] flex items-center">
+              <span className="text-[13px] font-700 text-gray-4 select-none">팬사진</span>
+            </div>
+            <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2 overflow-x-auto flex-nowrap scrollbar-hide">
+              <OptionalButton onClick={() => {}} width="53px" text="직찍" selected={false} />
+              <OptionalButton onClick={() => {}} width="53px" text="타팬" selected={false} />
+              <OptionalButton onClick={() => {}} width="53px" text="기타" selected={false} />
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </>
   )
 }

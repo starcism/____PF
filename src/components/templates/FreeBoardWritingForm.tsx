@@ -119,11 +119,8 @@ export default function FreeBoardWritingForm() {
         alert('권한이 만료되었어요')
         setIsSubmit(false)
         router.replace('/forum')
-        return
       } else if (res.status === 400) {
         alert('제출 형식이 잘못되었어요')
-        setIsSubmit(false)
-        return
       } else if (res.ok) {
         // const revalidate = await fetch(checkEnvironment().concat('/api/revalidate'), {
         //   method: 'GET',
@@ -132,16 +129,13 @@ export default function FreeBoardWritingForm() {
         setIsSubmit(false)
         router.refresh()
         router.replace('/forum')
-        return
       } else {
         alert('글 작성에 실패했어요')
-        setIsSubmit(false)
-        return
       }
     } catch (error) {
-      alert('글 작성 실패2')
+      alert('글 작성에 실패했어요')
+    } finally {
       setIsSubmit(false)
-      return
     }
   }
 

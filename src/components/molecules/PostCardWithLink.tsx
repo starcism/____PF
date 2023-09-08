@@ -66,7 +66,7 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
           </div>
         </div>
         <div className="flex w-full px-[4px] select-none">
-          <span className="text-[14px] weight-400 text-gray-6 leading-[22px]">{title}</span>
+          <span className="text-[14px] weight-400 text-gray-6 leading-[22px] whitespace-pre-line">{title}</span>
         </div>
         <div className="flex w-full px-[4px] pt-[12px] select-none">
           <span className="text-[14px] weight-700 text-gray-6 leading-[26px]">#단체샷</span>

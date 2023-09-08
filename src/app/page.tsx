@@ -34,6 +34,7 @@ export default function Home() {
       {/* <button onClick={() => console.log(accessToken)}>버튼</button> */}
       <div className="mt-[52px] h-[100px] w-full bg-white flex items-center font-sans text-[14px] font-500 justify-center">Main</div>
       <YoutubeViewer url={'https://youtu.be/6ZUIwj3FgUY?si=YkHxng_JUhCpJcUI'} full={true} />
+      <LoadingSpinner />
     </>
   )
 }
