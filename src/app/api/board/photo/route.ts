@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   let accessToken = headers().get('Authorization')
   const formData = await request.formData()
   const title = formData.get('title')?.toString()
-
+  
   //유효성 검사
   if (!title || title.length < 1 || title.length > 100) {
     return NextResponse.json({ error: '제출 형식이 잘못되었어요' }, { status: 400 })

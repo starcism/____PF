@@ -18,11 +18,7 @@ export default function Page() {
       </>
     )
   } else if (error) {
-    return (
-      <>
-        <UnauthorizedPage />
-      </>
-    )
+    router.push('/auth')
   }
   return (
     <>

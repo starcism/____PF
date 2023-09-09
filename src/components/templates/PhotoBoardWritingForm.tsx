@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import '@/styles/checkbox.css'
 import { useRouter } from 'next/navigation'
-import axios from 'axios'
 import checkEnvironment from '@/libs/checkEnvironment'
 import Image from 'next/image'
 import { CircleImageButton, OptionalButton } from '../atoms/Button'
@@ -122,7 +121,7 @@ export default function PhotoBoardWritingForm() {
       fileInputRef.current.value = ''
     }
   }
-
+  const [AB, ABB]= useState('호호')
   //폼 제출
   const [isSubmit, setIsSubmit] = useState<boolean>(false)
 
@@ -167,6 +166,7 @@ export default function PhotoBoardWritingForm() {
       })
       if (res.status === 200) {
         const data = await res.json()
+        // ABB(data)
         console.log(data)
         // alert('글 작성 완료')
         // router.push('/photo')
@@ -201,13 +201,14 @@ export default function PhotoBoardWritingForm() {
 
   return (
     <>
+      <h1 className='fixed bottom-0 left-0 w-full'>{AB}</h1>
       <form onSubmit={submitPost} encType="multipart/form-data">
         <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-[54px]">
           <div className="flex-col justify-center">
             <div className="w-[100vw] h-[53px] custom-border-b-1 bg-white">
               <div className="flex justify-between items-center">
                 <div className="h-[53px] w-[53px] flex justify-center items-center">
-                  <button className="justify-center items-center" onClick={handleWritingForm}>
+                  <button type='button' className="justify-center items-center" onClick={handleWritingForm}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                     </svg>
@@ -215,7 +216,7 @@ export default function PhotoBoardWritingForm() {
                 </div>
                 <div className="grid place-items-center gap-1">
                   <h1 className="text-[16px] select-none">글쓰기</h1>
-                  <h1 className="text-[13px] text-gray-3 select-none">PHOTO</h1>
+                  <h1 className="text-[13px] text-gray-3 select-none">갤러리</h1>
                 </div>
                 <div className="h-[53px] w-[53px] flex justify-center items-center select-none">
                   <button type="submit">
