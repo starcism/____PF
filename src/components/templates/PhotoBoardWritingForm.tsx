@@ -168,6 +168,7 @@ export default function PhotoBoardWritingForm() {
         const data = await res.json()
         // ABB(data)
         console.log(data)
+        // console.log(data.data.result.files[0].content.data)
         // alert('글 작성 완료')
         // router.push('/photo')
       } else if (res.status === 401) {
