@@ -1,13 +1,74 @@
 import { headers } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 const verified = process.env.VERIFYING_KEY
 
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl
+  // const path = request.nextUrl.pathname
+  const pageIndex = searchParams.get('pageIndex')
+  const keyW = searchParams.get('kw')
+  const keyX = searchParams.get('kx')
+  const keyY = searchParams.get('ky')
+  const keyZ = searchParams.get('kz')
+
+  const kw = keyW ? `kw=${keyW}` : 'kw='
+  const kx = keyX ? `&kx=${keyX}` : ''
+  const ky = keyY ? `&ky=${keyY}` : ''
+  const kz = keyZ ? `&kz=${keyZ}` : ''
+
+  if (pageIndex) {
+    try {
+      // revalidatePath(path)
+
+      const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/photo?pageIndex=${pageIndex}`, {
+        method: 'GET',
+        cache: 'no-store',
+      })
+      if (res.status === 200) {
+        const { result, totalPages } = await res.json()
+
+        return NextResponse.json({ posts: result, totalPages })
+      } else if (res.status === 204) {
+        return NextResponse.json({ message: '게시물 없음' }, { status: 204 })
+      } else {
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+      }
+    } catch (error) {
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    }
+  } else {
+    try {
+      const res = await fetch(`https://0lky4v3m2f.execute-api.ap-northeast-2.amazonaws.com/20230915/getobj?${kw}${kx}${ky}${kz}`, {
+        method: 'GET',
+        next: {
+          revalidate: 300,
+        },
+      })
+      if (res.status === 200) {
+        const { signatureUrls } = await res.json()
+        // const data = await res.json()
+        return NextResponse.json({ signatureUrls })
+      } else {
+        const data = await res.json()
+        return NextResponse.json({ error: 'Internal Server Error', data }, { status: 500 })
+      }
+    } catch (error) {
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    }
+  }
+}
+
 export async function POST(request: Request) {
   let accessToken = headers().get('Authorization')
+
   const formData = await request.formData()
+  const files = formData.getAll('images')
+  const extensions = formData.getAll('extensions')
   const title = formData.get('title')?.toString()
-  
+  const tag = formData.get('tag')?.toString()
+  const postTag = formData.get('postTag')?.toString()
+
   //유효성 검사
   if (!title || title.length < 1 || title.length > 100) {
     return NextResponse.json({ error: '제출 형식이 잘못되었어요' }, { status: 400 })
@@ -15,31 +76,49 @@ export async function POST(request: Request) {
 
   if (accessToken) {
     try {
-      const verifyingRes = await fetch('https://6ietu7gzmk.execute-api.ap-northeast-2.amazonaws.com/20230717/v0', {
+      const verifyingReq = fetch('https://6ietu7gzmk.execute-api.ap-northeast-2.amazonaws.com/20230717/v0', {
         method: 'POST',
         headers: {
           Authorization: `${accessToken}`,
         },
         body: JSON.stringify({ verified }),
       })
-      if (verifyingRes.ok) {
-        const verifyingData = await verifyingRes.json()
-        const user_id = verifyingData.userId
-        formData.append('userId', user_id)
 
-        const res = await fetch('https://uq8hvp2my8.execute-api.ap-northeast-2.amazonaws.com/20230907/lvd', {
+      const signatureReq = fetch('https://0lky4v3m2f.execute-api.ap-northeast-2.amazonaws.com/20230915/putobj', {
+        method: 'POST',
+        body: JSON.stringify({ extensions, verified }),
+      })
+
+      const [verifyingRes, signatureRes] = await Promise.all([verifyingReq, signatureReq])
+
+      if (verifyingRes.ok && signatureRes.ok) {
+        const { signatures, imageKeys } = await signatureRes.json()
+
+        if (!signatures || signatures.length === 0) {
+          return NextResponse.json({ error: '이미지 등록 실패' }, { status: 500 })
+        }
+
+        const verifyingData = await verifyingRes.json()
+        const userId = verifyingData.userId
+
+        const dbReq = await fetch('https://uq8hvp2my8.execute-api.ap-northeast-2.amazonaws.com/20230907/lvd', {
           method: 'POST',
-          body: formData,
+          body: JSON.stringify({ title, tag, postTag, userId, imageKeys, verified }),
         })
 
-        if (res.ok) {
-          // const data = await res.json()
-          // const boardId = data.boardId
-          const data = await res.json()
-          return NextResponse.json({ message: '글쓰기를 완료했어요', data }, { status: 200 })
+        const uploadToS3Promises = signatures.map(async (signature: string, index: number) => {
+          return fetch(signature, {
+            method: 'PUT',
+            body: files[index],
+          })
+        })
+
+        const [dbRes, ...res] = await Promise.all([dbReq, ...uploadToS3Promises])
+
+        if (dbRes.ok) {
+          return NextResponse.json({ message: '글쓰기를 완료했어요' }, { status: 200 })
         } else {
-          const response = await res.json()
-          return NextResponse.json({ error: 'Internal Server Error', response }, { status: 500 })
+          return NextResponse.json({ error: 'Internal Server Error' }, { status: 401 })
         }
 
         //검증 실패

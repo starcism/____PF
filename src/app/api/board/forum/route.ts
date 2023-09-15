@@ -69,6 +69,7 @@ export async function GET(request: NextRequest) {
     }
   }
 }
+
 export async function POST(request: Request) {
   let accessToken = headers().get('Authorization')
   const { title, content, contentValue } = await request.json()

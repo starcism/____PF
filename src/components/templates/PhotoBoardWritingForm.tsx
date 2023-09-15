@@ -22,7 +22,9 @@ export default function PhotoBoardWritingForm() {
   const [selectedIndex, setSelectedIndex] = useState([0, 0, 0, 0, 0, 0])
   const [selectAll, setSelectAll] = useState(false)
   const nameTags = ['유진', '가을', '레이', '원영', '리즈', '이서']
-  const postTags = []
+  const postTags = ['트위터', '인스타', '공카', 'SNS', '직찍', '타팬', '기타']
+  const [postTagIndex, setPostTagIndex] = useState<number | null>(null)
+
   const tagButtonUrl = ['/images/yujin.jpeg', '/images/gaeul.jpeg', '/images/rei.jpeg', '/images/wonyo.jpeg', '/images/liz.jpeg', '/images/leeseo.jpeg']
   const setTagByIndex = (index: number) => {
     if (selectAll) {
@@ -121,7 +123,7 @@ export default function PhotoBoardWritingForm() {
       fileInputRef.current.value = ''
     }
   }
-  const [AB, ABB]= useState('호호')
+
   //폼 제출
   const [isSubmit, setIsSubmit] = useState<boolean>(false)
 
@@ -139,6 +141,14 @@ export default function PhotoBoardWritingForm() {
       setIsSubmit(false)
       return
     }
+    
+    const tagUnSelected = selectedIndex.every((element) => element === 0)
+
+    if (postTagIndex === null || tagUnSelected ) {
+      alert('태그를 선택해주세요')
+      setIsSubmit(false)
+      return
+    }
 
     if (images.file.length === 0) {
       alert('사진을 업로드해주세요')
@@ -149,12 +159,20 @@ export default function PhotoBoardWritingForm() {
     const formData = new FormData()
     images.file.forEach((file) => {
       formData.append('images', file)
+      const extension = file.name.split('.').pop()
+      if (extension) {
+        formData.append('extensions', extension)
+      }
     })
 
     const tag = selectedIndex.join('')
+    const postTag = postTagIndex !== null && postTags[postTagIndex]
 
     formData.append('title', title)
     formData.append('tag', tag)
+    if(postTag){
+      formData.append('postTag', postTag)
+    }
 
     try {
       const res = await fetch(checkEnvironment().concat('/api/board/photo'), {
@@ -165,12 +183,8 @@ export default function PhotoBoardWritingForm() {
         },
       })
       if (res.status === 200) {
-        const data = await res.json()
-        // ABB(data)
-        console.log(data)
-        // console.log(data.data.result.files[0].content.data)
-        // alert('글 작성 완료')
-        // router.push('/photo')
+        alert('글 작성 완료')
+        router.push('/photo')
       } else if (res.status === 401) {
         alert('권한이 만료되었어요')
         return
@@ -202,14 +216,13 @@ export default function PhotoBoardWritingForm() {
 
   return (
     <>
-      <h1 className='fixed bottom-0 left-0 w-full'>{AB}</h1>
       <form onSubmit={submitPost} encType="multipart/form-data">
         <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-[54px]">
           <div className="flex-col justify-center">
             <div className="w-[100vw] h-[53px] custom-border-b-1 bg-white">
               <div className="flex justify-between items-center">
                 <div className="h-[53px] w-[53px] flex justify-center items-center">
-                  <button type='button' className="justify-center items-center" onClick={handleWritingForm}>
+                  <button type="button" className="justify-center items-center" onClick={handleWritingForm}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                     </svg>
@@ -276,27 +289,16 @@ export default function PhotoBoardWritingForm() {
                     ref={titleRef}
                   />
                 </div>
-                <div className="w-[100vw] max-w-[800px] h-[68px] grid place-content-center-center custom-border-b-0 overflow-x-auto scrollbar-hide flex-nowrap">
-                  <div className="flex min-h-[32px] ml-[13px] items-center space-x-2">
-                    {nameTags.map(
-                      (tag, index) =>
-                        selectedIndex[index] === 1 && (
-                          <div key={index}>
-                            <Tag text={nameTags[index]} />
-                          </div>
-                        ),
-                    )}
-                  </div>
-                  {/* <div className="flex min-h-[32px] ml-[13px] items-center space-x-2">
-                    {nameTags.map(
-                      (tag, index) =>
-                        selectedIndex[index] === 1 && (
-                          <div key={index}>
-                            <Tag text={nameTags[index]} />
-                          </div>
-                        ),
-                    )}
-                  </div> */}
+                <div className="w-[calc(100vw-26px)] max-w-[800px] min-h-[68px] place-content-center mx-[13px] grid-tags custom-border-b-0">
+                  {nameTags.map(
+                    (tag, index) =>
+                      selectedIndex[index] === 1 && (
+                        <div key={index}>
+                          <Tag text={nameTags[index]} />
+                        </div>
+                      ),
+                  )}
+                  {postTagIndex !== null && <Tag text={postTags[postTagIndex]} />}
                 </div>
               </div>
             </>
@@ -361,18 +363,67 @@ export default function PhotoBoardWritingForm() {
               <span className="text-[13px] font-700 text-gray-4 select-none">공식사진</span>
             </div>
             <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2 overflow-x-auto flex-nowrap scrollbar-hide">
-              <OptionalButton onClick={() => {}} width="60px" text="트위터" selected={false} />
-              <OptionalButton onClick={() => {}} width="60px" text="인스타" selected={false} />
-              <OptionalButton onClick={() => {}} width="75px" text="공식카페" selected={false} />
-              <OptionalButton onClick={() => {}} width="48px" text="SNS" selected={false} />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(0)
+                }}
+                width="60px"
+                text="트위터"
+                selected={postTagIndex === 0}
+              />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(1)
+                }}
+                width="60px"
+                text="인스타"
+                selected={postTagIndex === 1}
+              />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(2)
+                }}
+                width="75px"
+                text="공식카페"
+                selected={postTagIndex === 2}
+              />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(3)
+                }}
+                width="48px"
+                text="SNS"
+                selected={postTagIndex === 3}
+              />
             </div>
             <div className="ml-[17px] h-[36px] mt-[13px] flex items-center">
               <span className="text-[13px] font-700 text-gray-4 select-none">팬사진</span>
             </div>
             <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2 overflow-x-auto flex-nowrap scrollbar-hide">
-              <OptionalButton onClick={() => {}} width="53px" text="직찍" selected={false} />
-              <OptionalButton onClick={() => {}} width="53px" text="타팬" selected={false} />
-              <OptionalButton onClick={() => {}} width="53px" text="기타" selected={false} />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(4)
+                }}
+                width="53px"
+                text="직찍"
+                selected={postTagIndex === 4}
+              />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(5)
+                }}
+                width="53px"
+                text="타팬"
+                selected={postTagIndex === 5}
+              />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(6)
+                }}
+                width="53px"
+                text="기타"
+                selected={postTagIndex === 6}
+              />
             </div>
           </div>
         </div>

@@ -2,9 +2,14 @@ import { ICard } from '@/types/types'
 import LinkContainer from '../atoms/LinkContainer'
 import { useState } from 'react'
 import formatDate from '@/libs/getFormDate'
+import UserIcon from '../atoms/UserIcon'
 
-export default function PostLink({ href, title, view, createdAt, profile_image, nickname, likeCount = 0, commentCount = 0 }: ICard) {
+const tags = ['#유진', '#가을', '#레이', '#원영', '#리즈', '#이서']
+
+export default function PostLink({ href, title, view, createdAt, tag, postTag, profile_image, nickname, liked = 0, commentCount = 0 }: ICard) {
   const [like, setLike] = useState(false)
+  const filteredTags = tags.filter((_, index) => tag[index] === '1')
+
   const createdDate = createdAt && formatDate(createdAt)
   const handleNameClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -21,7 +26,7 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
           <div className="flex items-center w-[100px] h-[40px]">
             <button onClick={handleNameClick}>
               <div className="flex items-center pl-[4px]">
-                <div className="min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] bg-blue-200 rounded-full"></div>
+                <UserIcon size='28' />
                 <span className="ml-2 text-[14px] mb-[2px] font-700 text-gray-4 select-none">{nickname}</span>
               </div>
             </button>
@@ -42,7 +47,7 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
                   <path d="M9.653 16.915l-.005-.003-.019-.01a20.759 20.759 0 01-1.162-.682 22.045 22.045 0 01-2.582-1.9C4.045 12.733 2 10.352 2 7.5a4.5 4.5 0 018-2.828A4.5 4.5 0 0118 7.5c0 2.852-2.044 5.233-3.885 6.82a22.049 22.049 0 01-3.744 2.582l-.019.01-.005.003h-.002a.739.739 0 01-.69.001l-.002-.001z" />
                 </svg>
               </button>
-              <span className="text-[14px] weight-350 select-none text-pinkish">{likeCount}</span>
+              <span className="text-[14px] weight-350 select-none text-pinkish">{liked}</span>
             </div>
             <div className="mr-[6px] flex items-center">
               <button className="flex items-center justify-center  ml-[6px] rounded-[50%] w-[32px] h-[32px] text-turquoise">
@@ -69,7 +74,11 @@ export default function PostLink({ href, title, view, createdAt, profile_image, 
           <span className="text-[14px] weight-400 text-gray-6 leading-[22px] whitespace-pre-line">{title}</span>
         </div>
         <div className="flex w-full px-[4px] pt-[12px] select-none">
-          <span className="text-[14px] weight-700 text-gray-6 leading-[26px]">#단체샷</span>
+          <span className="text-gray-6 leading-[26px]">
+            {filteredTags.map((value, index) => (
+              <span className="text-black weight-500 text-[13px]" key={index}>{`${value} `}</span>
+            ))}
+          </span>
         </div>
         <div className="flex w-full p-[4px] text-[13px] weight-500">
           <span className="text-[13px] weight-500 text-gray-3 select-none">{createdDate}</span>

@@ -22,8 +22,16 @@ export interface IVideoBoard extends IBoard {
   videoId?: string
 }
 
-export interface IPhotoBoard extends IBoard {
-  images?: string[]
+export interface PhotoBoard extends IBoard {
+  tag: string
+  post_tag: string
+  photo_url: string[]
+}
+
+export interface IPhotoBoard {
+  posts: PhotoBoard[]
+  photoUrls?: any
+  images?: any
 }
 
 export interface IFreeBoard {
@@ -41,11 +49,6 @@ export interface IVideoBoard {
   totalPage: number
 }
 
-export interface IPhotoBoard {
-  posts: IPhotoBoard[]
-  totalPage: number
-}
-
 export interface IPostItem {
   key: number
   boardid: number
@@ -59,20 +62,22 @@ export interface IPostItem {
 }
 
 export interface ICard {
-  key: number
+  key?: number
   href: string
   url?: string
   title?: string
   view?: number
   profile_image?: string
   nickname?: string
-  likeCount?: number
+  liked?: number
   commentCount?: number
   createdAt?: string
+  tag: string
+  postTag: string
 }
 
 export interface IPhotoCard extends ICard {
-  images?: string[]
+  photoUrls: string[]
 }
 
 export interface Comments {

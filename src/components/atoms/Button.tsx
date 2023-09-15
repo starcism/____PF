@@ -26,12 +26,15 @@ export function CircleImageButton({ onClick, src, selected }: CIProps) {
     </div>
   )
 }
+
 export function OptionalButton({ onClick, width, text, selected }: OBProps) {
   return (
     <button
-      className={`w-[${width}] flex flex-shrink-0 items-center justify-center bg-white border border-gray-1 h-[28px] my-1 rounded-[20px] transition-transform transform-gpu active:scale-95`}
+      type='button'
+      onClick={onClick}
+      className={`w-[${width}] flex flex-shrink-0 items-center justify-center bg-white ${selected ? 'hover:bg-clicked-button-turquoise': 'hover:bg-hover-button'} border ${selected ? 'border-turquoise' : 'border-gray-1'} h-[28px] my-1 rounded-[20px] transition-transform transform-gpu active:scale-95`}
     >
-      <span className="text-gray-2 text-[12px]">{text}</span>
+      <span className={`${selected ? 'text-turquoise weight-500' : 'text-gray-3 weight-400'} text-[12px]`}>{text}</span>
     </button>
   )
 }
