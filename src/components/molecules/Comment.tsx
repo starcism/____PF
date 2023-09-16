@@ -4,6 +4,7 @@ import formatDate from '@/libs/getFormDate'
 import UserIcon from '../atoms/UserIcon'
 import { useState } from 'react'
 import checkEnvironment from '@/libs/checkEnvironment'
+import { ConfirmModal } from '../atoms/ModalContainer'
 
 interface Props {
   comment: {
@@ -37,8 +38,8 @@ export default function Comment({ boardId, accessToken, comment, handleReplyInde
     setIsHovered(false)
   }
 
-  const deleteComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
+  const [confirm, setConfirm] = useState(false)
+  const deleteComment = async () => {
     try {
       const res = await fetch(checkEnvironment().concat('/api/board/forum/comment'), {
         method: 'PUT',
@@ -97,12 +98,13 @@ export default function Comment({ boardId, accessToken, comment, handleReplyInde
                 <span className="text-[11px] px-[6px] text-gray-3">&bull;</span>
                 <span className="text-[13px] mr-[12px] text-gray-3 font-400">{createdDate}</span>
                 {comment.is_author && (
-                  <button
-                    onClick={(e) => deleteComment(e)}
-                    className="flex items-center justify-center transition-colors duration-200 rounded-[20px] w-[42px] h-[28px] text-darkgold hover:bg-darkgold hover:text-white"
-                  >
-                    <span className="text-[13px] font-400 select-none">삭제</span>
-                  </button>
+                  <ConfirmModal confirmType="comment" onClick={deleteComment}>
+                    <button
+                      className="flex items-center justify-center transition-colors duration-200 rounded-[20px] w-[42px] h-[28px] text-darkgold hover:bg-darkgold hover:text-white"
+                    >
+                      <span className="text-[13px] font-400 select-none">삭제</span>
+                    </button>
+                  </ConfirmModal>
                 )}
                 {/* {comment.comment_id && <span className="text-[13px] pl-[20px] text-turquoise font-400">{comment.comment_id}</span>} */}
               </div>

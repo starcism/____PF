@@ -12,7 +12,9 @@ interface Props {
 
 export default function PhotoViewer({ photoUrls = [] }: Props) {
   const length = photoUrls.length
+  const lengthArray = Array.from({ length }, (_, i) => i)
   const [images, setImages] = useState<string[] | null>()
+  const [load, setLoad] = useState(false)
   const getPhotoUrls = useCallback(async (photoUrls: string[]) => {
     const [keyW, keyX, keyY, keyZ] = photoUrls.slice(0, 4)
 
@@ -39,38 +41,57 @@ export default function PhotoViewer({ photoUrls = [] }: Props) {
     } catch (error) {
       console.log('error:', error)
       return
+    } finally {
+      setLoad(false)
     }
   }, [])
 
   useEffect(() => {
-    getPhotoUrls(photoUrls)
-  }, [])
+    if (load) {
+      getPhotoUrls(photoUrls)
+    }
+  }, [load])
 
   useEffect(() => {
-    return () => {
-      images && images.forEach((imageUrl: string) => URL.revokeObjectURL(imageUrl))
+    if (!images) {
+      setLoad(true)
     }
   }, [images])
 
   return (
-    <div className="flex-row px-[34px] w-screen">
+    <div className="flex-row px-[34px] h-auto w-screen">
       <div
         className={`bg-white ${length > 1 ? 'grid grid-cols-2 gap-[3px]' : 'grid'} ${
           length > 2 ? 'gird-rows-2' : length === 2 && 'grid-rows-1'
-        } h-auto w-full rounded-[20px] overflow-hidden`}
+        } h-auto w-full rounded-[15px] overflow-hidden`}
       >
-        {images ? (
-          images.map((image, i) => (
-            <div
-              key={i}
-              className={`${length === 3 && i === 0 ? 'row-start-1 row-end-3 h-full' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-full' : 'h-[15vh]'}`}
-            >
-              <Image src={image} alt="_blank" width={500} height={500} className="relative w-full h-full object-cover" />
-            </div>
-          ))
-        ) : (
-          <></>
-        )}
+        {images
+          ? images.map((image, i) => (
+              <div
+                key={i}
+                className={`cursor-pointer ${
+                  length === 3 && i === 0 ? 'row-start-1 row-end-3 h-full' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-full' : 'h-[15vh]'
+                }`}
+              >
+                <Image
+                  src={image}
+                  alt="_blank"
+                  width={500}
+                  height={500}
+                  className="relative w-full h-full object-cover"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN89x8AAuEB74Y0o2cAAAAASUVORK5CYII="
+                />
+              </div>
+            ))
+          : lengthArray.map((i) => (
+              <div
+                key={i}
+                className={`bg-gray-1 ${
+                  length === 3 && i === 0 ? 'row-start-1 row-end-3 h-full' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-full' : 'h-[15vh]'
+                }`}
+              />
+            ))}
       </div>
     </div>
   )
