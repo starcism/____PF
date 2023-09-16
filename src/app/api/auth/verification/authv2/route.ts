@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         headers: {
           Authorization: `${accessToken}`,
         },
-        body: JSON.stringify({ verified: '' }),
+        body: JSON.stringify({ verified: verifyingKey }),
       })
       if (res.ok) {
         const data = await res.json()

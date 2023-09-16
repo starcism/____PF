@@ -19,12 +19,14 @@ export interface IBoard {
 
 export interface IVideoBoard extends IBoard {
   youtubeUrl?: string
+  user_id: number
   videoId?: string
 }
 
 export interface PhotoBoard extends IBoard {
   tag: string
   post_tag: string
+  user_id: number
   photo_url: string[]
 }
 
@@ -63,7 +65,7 @@ export interface IPostItem {
 
 export interface ICard {
   key?: number
-  href: string
+  userId: number
   url?: string
   title?: string
   view?: number
@@ -74,9 +76,13 @@ export interface ICard {
   createdAt?: string
   tag: string
   postTag: string
+  boardId: number
+  UID: number | null
+  accessToken: string | null
+  setDelete: () => void
 }
 
-export interface IPhotoCard extends ICard {
+export interface IPhotoCard extends Omit<ICard, 'setDelete'> {
   photoUrls: string[]
 }
 

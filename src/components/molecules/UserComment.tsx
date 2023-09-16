@@ -56,8 +56,7 @@ export default function UserComment({ nested, value, setValue, onSubmit = () => 
     //   }
     // }
   }
-
-  console.log(nested)
+  
   return (
     <>
       <div className={`flex w-full py-[8px] pr-[8px] ${nested && 'pl-[36px]'}`}>

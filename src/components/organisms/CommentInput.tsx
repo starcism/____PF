@@ -23,7 +23,6 @@ export default function CommentInput({ nested = false, accessToken, loggedIn, bo
       const res = await fetch(checkEnvironment().concat('/api/board/forum/comment'), {
         method: 'POST',
         body: JSON.stringify({ board_id: boardId, reply: textareaValue, comment_id: commentId }),
-        cache: 'no-store',
         headers: {
           Authorization: `${accessToken}`,
           // "Content-Type": "multipart/form-data",

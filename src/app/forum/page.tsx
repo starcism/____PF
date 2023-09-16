@@ -22,19 +22,23 @@ export default function Page() {
     <>
       <BoardNotice />
       {postData ? (
-        postData.posts.map((post: IBoard, index: number) => (
-          <PostItem
-            key={index}
-            boardid={post.board_id}
-            title={post.title}
-            view={post.view}
-            likeCount={post.liked}
-            commentCount={post.comment_count}
-            createdAt={post.created_at}
-            updatedAt={post.updated_at}
-            nickname={post.nickname}
-          />
-        ))
+        postData.posts.map((post: IBoard, index: number) =>
+          post.deleted_at === null ? (
+            <PostItem
+              key={index}
+              boardid={post.board_id}
+              title={post.title}
+              view={post.view}
+              likeCount={post.liked}
+              commentCount={post.comment_count}
+              createdAt={post.created_at}
+              updatedAt={post.updated_at}
+              nickname={post.nickname}
+            />
+          ) : (
+            <></>
+          ),
+        )
       ) : (
         <div className="w-full h-[200px] text-gray-3 flex justify-center items-center">게시물 없음</div>
       )}

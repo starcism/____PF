@@ -22,7 +22,7 @@ export default function PhotoBoardWritingForm() {
   const [selectedIndex, setSelectedIndex] = useState([0, 0, 0, 0, 0, 0])
   const [selectAll, setSelectAll] = useState(false)
   const nameTags = ['유진', '가을', '레이', '원영', '리즈', '이서']
-  const postTags = ['트위터', '인스타', '공카', 'SNS', '직찍', '타팬', '기타']
+  const postTags = ['트위터', '인스타', '공카', 'SNS', '직찍', '타팬', '팬사진']
   const [postTagIndex, setPostTagIndex] = useState<number | null>(null)
 
   const tagButtonUrl = ['/images/yujin.jpeg', '/images/gaeul.jpeg', '/images/rei.jpeg', '/images/wonyo.jpeg', '/images/liz.jpeg', '/images/leeseo.jpeg']
@@ -75,12 +75,9 @@ export default function PhotoBoardWritingForm() {
       e.currentTarget.value = newValue
       e.currentTarget.setSelectionRange(selectionStart + 4, selectionStart + 4) // 커서 위치 조정
     }
-    //줄바꿈 3개까지 제한
+    //줄바꿈 제한
     if (e.key === 'Enter') {
-      const lines = e.currentTarget.value.split('\n')
-      if (lines.length >= 3) {
-        e.preventDefault()
-      }
+      e.preventDefault()
     }
   }
 
@@ -141,10 +138,10 @@ export default function PhotoBoardWritingForm() {
       setIsSubmit(false)
       return
     }
-    
+
     const tagUnSelected = selectedIndex.every((element) => element === 0)
 
-    if (postTagIndex === null || tagUnSelected ) {
+    if (postTagIndex === null || tagUnSelected) {
       alert('태그를 선택해주세요')
       setIsSubmit(false)
       return
@@ -170,7 +167,7 @@ export default function PhotoBoardWritingForm() {
 
     formData.append('title', title)
     formData.append('tag', tag)
-    if(postTag){
+    if (postTag) {
       formData.append('postTag', postTag)
     }
 

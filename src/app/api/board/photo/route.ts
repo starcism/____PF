@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
       const res = await fetch(`https://0lky4v3m2f.execute-api.ap-northeast-2.amazonaws.com/20230915/getobj?${kw}${kx}${ky}${kz}`, {
         method: 'GET',
         next: {
-          revalidate: 300,
+          revalidate: 3600 * 6,
         },
       })
       if (res.status === 200) {
@@ -127,6 +127,46 @@ export async function POST(request: Request) {
       }
     } catch (errors) {
       return NextResponse.json({ error: 'Internal Server Error', errors }, { status: 500 })
+    }
+
+    //토큰 없음
+  } else {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+}
+
+export async function PUT(request: Request) {
+  let accessToken = headers().get('Authorization')
+  const { boardId } = await request.json()
+
+  if (accessToken) {
+    try {
+      const verifyingRes = await fetch('https://6ietu7gzmk.execute-api.ap-northeast-2.amazonaws.com/20230717/v0', {
+        method: 'POST',
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+        body: JSON.stringify({ verified }),
+      })
+
+      if (verifyingRes.ok) {
+        const verifyingData = await verifyingRes.json()
+        const user_id = verifyingData.userId
+        const res = await fetch('https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/photo', {
+          method: 'PUT',
+          body: JSON.stringify({ boardId, userId: user_id }),
+        })
+
+        if (res.ok) {
+          return NextResponse.json({ message: '게시글을 삭제했어요' }, { status: 200 })
+        } else {
+          return NextResponse.json({ error: 'Unauthorized' }, { status: 500 })
+        }
+      } else {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      }
+    } catch (error) {
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
 
     //토큰 없음

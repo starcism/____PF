@@ -4,14 +4,15 @@ import { useCallback, useEffect, useState } from 'react'
 import { useAccessTokenState } from './AccessTokenProvider'
 import checkEnvironment from './checkEnvironment'
 
-export default function useAuth(withUID = false) {
+export default function useUserId() {
   const { accessToken, setAccessToken, loading } = useAccessTokenState()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<boolean>(false)
+  const [UID, setUID] = useState<number | null>(null)
   const fetchData = useCallback(async () => {
     try {
       //액세스 토큰 먼저 검증
-      const verifyingRes = await fetch(checkEnvironment().concat('/api/auth/verification/authv1'), {
+      const verifyingRes = await fetch(checkEnvironment().concat('/api/auth/verification/authv2'), {
         method: 'POST',
         headers: {
           Authorization: `${accessToken}`,
@@ -22,7 +23,10 @@ export default function useAuth(withUID = false) {
       })
 
       if (verifyingRes.ok) {
-        return
+        const { data } = await verifyingRes.json()
+        if (data.userId) {
+          setUID(data.userId)
+        }
 
         //토큰 만료시 재발급 요청
       } else if (verifyingRes.status === 401) {
@@ -64,5 +68,5 @@ export default function useAuth(withUID = false) {
     }
   }, [loading, fetchData])
 
-  return { isLoading, error }
+  return { accessToken, UID, isLoading, error }
 }

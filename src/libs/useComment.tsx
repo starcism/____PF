@@ -13,13 +13,14 @@ export default function useComment(boardId: string) {
   const [like, setLike] = useState<boolean>(false)
   const [commentList, setCommentList] = useState<Comments[]>([])
   const [refresh, setRefresh] = useState<boolean>(false)
+  const [UID, setUID] = useState<number | null>(null)
 
   const refreshComments = async () => {
     if (!loading) {
       setRefresh(true)
-      await getCommentArea(boardId, true);
+      await getCommentArea(boardId, true)
     }
-  };
+  }
 
   const getCommentArea = useCallback(
     async (boardId: string, refresh?: boolean) => {
@@ -56,17 +57,16 @@ export default function useComment(boardId: string) {
   const fetchData = useCallback(async () => {
     try {
       //액세스 토큰 먼저 검증
-      const verifyingRes = await fetch(checkEnvironment().concat('/api/auth/verification/authv1'), {
+      const verifyingRes = await fetch(checkEnvironment().concat('/api/auth/verification/authv2'), {
         method: 'POST',
         headers: {
           Authorization: `${accessToken}`,
         },
-        next: {
-          revalidate: 3600 * 23,
-        },
       })
 
       if (verifyingRes.ok) {
+        const { data } = await verifyingRes.json()
+        setUID(data.userId)
         setLoggedIn(true)
         return
 
@@ -105,7 +105,6 @@ export default function useComment(boardId: string) {
     } else if (!loading && !accessToken) {
       setUserInfoLoading(false)
     }
-
   }, [loading, fetchData])
 
   useEffect(() => {
@@ -114,5 +113,5 @@ export default function useComment(boardId: string) {
     }
   }, [loading])
 
-  return { userInfoLoading, commentAreaLoading, loggedIn, like, commentList, accessToken, refresh, refreshComments }
+  return { userInfoLoading, commentAreaLoading, loggedIn, like, commentList, accessToken, refresh, refreshComments, UID }
 }

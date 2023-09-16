@@ -11,7 +11,7 @@ module.exports = {
     },
     extend: {
       backgroundColor: {
-        'hover-button': 'rgba(0, 0, 0, 0.03)',
+        'hover-button': 'rgba(0, 0, 0, 0.05)',
         'nav-button': 'rgba(0, 0, 0, 0.3)',
         'dot-nav': 'rgba(187, 187, 187, 0.66)',
         'clicked-button-turquoise': 'rgba(133, 184, 203, 0.05)',

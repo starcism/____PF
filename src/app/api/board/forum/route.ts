@@ -122,3 +122,44 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 }
+
+
+export async function PUT(request: Request) {
+  let accessToken = headers().get('Authorization')
+  const { boardId } = await request.json()
+
+  if (accessToken) {
+    try {
+      const verifyingRes = await fetch('https://6ietu7gzmk.execute-api.ap-northeast-2.amazonaws.com/20230717/v0', {
+        method: 'POST',
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+        body: JSON.stringify({ verified }),
+      })
+
+      if (verifyingRes.ok) {
+        const verifyingData = await verifyingRes.json()
+        const user_id = verifyingData.userId
+        const res = await fetch('https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/free', {
+          method: 'PUT',
+          body: JSON.stringify({ boardId, userId: user_id }),
+        })
+
+        if (res.ok) {
+          return NextResponse.json({ message: '게시글을 삭제했어요' }, { status: 200 })
+        } else {
+          return NextResponse.json({ error: 'Unauthorized' }, { status: 500 })
+        }
+      } else {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      }
+    } catch (error) {
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    }
+
+    //토큰 없음
+  } else {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+}
