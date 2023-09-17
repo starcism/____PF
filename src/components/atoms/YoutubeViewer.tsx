@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 
 interface IYoutubeViewer {
-  url?: string
+  url?: string | null | undefined
   hasBorderRadius?: boolean
   full?: boolean
 }
@@ -36,15 +36,15 @@ export default function YoutubeViewer({ url, full = false, hasBorderRadius = fal
     }
   }, [])
 
-  const youtubeUrlRegex = /(http:|https:)?(\/\/)?(www\.)?(youtube.com|youtu.be)\/(watch|embed)?(\?v=|\/)?(\S+)?/g
+  const youtubeUrlRegex = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
   const match = url && youtubeUrlRegex.exec(url)
-  const videoId = match && match[7]
+  const videoId = match && match[2]
 
   return (
     <div className="flex justify-center items-center">
       {videoId ? (
         <iframe
-          className={`${hasBorderRadius && 'border-radius-18px'}`}
+          className={`${hasBorderRadius && 'rounded-[18px]'}`}
           width={width}
           height={height}
           src={`https://www.youtube.com/embed/${videoId}?fs=0&modestbranding=1`}

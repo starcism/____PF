@@ -5,9 +5,6 @@ export default async function getToken() {
     const res = await fetch(checkEnvironment().concat('/api/auth/verification/authv4'), {
       method: 'POST',
       credentials: 'include',
-      next: {
-        revalidate: 3600 * 6 - 1800,
-      },
     })
     if (res.status === 500 || res.status === 401) {
       return null;

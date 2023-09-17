@@ -17,9 +17,6 @@ export default function useUserId() {
         headers: {
           Authorization: `${accessToken}`,
         },
-        next: {
-          revalidate: 3600 * 23,
-        },
       })
 
       if (verifyingRes.ok) {

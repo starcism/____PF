@@ -2,7 +2,7 @@
 
 import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
 import PostItem from '@/components/organisms/PostItem'
-import { IBoard } from '@/types/types'
+import { Board } from '@/types/types'
 import React, { Suspense, useEffect, useState } from 'react'
 
 async function getPost(pageIndex: number) {
@@ -25,8 +25,8 @@ async function getPost(pageIndex: number) {
   }
 }
 
-export default function InfiniteScroll({ next }: {next: IBoard[]}) {
-  const [postData, setPostData] = useState<IBoard[]>(next)
+export default function InfiniteScroll({ next }: { next: Board[] }) {
+  const [postData, setPostData] = useState<Board[]>(next)
   const [pageIndex, setPageIndex] = useState<number>(3)
 
   // 데이터를 불러오는 함수
@@ -62,7 +62,7 @@ export default function InfiniteScroll({ next }: {next: IBoard[]}) {
   return (
     <div className="bg-white z-[1]">
       <Suspense fallback={<div>로딩중</div>}>
-        {postData.map((post: IBoard, index: number) => (
+        {postData.map((post: Board, index: number) => (
           <PostItem
             key={index}
             boardid={post.board_id}

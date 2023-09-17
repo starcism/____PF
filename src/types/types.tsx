@@ -4,7 +4,7 @@ interface IUser {
   nickname: string
 }
 
-export interface IBoard {
+export interface Board {
   key?: number
   board_id: number
   title: string
@@ -17,38 +17,47 @@ export interface IBoard {
   comment_count: number
 }
 
-export interface IVideoBoard extends IBoard {
-  youtubeUrl?: string
-  user_id: number
-  videoId?: string
-}
-
-export interface PhotoBoard extends IBoard {
+export interface PhotoBoard extends Board {
   tag: string
   post_tag: string
   user_id: number
   photo_url: string[]
 }
 
-export interface IPhotoBoard {
-  posts: PhotoBoard[]
-  photoUrls?: any
-  images?: any
-}
-
-export interface IFreeBoard {
-  posts: IBoard[]
-  totalPages: number
-}
-
-export interface IFreePost extends IBoard {
+export interface FreePost extends Board {
   content: string
   user_id: number
 }
 
-export interface IVideoBoard {
-  posts: IVideoBoard[]
-  totalPage: number
+export interface ForumData {
+  posts: Board[]
+  totalPages: number
+}
+
+export interface PhotoBoardData {
+  posts: PhotoBoard[]
+  photoUrls?: string[]
+}
+
+export interface VideoBoardData {
+  posts: VideoBoard[]
+}
+
+export interface VideoBoard {
+  key?: number
+  board_id: number
+  title: string
+  view: number
+  created_at: string
+  updated_at?: string
+  deleted_at?: string | null
+  nickname: string
+  liked: number
+  comment_count: number
+  youtube_url: string
+  user_id: number
+  tag: string
+  post_tag: string
 }
 
 export interface IPostItem {
@@ -63,27 +72,31 @@ export interface IPostItem {
   nickname?: string
 }
 
-export interface ICard {
+export interface Card {
   key?: number
   userId: number
-  url?: string
-  title?: string
+  title: string
   view?: number
   profile_image?: string
-  nickname?: string
-  liked?: number
-  commentCount?: number
-  createdAt?: string
-  tag: string
-  postTag: string
+  nickname: string
+  liked: number
+  commentCount: number
+  createdAt: string
   boardId: number
   UID: number | null
+  tag: string
+  postTag: string
+  boardType: string
   accessToken: string | null
   setDelete: () => void
 }
 
-export interface IPhotoCard extends Omit<ICard, 'setDelete'> {
+export interface PhotoCard extends Omit<Card, 'setDelete'> {
   photoUrls: string[]
+}
+
+export interface VideoCard extends Omit<Card, 'setDelete'> {
+  youtubeUrl: string
 }
 
 export interface Comments {

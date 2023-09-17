@@ -1,4 +1,4 @@
-import { IBoard } from '@/types/types'
+import { Board } from '@/types/types'
 import PostItem from '../organisms/PostItem'
 import checkEnvironment from '@/libs/checkEnvironment'
 
@@ -29,7 +29,7 @@ export default async function Forum() {
     <>
       <div>
         {posts &&
-          posts.map((post: IBoard, index: number) => (
+          posts.map((post: Board, index: number) => (
             <PostItem
               key={index}
               boardid={post.board_id}

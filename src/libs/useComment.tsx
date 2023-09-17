@@ -27,7 +27,6 @@ export default function useComment(boardId: string) {
       try {
         const res = await fetch(checkEnvironment().concat(`/api/board/forum/info?boardId=${boardId}`), {
           method: 'POST',
-          cache: 'no-store',
           headers: {
             Authorization: `${accessToken}`,
           },

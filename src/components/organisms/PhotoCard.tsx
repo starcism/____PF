@@ -1,5 +1,5 @@
 'use client'
-import { IPhotoCard } from '@/types/types'
+import { PhotoCard } from '@/types/types'
 import PhotoViewer from '../molecules/PhotoViwer'
 import PostCard from '../molecules/PostCard'
 import { useState } from 'react'
@@ -18,7 +18,7 @@ export default function PhotoCard({
   commentCount = 0,
   accessToken,
   UID,
-}: IPhotoCard) {
+}: PhotoCard) {
   const [isDeleted, setIsDeleted] = useState(false)
   const handleDelete = () => {
     setIsDeleted(true)
@@ -33,6 +33,7 @@ export default function PhotoCard({
       <div className="mx-[14px] mt-[16px]">
         <PhotoViewer photoUrls={photoUrls} />
         <PostCard
+          boardType="photo"
           userId={userId}
           boardId={boardId}
           title={title}

@@ -69,15 +69,14 @@ export default function PhotoViewer({ photoUrls = [] }: Props) {
           ? images.map((image, i) => (
               <div
                 key={i}
-                className={`cursor-pointer ${
-                  length === 3 && i === 0 ? 'row-start-1 row-end-3 h-full' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-full' : 'h-[15vh]'
+                className={`cursor-pointer relative ${
+                  length === 3 && i === 0 ? 'row-start-1 row-end-3 h-[30vh]' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-full' : 'h-[15vh]'
                 }`}
               >
                 <Image
                   src={image}
                   alt="_blank"
-                  width={500}
-                  height={500}
+                  fill
                   className="relative w-full h-full object-cover"
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN89x8AAuEB74Y0o2cAAAAASUVORK5CYII="

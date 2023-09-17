@@ -33,9 +33,6 @@ export default function AccessTokenProvider({ children }: Props) {
       const res = await fetch(checkEnvironment().concat('/api/auth/verification/authv4'), {
         method: 'POST',
         credentials: 'include',
-        next: {
-          revalidate: 3600 * 23,
-        },
       })
 
       if (res.status === 500 || res.status === 401) {

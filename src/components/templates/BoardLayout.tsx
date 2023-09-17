@@ -1,6 +1,6 @@
 'use client'
 
-export default function VideoBoardLayout({ children }: { children: React.ReactNode }) {
+export default function BoardLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className="z-[1] bg-white">

@@ -4,7 +4,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { useAccessTokenState } from './AccessTokenProvider'
 import checkEnvironment from './checkEnvironment'
 
-export default function useAuth(withUID = false) {
+process.env
+
+export default function useAuth() {
   const { accessToken, setAccessToken, loading } = useAccessTokenState()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<boolean>(false)
@@ -15,9 +17,6 @@ export default function useAuth(withUID = false) {
         method: 'POST',
         headers: {
           Authorization: `${accessToken}`,
-        },
-        next: {
-          revalidate: 3600 * 23,
         },
       })
 

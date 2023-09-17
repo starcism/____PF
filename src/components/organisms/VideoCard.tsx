@@ -1,22 +1,51 @@
 'use client'
+import { useState } from 'react'
 import YoutubeViewer from '../atoms/YoutubeViewer'
-import PostCardWithModal from '../molecules/PostCard'
-import { ICard } from '@/types/types'
+import PostCard from '../molecules/PostCard'
+import { VideoCard } from '@/types/types'
 
-export default function VideoCard({ key, boardId, url, title, view, createdAt, profile_image, nickname, likeCount = 0, commentCount = 0 }: ICard) {
+export default function VideoCard({
+  userId,
+  youtubeUrl,
+  boardId,
+  title,
+  view,
+  createdAt,
+  tag,
+  postTag,
+  nickname,
+  liked = 0,
+  commentCount = 0,
+  accessToken,
+  UID,
+}: VideoCard) {
+  const [isDeleted, setIsDeleted] = useState(false)
+  const handleDelete = () => {
+    setIsDeleted(true)
+  }
+
+  if (isDeleted) {
+    return <></>
+  }
+
   return (
     <>
       <div className="mx-[14px] mt-[16px]">
-        <YoutubeViewer url={url} hasBorderRadius={true} />
-        <PostCardWithModal
-          key={key}
+        <YoutubeViewer url={youtubeUrl} hasBorderRadius={true} />
+        <PostCard
+          boardType="video"
+          userId={userId}
           boardId={boardId}
           title={title}
-          view={view}
           createdAt={createdAt}
           nickname={nickname}
           liked={liked}
+          postTag={postTag}
+          tag={tag}
           commentCount={commentCount}
+          accessToken={accessToken}
+          UID={UID}
+          setDelete={handleDelete}
         />
       </div>
     </>

@@ -9,12 +9,12 @@ import { CircleImageButton, OptionalButton } from '../atoms/Button'
 import Tag from '../atoms/Tag'
 import { useAccessTokenState } from '@/libs/AccessTokenProvider'
 import YoutubeThumbnail from '../atoms/YoutubeThumbnail'
+import ModalContainer, { ModalSetVideo } from '../atoms/ModalContainer'
 
 export default function PhotoBoardWritingForm() {
   const router = useRouter()
   const { accessToken } = useAccessTokenState()
   const titleRef = useRef<HTMLInputElement>(null)
-  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleWritingForm: React.MouseEventHandler<HTMLButtonElement> = () => {
     router.replace('/video')
@@ -23,7 +23,9 @@ export default function PhotoBoardWritingForm() {
   const [selectedIndex, setSelectedIndex] = useState([0, 0, 0, 0, 0, 0])
   const [selectAll, setSelectAll] = useState(false)
   const nameTags = ['유진', '가을', '레이', '원영', '리즈', '이서']
-  const postTags = []
+  const postTags = ['공튜브', '자컨', '콘서트', '팬싸', '팬튜브', '기타']
+  const [postTagIndex, setPostTagIndex] = useState<number | null>(null)
+
   const tagButtonUrl = ['/images/yujin.jpeg', '/images/gaeul.jpeg', '/images/rei.jpeg', '/images/wonyo.jpeg', '/images/liz.jpeg', '/images/leeseo.jpeg']
   const setTagByIndex = (index: number) => {
     if (selectAll) {
@@ -47,7 +49,11 @@ export default function PhotoBoardWritingForm() {
     setSelectAll(!e)
   }
 
-  const [videoUrl, setVideoUrl] = useState<string>('')
+  const [youtubeUrl, setYoutubeUrl] = useState<string>('')
+
+  const getYoutubeUrl = (url: string) => {
+    setYoutubeUrl(url)
+  }
 
   //텍스트 영역 핸들링
   const [value, setValue] = useState<string>('')
@@ -77,23 +83,27 @@ export default function PhotoBoardWritingForm() {
       return
     }
 
-    if (videoUrl.length === 0) {
+    if (!youtubeUrl || youtubeUrl.length === 0) {
       alert('유튜브 주소를 업로드해주세요')
       setIsSubmit(false)
       return
     }
 
-    const formData = new FormData()
+    const tagUnSelected = selectedIndex.every((element) => element === 0)
+
+    if (postTagIndex === null || tagUnSelected) {
+      alert('태그를 선택해주세요')
+      setIsSubmit(false)
+      return
+    }
 
     const tag = selectedIndex.join('')
-
-    formData.append('title', title)
-    formData.append('tag', tag)
+    const postTag = postTagIndex !== null && postTags[postTagIndex]
 
     try {
-      const res = await fetch(checkEnvironment().concat('/api/board/photo'), {
+      const res = await fetch(checkEnvironment().concat('/api/board/video'), {
         method: 'POST',
-        body: formData,
+        body: JSON.stringify({ tag, postTag, title, youtubeUrl }),
         headers: {
           Authorization: `${accessToken}`,
         },
@@ -101,8 +111,8 @@ export default function PhotoBoardWritingForm() {
       if (res.status === 200) {
         const data = await res.json()
         console.log(data)
-        // alert('글 작성 완료')
-        // router.push('/photo')
+
+        router.push('/video')
       } else if (res.status === 401) {
         alert('권한이 만료되었어요')
         return
@@ -125,7 +135,7 @@ export default function PhotoBoardWritingForm() {
 
   return (
     <>
-      <form onSubmit={submitPost} encType="multipart/form-data">
+      <form onSubmit={submitPost}>
         <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-[54px]">
           <div className="flex-col justify-center">
             <div className="w-[100vw] h-[53px] custom-border-b-1 bg-white">
@@ -154,22 +164,27 @@ export default function PhotoBoardWritingForm() {
           <div className="flex w-[100vw] justify-center">
             <>
               <div className="flex-col w-[100vw] max-w-[800px]">
-                {videoUrl ? (
-                  <YoutubeThumbnail url={'https://www.youtube.com/watch?v=6ZUIwj3FgUY'} />
+                {youtubeUrl ? (
+                  <YoutubeThumbnail url={youtubeUrl} deleteButton={getYoutubeUrl} />
                 ) : (
                   <div className={`flex justify-center items-center py-[20px]`}>
-                    <button className="h-[186px] w-[330px] mx-[10px] items-center justify-center rounded-[10px] border border-semigold bg-gray-1 border-dashed">
-                      <div className="flex justify-center">
-                        <svg className="text-semigold" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="80" height="80" viewBox="0 0 48 48">
-                          <path
-                            fill="currentColor"
-                            d="M43.2,33.9c-0.4,2.1-2.1,3.7-4.2,4c-3.3,0.5-8.8,1.1-15,1.1c-6.1,0-11.6-0.6-15-1.1c-2.1-0.3-3.8-1.9-4.2-4C4.4,31.6,4,28.2,4,24c0-4.2,0.4-7.6,0.8-9.9c0.4-2.1,2.1-3.7,4.2-4C12.3,9.6,17.8,9,24,9c6.2,0,11.6,0.6,15,1.1c2.1,0.3,3.8,1.9,4.2,4c0.4,2.3,0.9,5.7,0.9,9.9C44,28.2,43.6,31.6,43.2,33.9z"
-                          ></path>
-                          <path fill="#FFF" d="M20 31L20 17 32 24z"></path>
-                        </svg>
-                      </div>
-                      <span className="text-darkgold">영상 공유하기</span>
-                    </button>
+                    <ModalSetVideo setUrl={getYoutubeUrl}>
+                      <button
+                        type="button"
+                        className="h-[186px] w-[330px] mx-[10px] items-center justify-center rounded-[10px] border border-semigold bg-gray-1 border-dashed"
+                      >
+                        <div className="flex justify-center">
+                          <svg className="text-semigold" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="80" height="80" viewBox="0 0 48 48">
+                            <path
+                              fill="currentColor"
+                              d="M43.2,33.9c-0.4,2.1-2.1,3.7-4.2,4c-3.3,0.5-8.8,1.1-15,1.1c-6.1,0-11.6-0.6-15-1.1c-2.1-0.3-3.8-1.9-4.2-4C4.4,31.6,4,28.2,4,24c0-4.2,0.4-7.6,0.8-9.9c0.4-2.1,2.1-3.7,4.2-4C12.3,9.6,17.8,9,24,9c6.2,0,11.6,0.6,15,1.1c2.1,0.3,3.8,1.9,4.2,4c0.4,2.3,0.9,5.7,0.9,9.9C44,28.2,43.6,31.6,43.2,33.9z"
+                            ></path>
+                            <path fill="#FFF" d="M20 31L20 17 32 24z"></path>
+                          </svg>
+                        </div>
+                        <span className="text-darkgold">영상 공유하기</span>
+                      </button>
+                    </ModalSetVideo>
                   </div>
                 )}
                 <div className="flex overflow-hidden max-w-[800px] justify-center w-[100vw] my-[0.2rem]">
@@ -184,7 +199,7 @@ export default function PhotoBoardWritingForm() {
                   />
                 </div>
                 <div className="w-[100vw] max-w-[800px] h-[68px] grid place-content-center-center custom-border-b-0 overflow-x-auto scrollbar-hide flex-nowrap">
-                  <div className="flex min-h-[32px] ml-[13px] items-center space-x-2">
+                  <div className="w-[calc(100vw-26px)] max-w-[800px] min-h-[68px] place-content-center mx-[13px] grid-tags custom-border-b-0">
                     {nameTags.map(
                       (tag, index) =>
                         selectedIndex[index] === 1 && (
@@ -193,6 +208,7 @@ export default function PhotoBoardWritingForm() {
                           </div>
                         ),
                     )}
+                    {postTagIndex !== null && <Tag text={postTags[postTagIndex]} />}
                   </div>
                   {/* <div className="flex min-h-[32px] ml-[13px] items-center space-x-2">
                     {nameTags.map(
@@ -265,21 +281,62 @@ export default function PhotoBoardWritingForm() {
               </span>
             </div>
             <div className="ml-[17px] h-[36px] mt-[17px] flex items-center">
-              <span className="text-[13px] font-700 text-gray-4 select-none">공식사진</span>
+              <span className="text-[13px] font-700 text-gray-4 select-none">공식영상</span>
             </div>
             <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2 overflow-x-auto flex-nowrap scrollbar-hide">
-              <OptionalButton onClick={() => {}} width="60px" text="트위터" selected={false} />
-              <OptionalButton onClick={() => {}} width="60px" text="인스타" selected={false} />
-              <OptionalButton onClick={() => {}} width="75px" text="공식카페" selected={false} />
-              <OptionalButton onClick={() => {}} width="48px" text="SNS" selected={false} />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(0)
+                }}
+                width="80px"
+                text="공식 유튜브"
+                selected={postTagIndex === 0}
+              />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(1)
+                }}
+                width="53px"
+                text="자컨"
+                selected={postTagIndex === 1}
+              />
             </div>
             <div className="ml-[17px] h-[36px] mt-[13px] flex items-center">
-              <span className="text-[13px] font-700 text-gray-4 select-none">팬사진</span>
+              <span className="text-[13px] font-700 text-gray-4 select-none">팬영상</span>
             </div>
             <div className="ml-[17px] w-[calc(100vw-24px)] h-[36px] flex items-center space-x-2 overflow-x-auto flex-nowrap scrollbar-hide">
-              <OptionalButton onClick={() => {}} width="53px" text="직찍" selected={false} />
-              <OptionalButton onClick={() => {}} width="53px" text="타팬" selected={false} />
-              <OptionalButton onClick={() => {}} width="53px" text="기타" selected={false} />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(2)
+                }}
+                width="60px"
+                text="콘서트"
+                selected={postTagIndex === 2}
+              />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(3)
+                }}
+                width="68px"
+                text="팬사인회"
+                selected={postTagIndex === 3}
+              />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(4)
+                }}
+                width="60px"
+                text="팬튜브"
+                selected={postTagIndex === 4}
+              />
+              <OptionalButton
+                onClick={() => {
+                  setPostTagIndex(5)
+                }}
+                width="53px"
+                text="기타"
+                selected={postTagIndex === 5}
+              />
             </div>
           </div>
         </div>
