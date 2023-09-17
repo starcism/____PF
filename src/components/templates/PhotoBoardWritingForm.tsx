@@ -68,15 +68,7 @@ export default function PhotoBoardWritingForm() {
 
   const PreventKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     //텍스트 영역 포커스 이동 방지
-    if (e.key === 'Tab') {
-      e.preventDefault()
-      const { selectionStart, selectionEnd, value } = e.currentTarget
-      const newValue = value.substring(0, selectionStart) + '    ' + value.substring(selectionEnd)
-      e.currentTarget.value = newValue
-      e.currentTarget.setSelectionRange(selectionStart + 4, selectionStart + 4) // 커서 위치 조정
-    }
-    //줄바꿈 제한
-    if (e.key === 'Enter') {
+    if (e.key === 'Tab' || e.key === 'Enter') {
       e.preventDefault()
     }
   }

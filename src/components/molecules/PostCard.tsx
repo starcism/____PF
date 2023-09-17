@@ -1,5 +1,5 @@
-import { ICard } from '@/types/types'
-import { useEffect, useState } from 'react'
+import { Card } from '@/types/types'
+import { useState } from 'react'
 import formatDate from '@/libs/getFormDate'
 import UserIcon from '../atoms/UserIcon'
 import ModalContainer from '../atoms/ModalContainer'
@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 const tags = ['#유진', '#가을', '#레이', '#원영', '#리즈', '#이서']
 
 export default function PostCard({
+  boardType,
   userId,
   boardId,
   title,
@@ -23,7 +24,7 @@ export default function PostCard({
   accessToken,
   UID,
   setDelete,
-}: ICard) {
+}: Card) {
   const [like, setLike] = useState(false)
   const filteredTags = tags.filter((_, index) => tag[index] === '1')
   const router = useRouter()
@@ -39,7 +40,7 @@ export default function PostCard({
   const deletePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     try {
-      const res = await fetch(checkEnvironment().concat('/api/board/photo'), {
+      const res = await fetch(checkEnvironment().concat(`/api/board/${boardType}`), {
         method: 'PUT',
         body: JSON.stringify({ boardId }),
         headers: {
@@ -51,7 +52,6 @@ export default function PostCard({
       if (res.status === 200) {
         alert('게시글을 삭제했어요')
         setDelete()
-
       } else if (res.status === 401) {
         alert('권한이 없어요')
       } else {
@@ -64,7 +64,7 @@ export default function PostCard({
 
   return (
     <>
-      <div className="w-full h-[128px] px-[22px] mb-[25px] bg-white">
+      <div className={`w-full h-[128px] px-[22px] mb-[25px] bg-white`}>
         <div className="flex w-full h-[50px] items-center justify-between mt-[4px]">
           <div className="flex items-center w-auto h-[50px]">
             <button onClick={handleNameClick}>
