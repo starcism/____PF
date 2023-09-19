@@ -29,6 +29,16 @@
 .text-outlined {
   text-shadow: -0.5px 0 #000, 0 0.5px #000, 0.5px 0 #000, 0 -0.5px #000;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(383px, 1fr));
+}
+@media (min-width: 768px) {
+  .grid-container {
+    justify-items: start;
+  }
+}
+
 .custom-border-1 {
   border-width: 1px;
   border-style: solid;
@@ -44,6 +54,11 @@
   border-style: solid;
   border-color: #eeeeee;
 }
+.custom-border-1 {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #eeeeee;
+}
 .custom-border-t-1 {
   border-top-width: 1px;
   border-style: solid;
@@ -51,6 +66,11 @@
 }
 .custom-border-t-2 {
   border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.layout-border {
+  border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
 }
 
 html,
@@ -257,10 +277,10 @@ lightblue: '#56cdfa', */
 } */
 
 .skeleton1 {
-  background: linear-gradient(to left, #b5a5a1 0%, #d0c4c1 33%, #ece4e2 100%);
+  background: linear-gradient(to left, #dddddd 0%, #dddddd 33%, #eeeeee 100%);
 }
 .skeleton2 {
-  background: linear-gradient(to left,#d0c4c1 0%, #ece4e2 100%);
+  background: linear-gradient(to left, #dddddd 0%, #eeeeee 100%);
 }
 
 .spinner {
@@ -269,7 +289,7 @@ lightblue: '#56cdfa', */
   height: 50px;
   box-sizing: border-box;
   border: 4px solid transparent;
-  background-image: linear-gradient(#fff, #fff), linear-gradient(to right, #ece4e2 0%,#56cdfa 100%);
+  background-image: linear-gradient(#fff, #fff), linear-gradient(to right, #ece4e2 0%, #56cdfa 100%);
   background-origin: border-box;
   background-clip: content-box, border-box;
   border-radius: 100%;
@@ -298,7 +318,7 @@ lightblue: '#56cdfa', */
 .ql-container {
   font-size: 15px !important;
   width: 100vw;
-  max-width: 800px;
+  max-width: 768px;
   overflow: auto !important;
   border-top: none !important;
   border-left: none !important;

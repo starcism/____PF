@@ -136,7 +136,7 @@ export default function PhotoBoardWritingForm() {
   return (
     <>
       <form onSubmit={submitPost}>
-        <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-[54px]">
+        <div className="fixed left-0 top-0 z-[1010] bg-white w-full max-w-[768px] h-[54px]">
           <div className="flex-col justify-center">
             <div className="w-[100vw] h-[53px] custom-border-b-1 bg-white">
               <div className="flex justify-between items-center">
@@ -160,7 +160,7 @@ export default function PhotoBoardWritingForm() {
             </div>
           </div>
         </div>
-        <div className="w-screen mt-[54px] bg-white">
+        <div className="w-full mt-[54px] bg-white">
           <div className="flex w-[100vw] justify-center">
             <>
               <div className="flex-col w-[100vw] max-w-[800px]">

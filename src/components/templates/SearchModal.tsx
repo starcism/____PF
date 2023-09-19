@@ -37,7 +37,7 @@ const SearchModal = ({ show, close, pathname }: IProps) => {
     <>
       {show && (
         <div
-          className="fixed left-0 top-0 w-screen h-screen bg-white custom-border-t-1 z-[1010]"
+          className="fixed left-0 top-0 w-full h-full bg-white custom-border-t-1 z-[1010]"
           onMouseDown={(e) => e.stopPropagation()}
         >
           <div className="flex w-full items-center h-[52px] bg-viva-7">

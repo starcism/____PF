@@ -30,7 +30,7 @@ export default function VideoCard({
 
   return (
     <>
-      <div className="mx-[14px] mt-[16px]">
+      <div className="mt-[16px]">
         <YoutubeViewer url={youtubeUrl} hasBorderRadius={true} />
         <PostCard
           boardType="video"

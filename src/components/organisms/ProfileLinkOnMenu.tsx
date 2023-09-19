@@ -37,7 +37,7 @@ export default function ProfileLinkOnMenu({ session = null, loading = false }: {
               <div className="flex w-full justify-between mx-[1rem]">
                 <div className="flex items-center">
                   <UserIcon />
-                  <span className="font-sans ml-4 text-[1rem] weight-600 leading-[0.8]">LVD</span>
+                  <span className="font-sans ml-4 text-[1rem] weight-500 leading-[0.8]">꾸미맘</span>
                 </div>
                 <div className="flex items-center">
                   <span>

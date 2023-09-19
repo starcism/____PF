@@ -29,8 +29,8 @@ export default function Page() {
   }
 
   return (
-    <div className="h-screen w-screen">
-      <div className="w-screen h-screen m-auto absolute object-cover overflow-hidden -z-10">
+    <div className="h-full w-full">
+      <div className="w-full h-full m-auto absolute object-cover overflow-hidden -z-10">
         <PhotoSlider />
         {/* <div className="max-w-[1000px] max-h-[1500px]">
           <Image
@@ -61,7 +61,7 @@ export default function Page() {
         <h1 className="text-[2rem]"></h1>
       </div>
       <div className="fixed left-0 bottom-[15%]">
-        <div className='flex justify-center w-screen h-full bg-transparent'>
+        <div className='flex justify-center w-full h-full bg-transparent'>
           <div className="max-w-[353px] min-w-[287px] w-[66%] h-[40%] bg-white rounded-[20px]">
             <div className="flex-col w-full h-full">
               <div className="flex w-full h-[58px] justify-center items-center">

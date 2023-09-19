@@ -28,7 +28,7 @@ export default function Page() {
         {postData ? (
           postData.posts.map((post: PhotoBoard, index: number) =>
             post.deleted_at === null ? (
-              <div key={index}>
+              <div key={index} className="w-[100vw] max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
                 <PhotoCard
                   boardType="photo"
                   userId={post.user_id}
@@ -47,11 +47,11 @@ export default function Page() {
                 />
               </div>
             ) : (
-              <></>
+              <div key={index}></div>
             ),
           )
         ) : (
-          <div className="w-full h-[200px] text-gray-3 flex justify-center items-center">게시물 없음</div>
+          <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center">게시물 없음</div>
         )}
       </BoardLayout>
     </>

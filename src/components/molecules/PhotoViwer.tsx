@@ -10,10 +10,11 @@ interface Props {
   photoUrls: string[]
 }
 
-export default function PhotoViewer({ photoUrls = [] }: Props) {
+export default function PhotoViewer({ photoUrls }: Props) {
   const length = photoUrls.length
-  const lengthArray = Array.from({ length }, (_, i) => i)
-  const [images, setImages] = useState<string[] | null>()
+  const lengthArray = Array.from({ length: length }, (_, i) => i + 1)
+
+  const [images, setImages] = useState<string[] | null>(null)
   const [load, setLoad] = useState(false)
   const getPhotoUrls = useCallback(async (photoUrls: string[]) => {
     const [keyW, keyX, keyY, keyZ] = photoUrls.slice(0, 4)
@@ -58,8 +59,14 @@ export default function PhotoViewer({ photoUrls = [] }: Props) {
     }
   }, [images])
 
+  useEffect(() => {
+    return () => {
+      setImages(null)
+    }
+  }, [])
+
   return (
-    <div className="flex-row px-[34px] h-auto w-screen">
+    <div className="flex-row h-auto w-full max-w-[430px] md:max-w-[374px]">
       <div
         className={`bg-white ${length > 1 ? 'grid grid-cols-2 gap-[3px]' : 'grid'} ${
           length > 2 ? 'gird-rows-2' : length === 2 && 'grid-rows-1'
@@ -70,13 +77,14 @@ export default function PhotoViewer({ photoUrls = [] }: Props) {
               <div
                 key={i}
                 className={`cursor-pointer relative ${
-                  length === 3 && i === 0 ? 'row-start-1 row-end-3 h-[30vh]' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-full' : 'h-[15vh]'
+                  length === 3 && i === 0 ? 'row-start-1 row-end-3 h-[calc(30vh+3px)]' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-full' : 'h-[15vh]'
                 }`}
               >
                 <Image
                   src={image}
                   alt="_blank"
                   fill
+                  priority={true}
                   className="relative w-full h-full object-cover"
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN89x8AAuEB74Y0o2cAAAAASUVORK5CYII="
@@ -86,8 +94,8 @@ export default function PhotoViewer({ photoUrls = [] }: Props) {
           : lengthArray.map((i) => (
               <div
                 key={i}
-                className={`bg-gray-1 ${
-                  length === 3 && i === 0 ? 'row-start-1 row-end-3 h-full' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-full' : 'h-[15vh]'
+                className={`bg-gray-1 w-full ${
+                  length === 3 && i === 0 ? 'row-start-1 row-end-3 h-full' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-[30vh]' : 'h-[15vh]'
                 }`}
               />
             ))}

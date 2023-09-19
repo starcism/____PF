@@ -1,5 +1,6 @@
 'use client'
 
+import LoadingSpinner from '@/components/atoms/LoadingSpinner'
 import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
 import VideoCard from '@/components/organisms/VideoCard'
 import BoardLayout from '@/components/templates/BoardLayout'
@@ -12,6 +13,14 @@ export default function Page() {
   const { postData, loading, totalPage } = useBoard('video', 1)
   const { accessToken, UID, isLoading } = useUserId()
 
+  if (loading) {
+    return (
+      <>
+        <LoadingSpinner />
+      </>
+    )
+  }
+
   return (
     <>
       <NoticeBoardHeader />
@@ -19,7 +28,7 @@ export default function Page() {
         {postData ? (
           postData.posts.map((post: VideoBoard, index: number) =>
             post.deleted_at === null ? (
-              <div key={index}>
+              <div key={index} className="w-[100vw] max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
                 <VideoCard
                   boardType="photo"
                   userId={post.user_id}
@@ -38,7 +47,7 @@ export default function Page() {
                 />
               </div>
             ) : (
-              <></>
+              <div key={index}></div>
             ),
           )
         ) : (

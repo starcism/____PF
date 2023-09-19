@@ -11,8 +11,8 @@ export default function PostLayout({ children, boardType }: Props) {
   const router = useRouter()
   return (
     <>
-      <div className="fixed left-0 top-0 z-[1010] h-[53px] w-full bg-white">
-        <div className="w-full h-[53px] custom-border-b-1 bg-white">
+      <div className="fixed top-0 z-[1010] max-w-[767px] h-[53px] w-full bg-white">
+        <div className="w-full h-[53px] custom-border-1 bg-white">
           <div className="flex justify-between items-center">
             <div className="h-[53px] w-[53px] flex justify-center items-center">
               <button
@@ -33,7 +33,7 @@ export default function PostLayout({ children, boardType }: Props) {
           </div>
         </div>
       </div>
-      <div className="mt-[54px]">{children}</div>
+      <div className="pt-[54px]">{children}</div>
     </>
   )
 }

@@ -9,46 +9,20 @@ interface IYoutubeViewer {
 }
 
 export default function YoutubeViewer({ url, full = false, hasBorderRadius = false }: IYoutubeViewer) {
-  const [width, setWidth] = useState(440)
-  const [height, setHeight] = useState(247.5)
-
-  const handleResize = () => {
-    const screenWidth = window.innerWidth
-    if (full) {
-      setWidth(screenWidth)
-      setHeight((screenWidth / 440) * 247.5)
-      return
-    }
-    if (screenWidth <= 454) {
-      setWidth(screenWidth - 14)
-      setHeight((screenWidth / 440) * 247.5)
-    } else {
-      setWidth(440)
-      setHeight(247.5)
-    }
-  }
-
-  useEffect(() => {
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-
   const youtubeUrlRegex = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
   const match = url && youtubeUrlRegex.exec(url)
   const videoId = match && match[2]
 
   return (
-    <div className="flex justify-center items-center">
+    <div className={`relative pt-[56.25%] overflw-hidden w-full h-0`}>
       {videoId ? (
         <iframe
-          className={`${hasBorderRadius && 'rounded-[18px]'}`}
-          width={width}
-          height={height}
-          src={`https://www.youtube.com/embed/${videoId}?fs=0&modestbranding=1`}
+          className={`absolute top-0 w-full h-full max-w-[430px] max-h-[242px] md:max-w-[374px] md:max-h-[210px] ${hasBorderRadius && 'rounded-[18px]'}`}
+          width={430}
+          height={242}
+          src={`https://www.youtube.com/embed/${videoId}?fs=1&modestbranding=1`}
           title="YouTube video player"
+          allowFullScreen
         ></iframe>
       ) : (
         <div></div>

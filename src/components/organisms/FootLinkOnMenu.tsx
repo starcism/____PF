@@ -62,7 +62,7 @@ export default function FootLinkOnMenu({ session = null, loading = false }: { se
       </ConditionalLink>
       <Divider size="m_transparent" my="4px" />
       <div className="flex w-full h-[4rem] justify-center items-center pointer-events-none select-none">
-        <span className="text-gray-2 text-[1.1rem] weight-400">후원하기</span>
+        <span className="text-gray-2 text-[1.1rem] weight-400">서포트</span>
       </div>
 
       {/* <ConditionalLink hrefLoggedIn="" hrefLoggedOut="" size="m_menu_footer" session={session} >

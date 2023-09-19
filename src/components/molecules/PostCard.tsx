@@ -55,6 +55,7 @@ export default function PostCard({
       } else if (res.status === 401) {
         alert('권한이 없어요')
       } else {
+        const data = await res.json()
         alert('삭제에 실패했어요')
       }
     } catch (error) {
@@ -64,7 +65,7 @@ export default function PostCard({
 
   return (
     <>
-      <div className={`w-full h-[128px] px-[22px] mb-[25px] bg-white`}>
+      <div className={`w-[calc(100vw-30px)] sm:w-[100vw] h-[128px] mb-[25px] max-w-[430px] md:max-w-[354px]`}>
         <div className="flex w-full h-[50px] items-center justify-between mt-[4px]">
           <div className="flex items-center w-auto h-[50px]">
             <button onClick={handleNameClick}>

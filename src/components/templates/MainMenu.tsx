@@ -11,6 +11,7 @@ type BlockInteractionEvent = MouseEvent | TouchEvent | WheelEvent
 
 export default function MainMenu() {
   const { accessToken, loading } = useAccessTokenState()
+
   useEffect(() => {
     const blockInteraction = (e: BlockInteractionEvent) => {
       e.preventDefault()
@@ -28,7 +29,7 @@ export default function MainMenu() {
 
   return (
     <>
-      <div className="fixed left-0 top-[52px] h-[calc(100vh-52px)] w-[100vw] bg-white z-[1002]">
+      <div onMouseDown={(e) => e.stopPropagation()} className="fixed top-[52px] h-[calc(100vh-52px)] w-full max-w-[479px] bg-white z-[1000] border-r-[0.5px] shadow-2xl border-solid border-r-gray-2">
         {loading ? <ProfileLinkOnMenu loading={true} /> : <ProfileLinkOnMenu session={accessToken} />}
         <PageLinkOnMenu />
         {loading ? <FootLinkOnMenu loading={true} /> : <FootLinkOnMenu session={accessToken} />}

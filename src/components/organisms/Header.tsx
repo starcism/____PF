@@ -23,15 +23,54 @@ function HeaderComponent({ pathname }: Props) {
     handleMainMenu(false)
   }
 
+  const [isMenu, setIsMenu] = useState(false)
+  const openMenu = () => {
+    handleMainMenu(true)
+    // document.body.style.cssText = `
+    //   position: fixed; 
+    //   top: -${window.scrollY}px;
+    //   overflow-y: scroll;
+    //   width: 100%;`
+  }
+
+  const closeMenu = () => {
+    handleMainMenu(false)
+    // const scrollY = document.body.style.top
+    // document.body.style.cssText = ''
+    // window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
+  }
+
+  // useEffect(() => {
+  //   return () => {
+  //     const scrollY = document.body.style.top
+  //     document.body.style.cssText = ''
+  //     window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
+  //   }
+  // }, [])
+
   return (
     <>
-      {isSearchBarOpen && <SearchModal pathname={pathname} show={isSearchBarOpen} close={handleSearchBarOpen} />}
-      {mainMenu && <MainMenu />}
-      <div className="z-1000 w-full h-[52px] flex items-center justify-center px-[0.5rem] bg-lightgold shadow-sm">
+      {/* {isSearchBarOpen && <SearchModal pathname={pathname} show={isSearchBarOpen} close={handleSearchBarOpen} />} */}
+      {mainMenu && (
+        <div className="fixed left-0 right-0 bottom-0 top-[52px] w-full max-w-[768px] bg-[rgba(34,34,34,.5)] mx-auto z-[999]" onMouseDown={() => closeMenu()}>
+          <MainMenu />
+        </div>
+      )}
+      <div className="z-[1002] w-full h-[52px] max-w-[768px] flex items-center justify-center px-[0.5rem] bg-white shadow-sm custom-border-b-1">
         <div className="flex w-full">
           <div className="flex h-[40px] w-[40px] items-center justify-center">
             <div className="text-[#373737] w-[40px] h-[40px] rounded-[50%] hover:bg-hover-button duration-200">
-              <button onClick={() => handleMainMenu(!mainMenu)} className="flex items-center justify-center w-full h-full rounded-[50%]">
+              <button
+                onClick={() => {
+                  if (mainMenu) {
+                    closeMenu()
+                  } else {
+                    openMenu()
+                  }
+                  handleMainMenu(!mainMenu)
+                }}
+                className="flex items-center justify-center w-full h-full rounded-[50%]"
+              >
                 {mainMenu ? (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -46,13 +85,13 @@ function HeaderComponent({ pathname }: Props) {
           </div>
           <div className="flex w-full h-[40px] items-center justify-center">
             <Link href="/" className="flex items-center justify-center h-[40px] w-[100px]" onClick={() => handleMainMenu(false)}>
-              <span className="font-sans text-[16px] font-700">LOVEDIVE</span>
+              <span className="font-sans text-[18px] font-700">lovedive.net</span>
               {/* <Image alt="logo" src={swithy_logo} width={80} priority={true} /> */}
             </Link>
           </div>
           <div className="flex h-[40px] w-[40px] items-center justify-center">
-            <div className="text-[#373737] w-[40px] h-[40px] rounded-[50%] hover:bg-hover-button duration-200">
-              <button className="flex items-center justify-center w-full h-full rounded-[50%]" onClick={() => setSearchBarOpen(true)}>
+            <div className={`text-[#373737] w-[40px] h-[40px] rounded-[50%] ${true ? '' :'hover:bg-hover-button'} duration-200`}>
+              <button type='button' className="text-gray-3 cursor-default flex items-center justify-center w-full h-full rounded-[50%]" onClick={() => setSearchBarOpen(true)}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
@@ -76,15 +115,15 @@ function SubHeader({ pathname }: Props) {
   const boardType = pathname ? boardTypeObj[pathname] : '전체글'
   return (
     <>
-      <div className="flex w-full relative bg-white justify-between items-center h-[44px] px-[0.5rem] border-b border-solid border-[#dddddd]">
+      <div className="flex w-full max-w-[768px] relative bg-white justify-between items-center h-[44px] px-[0.5rem] border-b border-solid border-[#dddddd]">
         <div className="flex h-[30px] w-[75px] ml-[0.5rem] justify-start items-center pointer-events-none select-none">
-          <span className="text-[14px] text-viva-gray-1 align-top whitespace-nowrap overflow-hidden overflow-ellipsis leading-[45px] font-bold">
+          <span className="text-[14px] text-gray-4 align-top whitespace-nowrap overflow-hidden overflow-ellipsis leading-[45px] font-bold">
             {boardType}
           </span>
         </div>
         {pathname !== '/notice' && (
           <div className="flex items-center">
-            <div className="h-[30px] w-[40px] mr-[0.5rem] border-[0.5px] border-solid border-[#dddddd] rounded-[15px] hover:bg-hover-button duration-200">
+            <div className="h-[30px] w-[40px] mr-[0.5rem] border-[0.5px] border-solid border-[#dddddd] bg-gray-0 rounded-[15px] hover:bg-hover-button-header shadow-sm shadow-semigold duration-200">
               <button className="flex justify-center items-center w-full h-full">
                 <svg
                   className="w-6 h-6 text-viva-gray-3"
@@ -102,7 +141,7 @@ function SubHeader({ pathname }: Props) {
                 </svg>
               </button>
             </div>
-            <div className="h-[30px] w-[45px] mr-[0.5rem] border-[0.5px] border-solid border-[#dddddd] rounded-[17px] hover:bg-hover-button duration-200">
+            <div className="h-[30px] w-[45px] mr-[0.5rem] border-[0.5px] border-solid border-[#dddddd] bg-gray-0 rounded-[17px] hover:bg-hover-button-header shadow-sm shadow-semigold duration-200">
               <Link href={`${pathname}/write`} className="flex justify-center items-center w-full h-full">
                 {pathname && (
                   <svg
@@ -143,7 +182,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="top-0 fixed z-10 w-full">
+      <div className="top-0 fixed z-10 w-full max-w-[766px] mx-auto">
         {pathname && showHeader && <HeaderComponent pathname={props} />}
         {pathname && showSubHeader && <SubHeader pathname={props} />}
       </div>

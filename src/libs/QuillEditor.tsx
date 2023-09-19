@@ -78,7 +78,7 @@ export default function QuillEditor({ quillRef, value, onChange, placeholder }: 
 
   return (
     <ReactQuill
-      style={{ minHeight: 'calc(100vh - 250px)', maxHeight: 'calc(100vh - 150px)' }}
+      style={{ minHeight: 'calc(100vh - 250px)', maxHeight: 'calc(100vh - 150px)', margin: '0 auto'}}
       ref={quillRef}
       onChange={onChange}
       modules={modules}

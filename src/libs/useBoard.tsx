@@ -35,7 +35,6 @@ export default function useBoard(boardType: string, pageIndex: number) {
         } else if (boardType === 'video') {
           const { posts, totalPages } = await res.json()
           const data = { posts, totalPages }
-          console.log(data)
           setPostData(data)
           setTotalPage(totalPages)
         }
@@ -53,6 +52,10 @@ export default function useBoard(boardType: string, pageIndex: number) {
 
   useEffect(() => {
     getPost(pageIndex)
+    return () => {
+      setLoading(true)
+      setPostData(null)
+    }
   }, [getPost, pageIndex])
 
   return { postData, loading, totalPage }

@@ -172,7 +172,6 @@ export default function PhotoBoardWritingForm() {
         },
       })
       if (res.status === 200) {
-        alert('글 작성 완료')
         router.push('/photo')
       } else if (res.status === 401) {
         alert('권한이 만료되었어요')
@@ -206,9 +205,9 @@ export default function PhotoBoardWritingForm() {
   return (
     <>
       <form onSubmit={submitPost} encType="multipart/form-data">
-        <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-[54px]">
+        <div className="fixed top-0 z-[1010] w-full max-w-[768px] h-[54px]" style={{ margin: '0 auto' }}>
           <div className="flex-col justify-center">
-            <div className="w-[100vw] h-[53px] custom-border-b-1 bg-white">
+            <div className="w-full h-[53px] custom-border-b-1 bg-white">
               <div className="flex justify-between items-center">
                 <div className="h-[53px] w-[53px] flex justify-center items-center">
                   <button type="button" className="justify-center items-center" onClick={handleWritingForm}>
@@ -230,11 +229,11 @@ export default function PhotoBoardWritingForm() {
             </div>
           </div>
         </div>
-        <div className="w-screen mt-[54px] bg-white">
-          <div className="flex w-[100vw] justify-center">
+        <div className="w-full mt-[54px] overflow-x-hidden" style={{ margin: '0 auto' }}>
+          <div className="flex max-w-[768px] w-full justify-center">
             <>
-              <div className="flex-col w-[100vw] max-w-[800px]">
-                <div className="flex items-center h-[120px] w-[100vw] max-w-[800px] overflow-x-auto flex-nowrap scrollbar-hide py-[12px] px-[0px] bg-white">
+              <div className="flex-col max-w-[768px] w-full">
+                <div className="flex items-center h-[120px] max-w-[768px] w-full overflow-x-auto flex-nowrap scrollbar-hide py-[12px] px-[0px] bg-white">
                   {/* 이미지 미리보기 추가 */}
                   {images.blob &&
                     images.blob.map((blobUrl, index) => (
@@ -267,9 +266,9 @@ export default function PhotoBoardWritingForm() {
                     </label>
                   )}
                 </div>
-                <div className="flex overflow-hidden max-w-[800px] justify-center w-[100vw] my-[0.2rem]">
+                <div className="flex overflow-hidden max-w-[768px] justify-center w-full my-[0.2rem]">
                   <textarea
-                    className="flex w-[100vw] h-[100px] leading-[26px] max-w-[800px] px-[15px] outline-none resize-none text-[16px] scrollbar-hide font-350 placeholder:text-gray-3"
+                    className="flex w-full h-[100px] leading-[26px] max-w-[768px] px-[15px] outline-none resize-none text-[16px] scrollbar-hide font-350 placeholder:text-gray-3"
                     placeholder="코멘트를 남겨보세요"
                     maxLength={100}
                     onKeyDown={PreventKeyDown}
@@ -278,7 +277,7 @@ export default function PhotoBoardWritingForm() {
                     ref={titleRef}
                   />
                 </div>
-                <div className="w-[calc(100vw-26px)] max-w-[800px] min-h-[68px] place-content-center mx-[13px] grid-tags custom-border-b-0">
+                <div className="w-[calc(100%-26px)] max-w-[768px] min-h-[68px] place-content-center mx-[13px] grid-tags custom-border-b-0">
                   {nameTags.map(
                     (tag, index) =>
                       selectedIndex[index] === 1 && (
@@ -292,7 +291,7 @@ export default function PhotoBoardWritingForm() {
               </div>
             </>
           </div>
-          <div className="flex-col justify-center items-center w-[100vw] h-[70vh]">
+          <div className="flex-col justify-center items-center w-full h-[70vh]">
             <div className="ml-[17px] mt-[3px] w-[calc(100vw-17px)] h-[33px] flex items-center">
               <span className="text-[13px] font-700 select-none">태그설정</span>
               <span>

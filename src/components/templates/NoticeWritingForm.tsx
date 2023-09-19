@@ -53,7 +53,7 @@ export default function NoticeWritingForm() {
 
   return (
     <>
-      <div className="fixed left-0 top-0 z-[1010] bg-white w-screen h-screen overflow-auto">
+      <div className="fixed left-0 top-0 z-[1010] bg-white w-full h-full overflow-auto">
         <div className="flex-col items-center justify-center">
           <div className="w-[100vw] h-[3.5rem] custom-border-b-1">
             <div className="flex justify-between items-center">
