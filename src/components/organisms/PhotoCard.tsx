@@ -30,7 +30,7 @@ export default function PhotoCard({
 
   return (
     <>
-      <div className="mx-[14px] mt-[16px]">
+      <div className="mt-[16px]">
         <PhotoViewer photoUrls={photoUrls} />
         <PostCard
           boardType="photo"
