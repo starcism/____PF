@@ -186,8 +186,8 @@ export default function Header() {
         {pathname && showHeader && <HeaderComponent pathname={props} />}
         {pathname && showSubHeader && <SubHeader pathname={props} />}
       </div>
-      {pathname && showHeader && <div className="h-[50px] w-full bg-white" />}
-      {pathname && showSubHeader && <div className="h-[42px] w-full bg-white" />}
+      {pathname && showHeader && <div className="h-[52px] w-full bg-white" />}
+      {pathname && showSubHeader && <div className="h-[44px] w-full bg-white" />}
     </>
   )
 }

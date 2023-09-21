@@ -71,7 +71,7 @@ export default function PostCard({
             <button onClick={handleNameClick}>
               <div className="flex items-center px-[4px]">
                 <UserIcon size="28" />
-                <span className="ml-2 text-[14px] mb-[2px] font-700 text-gray-4 select-none overflow-hidden whitespace-nowrap text-ellipsis">{nickname}</span>
+                <span className="ml-2 text-[14px] mb-[2px] font-700 text-gray-4 select-none overflow-hidden h-[14px] text-ellipsis">{nickname}</span>
               </div>
             </button>
           </div>
