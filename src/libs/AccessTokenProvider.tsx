@@ -17,7 +17,7 @@ interface AccessTokenContextProps {
 const AccessTokenContext = createContext<AccessTokenContextProps>({
   accessToken: null,
   setAccessToken: (): void => {},
-  loading: false,
+  loading: true,
 })
 
 export function useAccessTokenState() {

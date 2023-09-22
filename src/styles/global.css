@@ -283,7 +283,12 @@ lightblue: '#56cdfa', */
   transform: rotate(270deg);
   transition: transform 0.2s linear 0s, border-left-width 0s linear 0.15s;
 } */
-
+.shadow-tur {
+  box-shadow: 0 0 1.5px 1.5px rgba(133, 184, 203, 0.5);
+}
+.shadow-gol {
+  box-shadow: 0 0 1.5px 1.5px rgba(208, 196, 193, 0.5);
+}
 .skeleton1 {
   background: linear-gradient(to left, #dddddd 0%, #dddddd 33%, #eeeeee 100%);
 }
@@ -303,6 +308,16 @@ lightblue: '#56cdfa', */
   border-radius: 100%;
   /* border-top-color: ; */
   animation: spin 1s ease-in-out infinite;
+}
+.spinner-small {
+  width: 20px;
+  height: 20px;
+  border: 5px solid rgba(233, 233, 233, 0.5);
+  border-right: 5px solid rgba(211, 211, 211, 0.5);
+  border-top: 5px solid rgba(211, 211, 211, 0.5);
+  border-radius: 100%;
+  /* border-top-color: ; */
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {

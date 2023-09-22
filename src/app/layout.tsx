@@ -7,6 +7,7 @@ import MainMenuProvider from '@/libs/MainMenuProvider'
 import { cls } from '@/libs/cls'
 import QuillProvider from '@/libs/QuillProvider'
 import Head from 'next/head'
+import UserProvider from '@/libs/UserProvider'
 
 export const metadata = {
   title: {
@@ -35,10 +36,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="ko" className={cls(notoSansKR.className, inter.variable)}>
       <body className="overflow-y-auto scrollbar-hide mx-auto min-h-[100vh] h-full max-w-[768px] shadow-xl shadow-semigold layout-border">
         <AccessTokenProvider>
-          <MainMenuProvider>
-            <Header />
-            <QuillProvider>{children}</QuillProvider>
-          </MainMenuProvider>
+          <UserProvider>
+            <MainMenuProvider>
+              <Header />
+              <QuillProvider>{children}</QuillProvider>
+            </MainMenuProvider>
+          </UserProvider>
         </AccessTokenProvider>
       </body>
     </html>
