@@ -5,7 +5,15 @@ import { useContext } from 'react'
 import UserIcon from '../atoms/UserIcon'
 import ConditionalLink from '../molecules/ConditionalLink'
 
-export default function ProfileLinkOnMenu({ session = null, loading = false }: { session?: string | null; loading?: boolean }) {
+export default function ProfileLinkOnMenu({
+  nickname = '',
+  session = null,
+  loading = false,
+}: {
+  nickname?: string | null
+  session?: string | null
+  loading?: boolean
+}) {
   const { handleMainMenu } = useContext(MainMenuContext)
   if (loading) {
     return (
@@ -37,7 +45,7 @@ export default function ProfileLinkOnMenu({ session = null, loading = false }: {
               <div className="flex w-full justify-between mx-[1rem]">
                 <div className="flex items-center">
                   <UserIcon />
-                  <span className="font-sans ml-4 text-[1rem] weight-500 leading-[0.8]">꾸미맘</span>
+                  <span className="font-sans ml-4 text-[1rem] weight-500 leading-[0.8]">{nickname}</span>
                 </div>
                 <div className="flex items-center">
                   <span>

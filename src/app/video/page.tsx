@@ -4,14 +4,14 @@ import LoadingSpinner from '@/components/atoms/LoadingSpinner'
 import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
 import VideoCard from '@/components/organisms/VideoCard'
 import BoardLayout from '@/components/templates/BoardLayout'
+import { useUserState } from '@/libs/UserProvider'
 import useBoard from '@/libs/useBoard'
-import useUserId from '@/libs/useUserId'
 import { VideoBoard } from '@/types/types'
 import React from 'react'
 
 export default function Page() {
   const { postData, loading, totalPage } = useBoard('video', 1)
-  const { accessToken, UID, isLoading } = useUserId()
+  const { accessToken, userId, isLoading } = useUserState()
 
   if (loading) {
     return (
@@ -43,7 +43,7 @@ export default function Page() {
                   tag={post.tag}
                   postTag={post.post_tag}
                   accessToken={accessToken as string | null}
-                  UID={UID as number | null}
+                  UID={userId as number | null}
                 />
               </div>
             ) : (

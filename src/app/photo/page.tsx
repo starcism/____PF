@@ -5,13 +5,13 @@ import { PhotoBoard } from '@/types/types'
 import PhotoCard from '@/components/organisms/PhotoCard'
 import BoardNotice from '@/components/organisms/NoticeBoardHeader'
 import LoadingSpinner from '@/components/atoms/LoadingSpinner'
-import useUserId from '@/libs/useUserId'
 import useBoard from '@/libs/useBoard'
 import BoardLayout from '@/components/templates/BoardLayout'
+import { useUserState } from '@/libs/UserProvider'
 
 export default function Page() {
   const { postData, loading, totalPage } = useBoard('photo', 1)
-  const { accessToken, UID, isLoading } = useUserId()
+  const { accessToken, userId, isLoading } = useUserState()
 
   if (loading) {
     return (
@@ -43,7 +43,7 @@ export default function Page() {
                   tag={post.tag}
                   postTag={post.post_tag}
                   accessToken={accessToken as string | null}
-                  UID={UID as number | null}
+                  UID={userId as number | null}
                 />
               </div>
             ) : (

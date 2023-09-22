@@ -9,6 +9,7 @@ import checkEnvironment from '@/libs/checkEnvironment'
 interface Props {
   accessToken: string
   nickname: string
+  setNickname: React.Dispatch<React.SetStateAction<string | null>>
   profile_image: string
 }
 
@@ -17,7 +18,7 @@ const inputRegex = /^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]+$/
 const NICKNAME_MIN_LENGTH = 2
 const NICKNAME_MAX_LENGTH = 12
 
-export default function ProfileSetter({ accessToken, nickname, profile_image = '/images/liz1.jpeg' }: Props) {
+export default function ProfileSetter({ accessToken, nickname, setNickname, profile_image }: Props) {
   const [onInput, setOnInput] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [canSubmit, setCanSubmit] = useState(false)
@@ -32,7 +33,9 @@ export default function ProfileSetter({ accessToken, nickname, profile_image = '
   }
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value.replace(/\s| /gi, '')
+    const newNickname = nicknameRef.current?.value.trim() ?? ''
     console.log(inputValue)
+    console.log(newNickname)
     setValue(inputValue)
 
     const isValid = inputRegex.test(inputValue)
@@ -64,8 +67,9 @@ export default function ProfileSetter({ accessToken, nickname, profile_image = '
     const newNickname = nicknameRef.current?.value.trim() ?? ''
 
     const isValid = regex.test(newNickname)
+
     if (nickname === newNickname) {
-      setAlertMessage('')
+      setAlertMessage('동일한 닉네임으로 변경할 수 없어요')
       setLoading(false)
       return
     }
@@ -88,7 +92,7 @@ export default function ProfileSetter({ accessToken, nickname, profile_image = '
     try {
       const res = await fetch(checkEnvironment().concat('/api/user'), {
         method: 'POST',
-        body: JSON.stringify({ nickname: newNickname }),
+        body: JSON.stringify({ nickname: newNickname, pre: nickname }),
         headers: {
           Authorization: `${accessToken}`,
           // "Content-Type": "multipart/form-data",
@@ -97,14 +101,15 @@ export default function ProfileSetter({ accessToken, nickname, profile_image = '
 
       if (res.status === 200) {
         setOnInput(false)
+        setNickname(newNickname)
       } else if (res.status === 401) {
-        alert('권한이 없어요')
+        setAlertMessage(`로그인 정보가 만료되었어요`)
       } else {
-        const data = await res.json()
-        console.log(data)
+        const { error } = await res.json()
+        setAlertMessage(`${error}`)
       }
     } catch (error) {
-      console.log(error)
+      console.log('error', error)
     } finally {
       setLoading(false)
     }
@@ -134,16 +139,7 @@ export default function ProfileSetter({ accessToken, nickname, profile_image = '
                     {canSubmit ? (
                       <button type="button" onClick={() => submitNickname()} className="flex items-center justify-center w-[26px] h-[26px]">
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
-                          <g
-                            fill="none"
-                            fill-rule="nonzero"
-                            stroke="none"
-                            strokeWidth="1"
-                            fontFamily="none"
-                            fontWeight="none"
-                            fontSize="none"
-                            textAnchor="none"
-                          >
+                          <g fill="none" fillRule="nonzero" stroke="none" strokeWidth="1" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none">
                             <path
                               transform="scale(12,12)"
                               d="M20.93097,6.60012c0.16075,0.37985 0.07183,0.81942 -0.22393,1.10691l-11,11c-0.39053,0.39037 -1.02353,0.39037 -1.41406,0l-4,-4c-0.26124,-0.25082 -0.36647,-0.62327 -0.27511,-0.97371c0.09136,-0.35044 0.36503,-0.62411 0.71547,-0.71547c0.35044,-0.09136 0.72289,0.01388 0.97371,0.27511l3.29297,3.29297l10.29297,-10.29297c0.18112,-0.18641 0.4277,-0.29499 0.6875,-0.30273c0.41228,-0.01216 0.78974,0.23004 0.9505,0.60988z"
@@ -181,14 +177,14 @@ export default function ProfileSetter({ accessToken, nickname, profile_image = '
                       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
                         <g fill="none" fillRule="nonzero" stroke="none" strokeWidth="1" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none">
                           <path
-                            transform="scale(11,11)"
+                            transform="scale(12,12)"
                             d="M5.70703,4.29297l6.29297,6.29297l6.29297,-6.29297c0.18112,-0.18641 0.4277,-0.29499 0.6875,-0.30273c0.41228,-0.01216 0.78974,0.23004 0.9505,0.60988c0.16075,0.37985 0.07183,0.81942 -0.22393,1.10691l-6.29297,6.29297l6.29297,6.29297c0.26124,0.25082 0.36648,0.62327 0.27512,0.97371c-0.09136,0.35044 -0.36503,0.62411 -0.71547,0.71547c-0.35044,0.09136 -0.72289,-0.01388 -0.97371,-0.27512l-6.29297,-6.29297l-6.29297,6.29297c-0.25082,0.26124 -0.62327,0.36647 -0.97371,0.27511c-0.35044,-0.09136 -0.62411,-0.36503 -0.71547,-0.71547c-0.09136,-0.35044 0.01388,-0.72289 0.27511,-0.97371l6.29297,-6.29297l-6.29297,-6.29297c-0.29161,-0.28381 -0.38219,-0.71601 -0.22907,-1.09303c0.15312,-0.37701 0.51941,-0.62366 0.92633,-0.62377c0.27,0.00002 0.52853,0.1092 0.7168,0.30273z"
                             id="strokeMainSVG"
                             fill="#f87171"
                             stroke="#f87171"
                             strokeLinejoin="round"
                           ></path>
-                          <g transform="scale(11,11)" fill="#f87171" stroke="none" strokeLinejoin="miter">
+                          <g transform="scale(12,12)" fill="#f87171" stroke="none" strokeLinejoin="miter">
                             <path d="M4.99023,3.99023c-0.40692,0.00011 -0.77321,0.24676 -0.92633,0.62377c-0.15312,0.37701 -0.06255,0.80921 0.22907,1.09303l6.29297,6.29297l-6.29297,6.29297c-0.26124,0.25082 -0.36647,0.62327 -0.27511,0.97371c0.09136,0.35044 0.36503,0.62411 0.71547,0.71547c0.35044,0.09136 0.72289,-0.01388 0.97371,-0.27511l6.29297,-6.29297l6.29297,6.29297c0.25082,0.26124 0.62327,0.36648 0.97371,0.27512c0.35044,-0.09136 0.62411,-0.36503 0.71547,-0.71547c0.09136,-0.35044 -0.01388,-0.72289 -0.27512,-0.97371l-6.29297,-6.29297l6.29297,-6.29297c0.29576,-0.28749 0.38469,-0.72707 0.22393,-1.10691c-0.16075,-0.37985 -0.53821,-0.62204 -0.9505,-0.60988c-0.2598,0.00774 -0.50638,0.11632 -0.6875,0.30273l-6.29297,6.29297l-6.29297,-6.29297c-0.18827,-0.19353 -0.4468,-0.30272 -0.7168,-0.30273z"></path>
                           </g>
                         </g>

@@ -7,9 +7,9 @@ const verified = process.env.VERIFYING_KEY
 
 export async function POST(request: Request) {
   let accessToken = headers().get('Authorization')
-  const { nickname } = await request.json()
+  const { nickname, pre } = await request.json()
 
-  if (nickname.length > 12 || nickname.length < 2) {
+  if (nickname.length > 12 || nickname.length < 2 || nickname === pre) {
     return NextResponse.json({ error: '잘못된 형식' }, { status: 500 })
   }
   
@@ -26,9 +26,9 @@ export async function POST(request: Request) {
         const verifyingData = await verifyingRes.json()
         const user_id = verifyingData.userId
 
-        const res = await fetch(`https://9z05g5impf.execute-api.ap-northeast-2.amazonaws.com/20230921/lvd`, {
+        const res = await fetch(`https://9z05g5impf.execute-api.ap-northeast-2.amazonaws.com/20230921/info`, {
           method: 'POST',
-          body: JSON.stringify({ userId: user_id, nickname, req: 'nickname-change' }),
+          body: JSON.stringify({ userId: user_id, nickname, pre, req: 'nickname-change' }),
         })
 
         if (res.ok) {
