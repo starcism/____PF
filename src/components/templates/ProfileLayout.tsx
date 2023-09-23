@@ -1,14 +1,16 @@
 import ProfileInfo from '../organisms/ProfileInfo'
 import ProfileSetter from '../organisms/ProfileSetter'
+import UserPosts from '../organisms/UserPosts'
 
 interface Props {
   accessToken: string
+  userId: number
   nickname: string
   setNickname: React.Dispatch<React.SetStateAction<string | null>>
   profile_image: string
 }
 
-export default function ProfileLayout({ accessToken, nickname = 'LOVEDIVE', setNickname, profile_image = '/images/liz1.jpeg' }: Props) {
+export default function ProfileLayout({ accessToken, userId, nickname = 'LOVEDIVE', setNickname, profile_image = '/images/liz1.jpeg' }: Props) {
   return (
     <>
       <div className="p-[20px]">
@@ -18,7 +20,7 @@ export default function ProfileLayout({ accessToken, nickname = 'LOVEDIVE', setN
         <ProfileInfo loginMethod="kakao" createdAt="2023-07-26T23:53:06.635Z" />
       </div>
       <div>
-        
+        <UserPosts accessToken={accessToken} userId={userId} />
       </div>
     </>
   )

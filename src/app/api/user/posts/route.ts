@@ -2,16 +2,13 @@ import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
-  let accessToken = headers().get('Authorization')
   const { userId, boardType } = await request.json()
 
   if (userId && boardType) {
     try {
       const res = await fetch(`https://9z05g5impf.execute-api.ap-northeast-2.amazonaws.com/20230921/info?userId=${userId}&boardType=${boardType}`, {
         method: 'GET',
-        next: {
-          revalidate: 15,
-        },
+        cache: 'no-store',
       })
       if (res.status === 200) {
         const { data } = await res.json()

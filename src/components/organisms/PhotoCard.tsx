@@ -31,7 +31,7 @@ export default function PhotoCard({
   return (
     <>
       <div className="mt-[16px]">
-        <PhotoViewer photoUrls={photoUrls} />
+        <PhotoViewer photoUrls={photoUrls} boardId={boardId} />
         <PostCard
           boardType="photo"
           userId={userId}

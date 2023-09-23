@@ -7,12 +7,13 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
   // const path = request.nextUrl.pathname
   const pageIndex = searchParams.get('pageIndex')
+  const boardId = searchParams.get('boardId')
   const keyW = searchParams.get('kw')
   const keyX = searchParams.get('kx')
   const keyY = searchParams.get('ky')
   const keyZ = searchParams.get('kz')
 
-  const kw = keyW ? `kw=${keyW}` : 'kw='
+  const kw = keyW ? `&kw=${keyW}` : '&kw='
   const kx = keyX ? `&kx=${keyX}` : ''
   const ky = keyY ? `&ky=${keyY}` : ''
   const kz = keyZ ? `&kz=${keyZ}` : ''
@@ -39,11 +40,9 @@ export async function GET(request: NextRequest) {
     }
   } else {
     try {
-      const res = await fetch(`https://0lky4v3m2f.execute-api.ap-northeast-2.amazonaws.com/20230915/getobj?${kw}${kx}${ky}${kz}`, {
+      const res = await fetch(`https://0lky4v3m2f.execute-api.ap-northeast-2.amazonaws.com/20230915/getobj?boardId=${boardId}${kw}${kx}${ky}${kz}`, {
         method: 'GET',
-        next: {
-          revalidate: 3600 * 6,
-        },
+        cache: 'no-store'
       })
       if (res.status === 200) {
         const { signatureUrls } = await res.json()

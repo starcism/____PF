@@ -16,12 +16,12 @@ export default function Page() {
         <LoadingSpinner />
       </>
     )
-  } else if (!accessToken || !nickname || error) {
+  } else if (!accessToken || !nickname || error || !userId) {
     router.push('/auth')
   } else {
     return (
       <>
-        <ProfileLayout accessToken={accessToken} nickname={nickname} setNickname={setNickname} profile_image="/images/liz1.jpeg" />
+        <ProfileLayout accessToken={accessToken} userId={userId} nickname={nickname} setNickname={setNickname} profile_image="/images/liz1.jpeg" />
       </>
     )
   }

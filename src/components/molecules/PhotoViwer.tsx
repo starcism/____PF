@@ -8,9 +8,10 @@ import React, { useCallback, useEffect, useState } from 'react'
 
 interface Props {
   photoUrls: string[]
+  boardId: number
 }
 
-export default function PhotoViewer({ photoUrls }: Props) {
+export default function PhotoViewer({ photoUrls, boardId }: Props) {
   const length = photoUrls.length
   const lengthArray = Array.from({ length: length }, (_, i) => i + 1)
 
@@ -19,7 +20,7 @@ export default function PhotoViewer({ photoUrls }: Props) {
   const getPhotoUrls = useCallback(async (photoUrls: string[]) => {
     const [keyW, keyX, keyY, keyZ] = photoUrls.slice(0, 4)
 
-    const kw = keyW ? `kw=${keyW}` : ''
+    const kw = keyW ? `&kw=${keyW}` : ''
     const kx = keyX ? `&kx=${keyX}` : ''
     const ky = keyY ? `&ky=${keyY}` : ''
     const kz = keyZ ? `&kz=${keyZ}` : ''
@@ -27,7 +28,7 @@ export default function PhotoViewer({ photoUrls }: Props) {
     if (!kw) return
 
     try {
-      const res = await fetch(checkEnvironment().concat(`/api/board/photo?${kw}${kx}${ky}${kz}`), {
+      const res = await fetch(checkEnvironment().concat(`/api/board/photo?boardId=${boardId}${kw}${kx}${ky}${kz}`), {
         method: 'GET',
         cache: 'no-store',
       })
@@ -44,6 +45,20 @@ export default function PhotoViewer({ photoUrls }: Props) {
       return
     } finally {
       setLoad(false)
+    }
+  }, [])
+
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight)
+
+  useEffect(() => {
+    function updateViewportHeight() {
+      setViewportHeight(window.innerHeight)
+    }
+
+    window.addEventListener('resize', updateViewportHeight)
+
+    return () => {
+      window.removeEventListener('resize', updateViewportHeight)
     }
   }, [])
 
@@ -83,8 +98,9 @@ export default function PhotoViewer({ photoUrls }: Props) {
                 <Image
                   src={image}
                   alt="_blank"
-                  fill
-                  priority={true}
+                  width={430}
+                  height={viewportHeight * 0.3}
+                  priority
                   className="relative w-full h-full object-cover"
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN89x8AAuEB74Y0o2cAAAAASUVORK5CYII="

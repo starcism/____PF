@@ -1,29 +1,43 @@
 'use client'
 
 import checkEnvironment from '@/libs/checkEnvironment'
-import { useCallback, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   accessToken: string
-  userId: string
+  userId: number
 }
 
 export default function UserPosts({ accessToken, userId }: Props) {
   const [boardType, setBoardType] = useState<string>('forum')
+  const [posts, setPosts] = useState<any>(null)
 
-  const fetchData = useCallback(async () => {
+  const fetchData = async () => {
     try {
-      const data = await fetch(checkEnvironment().concat('/api/user/posts'), {
+      const res = await fetch(checkEnvironment().concat('/api/user/posts'), {
         method: 'POST',
-        headers: {
-          Authorization: `${accessToken}`
-        },
-        body: JSON.stringify({ userId, boardType })
+        body: JSON.stringify({ userId, boardType }),
       })
+
+      if (res.ok) {
+        const { data } = await res.json()
+        setPosts(data)
+        console.log(data)
+      } else {
+        return
+      }
     } catch (error) {
       console.log(error)
     }
-  }, [])
+  }
 
-  return <></>
+  useEffect(() => {
+    fetchData()
+  }, [boardType])
+
+  return (
+    <>
+      <div></div>
+    </>
+  )
 }
