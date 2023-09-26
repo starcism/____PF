@@ -3,7 +3,7 @@
 import React from 'react'
 import { PhotoBoard } from '@/types/types'
 import PhotoCard from '@/components/organisms/PhotoCard'
-import BoardNotice from '@/components/organisms/NoticeBoardHeader'
+import BoardNotice from '@/components/organisms/BoardNotice'
 import LoadingSpinner from '@/components/atoms/LoadingSpinner'
 import useBoard from '@/libs/useBoard'
 import BoardLayout from '@/components/templates/BoardLayout'
@@ -39,6 +39,7 @@ export default function Page() {
                   createdAt={post.created_at}
                   nickname={post.nickname}
                   liked={post.liked}
+                  userLike={post.user_like}
                   commentCount={post.comment_count}
                   tag={post.tag}
                   postTag={post.post_tag}
@@ -51,7 +52,7 @@ export default function Page() {
             ),
           )
         ) : (
-          <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center">게시물 없음</div>
+          <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">게시물 없음</div>
         )}
       </BoardLayout>
     </>

@@ -27,7 +27,7 @@ function HeaderComponent({ pathname }: Props) {
   const openMenu = () => {
     handleMainMenu(true)
     // document.body.style.cssText = `
-    //   position: fixed; 
+    //   position: fixed;
     //   top: -${window.scrollY}px;
     //   overflow-y: scroll;
     //   width: 100%;`
@@ -90,8 +90,12 @@ function HeaderComponent({ pathname }: Props) {
             </Link>
           </div>
           <div className="flex h-[40px] w-[40px] items-center justify-center">
-            <div className={`text-[#373737] w-[40px] h-[40px] rounded-[50%] ${true ? '' :'hover:bg-hover-button'} duration-200`}>
-              <button type='button' className="text-gray-3 cursor-default flex items-center justify-center w-full h-full rounded-[50%]" onClick={() => setSearchBarOpen(true)}>
+            <div className={`text-[#373737] w-[40px] h-[40px] rounded-[50%] ${true ? '' : 'hover:bg-hover-button'} duration-200`}>
+              <button
+                type="button"
+                className="text-gray-3 cursor-default flex items-center justify-center w-full h-full rounded-[50%]"
+                onClick={() => setSearchBarOpen(true)}
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
@@ -117,27 +121,14 @@ function SubHeader({ pathname }: Props) {
     <>
       <div className="flex w-full max-w-[768px] relative bg-white justify-between items-center h-[44px] px-[0.5rem] border-b border-solid border-[#dddddd]">
         <div className="flex h-[30px] w-[75px] ml-[0.5rem] justify-start items-center pointer-events-none select-none">
-          <span className="text-[14px] text-gray-4 align-top whitespace-nowrap overflow-hidden overflow-ellipsis leading-[45px] font-bold">
-            {boardType}
-          </span>
+          <span className="text-[14px] text-gray-4 align-top whitespace-nowrap overflow-hidden overflow-ellipsis leading-[45px] font-bold">{boardType}</span>
         </div>
         {pathname !== '/notice' && (
           <div className="flex items-center">
-            <div className="h-[30px] w-[40px] mr-[0.5rem] border-[0.5px] border-solid border-[#dddddd] bg-gray-0 rounded-[15px] hover:bg-hover-button-header shadow-sm shadow-semigold duration-200">
-              <button className="flex justify-center items-center w-full h-full">
-                <svg
-                  className="w-6 h-6 text-viva-gray-3"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                  />
+            <div className="text-gray-3 h-[30px] w-[40px] mr-[0.5rem] border-[0.5px] border-solid border-[#dddddd] bg-gray-0 rounded-[15px] shadow-sm shadow-semigold">
+              <button className="cursor-default flex justify-center items-center w-full h-full">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
                 </svg>
               </button>
             </div>

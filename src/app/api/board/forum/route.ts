@@ -20,20 +20,25 @@ function sanitizeHtml(inputHtml: string) {
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
   const pageIndex = searchParams.get('pageIndex')
+  const req = searchParams.get('req')
+  const total = searchParams.get('total')
   const boardId = searchParams.get('boardId')
 
   if (pageIndex) {
+    const url =
+      req && total
+        ? `https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/free?pageIndex=${pageIndex}&req=${req}&total=${total}`
+        : `https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/free?pageIndex=${pageIndex}`
 
     try {
-
-      const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/free?pageIndex=${pageIndex}`, {
+      const res = await fetch(url, {
         method: 'GET',
         cache: 'no-store',
       })
       if (res.status === 200) {
-        const { posts, totalPages } = await res.json()
+        const { posts, totalPages, isLastPage, next } = await res.json()
 
-        return NextResponse.json({ posts, totalPages })
+        return NextResponse.json({ posts, totalPages, isLastPage, next })
       } else if (res.status === 204) {
         return NextResponse.json({ message: '게시물 없음' }, { status: 204 })
       } else {
@@ -43,14 +48,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
   } else if (boardId) {
-
     try {
-
       const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/free?boardId=${boardId}`, {
         method: 'GET',
-        next: {
-          revalidate: 10,
-        }
+        cache: 'no-store',
       })
 
       if (res.status === 200) {
@@ -120,7 +121,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 }
-
 
 export async function PUT(request: Request) {
   let accessToken = headers().get('Authorization')

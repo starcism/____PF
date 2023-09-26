@@ -1,5 +1,5 @@
 import checkEnvironment from '@/libs/checkEnvironment'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 interface Props {
   boardType: string
   boardId?: string
@@ -8,13 +8,23 @@ interface Props {
   userLike?: boolean
 }
 
-export default function PostInfo({ boardType, boardId, accessToken, liked, userLike = false }: Props) {
-  const [like, setLike] = useState(userLike)
+export default function PostInfo({ boardType, boardId, accessToken, liked, userLike }: Props) {
+  const [like, setLike] = useState(false)
+  const [initialLiked, setInitialLiked] = useState(liked)
+  const handleLiked = () => {
+    if (like) {
+      setLike(false)
+      setInitialLiked(initialLiked - 1)
+    } else {
+      setLike(true)
+      setInitialLiked(initialLiked + 1)
+    }
+  }
 
   const handleLikeClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    if(!accessToken) {
+    if (!accessToken) {
       return
     }
 
@@ -30,16 +40,22 @@ export default function PostInfo({ boardType, boardId, accessToken, liked, userL
 
       if (res.status === 200) {
         const { userLike } = await res.json()
-        setLike(userLike)
+        handleLiked()
       } else if (res.status === 401) {
-        alert('권한이 없어요')
+        // alert('권한이 없어요')
       } else {
-        alert('좋아요 설정에 실패했어요1')
+        // alert('좋아요 설정에 실패했어요1')
       }
     } catch (error) {
-      alert('좋아요 설정에 실패했어요2')
+      // alert('좋아요 설정에 실패했어요2')
     }
   }
+
+  useEffect(() => {
+    if (userLike) {
+      setLike(userLike)
+    }
+  }, [userLike])
 
   return (
     <>
@@ -60,7 +76,7 @@ export default function PostInfo({ boardType, boardId, accessToken, liked, userL
                 <path d="M9.653 16.915l-.005-.003-.019-.01a20.759 20.759 0 01-1.162-.682 22.045 22.045 0 01-2.582-1.9C4.045 12.733 2 10.352 2 7.5a4.5 4.5 0 018-2.828A4.5 4.5 0 0118 7.5c0 2.852-2.044 5.233-3.885 6.82a22.049 22.049 0 01-3.744 2.582l-.019.01-.005.003h-.002a.739.739 0 01-.69.001l-.002-.001z" />
               </svg>
             </button>
-            <span className="text-[14px] ml-[6px] weight-400 select-none text-pinkish">{like ? liked + 1 : liked}</span>
+            <span className="text-[14px] ml-[6px] weight-400 select-none text-pinkish">{initialLiked}</span>
           </div>
           {/* <div className="ml-[4px] flex items-center">
             <div className="flex items-center justify-center select-none ml-[6px] rounded-[50%] w-[24px] h-[24px] text-turquoise">

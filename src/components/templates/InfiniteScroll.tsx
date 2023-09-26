@@ -1,6 +1,6 @@
 'use client'
 
-import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
+import NoticeBoardHeader from '@/components/organisms/BoardNotice'
 import PostItem from '@/components/organisms/PostItem'
 import { Board } from '@/types/types'
 import React, { Suspense, useEffect, useState } from 'react'

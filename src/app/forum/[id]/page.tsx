@@ -9,6 +9,7 @@ import LoadingCommentInput from '@/components/templates/LoadingCommentInput'
 import PostLayout from '@/components/templates/PostLayout'
 import useComment from '@/libs/useComment'
 import usePost from '@/libs/usePost'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 type Props = {
@@ -19,7 +20,8 @@ type Props = {
 
 export default function Page(props: Props) {
   const boardId = props.params.id
-  const { post } = usePost(boardId)
+  const router = useRouter()
+  const { post, deleted } = usePost(boardId)
   const { userInfoLoading, commentAreaLoading, loggedIn, like, commentList, accessToken, refresh, refreshComments, UID } = useComment(boardId)
 
   if (!post) {
@@ -28,6 +30,10 @@ export default function Page(props: Props) {
         <LoadingSpinner isBeforePost={true} />
       </PostLayout>
     )
+  }
+
+  if (deleted) {
+    router.back()
   }
 
   return (

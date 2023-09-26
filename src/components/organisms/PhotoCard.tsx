@@ -15,9 +15,11 @@ export default function PhotoCard({
   postTag,
   nickname,
   liked = 0,
+  userLike,
   commentCount = 0,
   accessToken,
   UID,
+  isProfilePage = false
 }: PhotoCard) {
   const [isDeleted, setIsDeleted] = useState(false)
   const handleDelete = () => {
@@ -40,12 +42,14 @@ export default function PhotoCard({
           createdAt={createdAt}
           nickname={nickname}
           liked={liked}
+          userLike={userLike}
           postTag={postTag}
           tag={tag}
           commentCount={commentCount}
           accessToken={accessToken}
           UID={UID}
           setDelete={handleDelete}
+          isProfilePage = {isProfilePage}
         />
       </div>
     </>

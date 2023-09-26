@@ -1,6 +1,7 @@
 import ProfileInfo from '../organisms/ProfileInfo'
 import ProfileSetter from '../organisms/ProfileSetter'
-import UserPosts from '../organisms/UserPosts'
+
+import ProfilePosts from '../organisms/ProfilePosts'
 
 interface Props {
   accessToken: string
@@ -17,10 +18,10 @@ export default function ProfileLayout({ accessToken, userId, nickname = 'LOVEDIV
         <ProfileSetter accessToken={accessToken} nickname={nickname} setNickname={setNickname} profile_image={profile_image} />
       </div>
       <div className="px-[20px] py-[15px] custom-border-b-1">
-        <ProfileInfo loginMethod="kakao" createdAt="2023-07-26T23:53:06.635Z" />
+        <ProfileInfo accessToken={accessToken} loginMethod="kakao" createdAt="2023-07-26T23:53:06.635Z" />
       </div>
       <div>
-        <UserPosts accessToken={accessToken} userId={userId} />
+        <ProfilePosts accessToken={accessToken} userId={userId} />
       </div>
     </>
   )

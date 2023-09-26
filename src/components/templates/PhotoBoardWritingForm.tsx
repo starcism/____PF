@@ -205,7 +205,7 @@ export default function PhotoBoardWritingForm() {
   return (
     <>
       <form onSubmit={submitPost} encType="multipart/form-data">
-        <div className="fixed top-0 z-[1010] w-full max-w-[768px] h-[54px]" style={{ margin: '0 auto' }}>
+        <div className="fixed top-0 z-[1010] w-full max-w-[766px] h-[54px]" style={{ margin: '0 auto' }}>
           <div className="flex-col justify-center">
             <div className="w-full h-[53px] custom-border-b-1 bg-white">
               <div className="flex justify-between items-center">
@@ -220,7 +220,7 @@ export default function PhotoBoardWritingForm() {
                   <h1 className="text-[16px] select-none">글쓰기</h1>
                   <h1 className="text-[13px] text-gray-3 select-none">갤러리</h1>
                 </div>
-                <div className="h-[53px] w-[53px] flex justify-center items-center select-none">
+                <div className="h-[53px] w-[80px] flex justify-center items-center select-none">
                   <button type="submit">
                     <span>등록</span>
                   </button>
@@ -229,7 +229,7 @@ export default function PhotoBoardWritingForm() {
             </div>
           </div>
         </div>
-        <div className="w-full mt-[54px] overflow-x-hidden" style={{ margin: '0 auto' }}>
+        <div className="w-full pt-[54px] overflow-x-hidden" style={{ margin: '0 auto' }}>
           <div className="flex max-w-[768px] w-full justify-center">
             <>
               <div className="flex-col max-w-[768px] w-full">

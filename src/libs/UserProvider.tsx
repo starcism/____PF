@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import checkEnvironment from './checkEnvironment'
 import { useAccessTokenState } from './AccessTokenProvider'
 
@@ -39,7 +39,7 @@ export default function UserProvider({ children }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<boolean>(false)
 
-  const fetchData = useCallback(async () => {
+  const fetchData = async () => {
     try {
       //액세스 검증
       const verifyingRes = await fetch(checkEnvironment().concat('/api/auth/verification/authv2'), {
@@ -61,7 +61,7 @@ export default function UserProvider({ children }: Props) {
     } finally {
       setIsLoading(false)
     }
-  }, [accessToken, setAccessToken])
+  }
 
   useEffect(() => {
     if (!loading && accessToken) {

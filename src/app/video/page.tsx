@@ -1,7 +1,7 @@
 'use client'
 
 import LoadingSpinner from '@/components/atoms/LoadingSpinner'
-import NoticeBoardHeader from '@/components/organisms/NoticeBoardHeader'
+import NoticeBoardHeader from '@/components/organisms/BoardNotice'
 import VideoCard from '@/components/organisms/VideoCard'
 import BoardLayout from '@/components/templates/BoardLayout'
 import { useUserState } from '@/libs/UserProvider'
@@ -39,6 +39,7 @@ export default function Page() {
                   createdAt={post.created_at}
                   nickname={post.nickname}
                   liked={post.liked}
+                  userLike={post.user_like}
                   commentCount={post.comment_count}
                   tag={post.tag}
                   postTag={post.post_tag}
@@ -51,7 +52,7 @@ export default function Page() {
             ),
           )
         ) : (
-          <div className="w-full h-[200px] text-gray-3 flex justify-center items-center">게시물 없음</div>
+          <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">게시물 없음</div>
         )}
       </BoardLayout>
     </>

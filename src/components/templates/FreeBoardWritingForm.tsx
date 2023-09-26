@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import ReactQuill from 'react-quill'
 import { useRouter } from 'next/navigation'
@@ -11,23 +11,19 @@ const QuillEditor = dynamic(() => import('@/libs/QuillEditor'), {
   ssr: false,
   loading: () => (
     <>
-      <div className="min-h-[calc(100vh-250px)] max-h-[calc(100vh-150px)] w-[100vw] max-w-[768px]">
+      <div className="min-h-[500px] max-h-[100vh] w-[100vw] max-w-[768px]">
         <div className="flex items-center h-[42px] w-[100vw] py-[12px] px-[9px] max-w-[768px] bg-white custom-border-b-1 custom-border-t-1">
           <div className="skeleton2 w-[98px] h-[19px] ml-[4px] rounded-[5px]"></div>
           <div className="skeleton1 w-[108px] h-[19px] ml-[24px] rounded-[5px]"></div>
           {/* <div className="bg-gray-2 w-[22px] h-[19px] ml-[24px] rounded-[5px]"></div> */}
         </div>
-        <div className="min-h-[calc(100vh-250px)] max-h-[calc(100vh-150px)] w-[100vw] max-w-[768px] py-[12px] px-[9px] custom-border-b-0">
+        <div className="min-h-[500px] max-h-[100vh] w-[100vw] max-w-[768px] py-[12px] px-[9px] custom-border-b-0">
           <div className="skeleton2 w-[120px] h-[19px] ml-[4px] rounded-[5px]"></div>
         </div>
       </div>
     </>
   ),
 })
-
-type TonSubmit = {
-  onSubmit: (title: string, content: string) => void
-}
 
 export default function FreeBoardWritingForm() {
   const router = useRouter()
@@ -114,7 +110,6 @@ export default function FreeBoardWritingForm() {
           // "Content-Type": "multipart/form-data",
         },
       })
-      console.log('res:', res)
       if (res.status === 401) {
         alert('권한이 만료되었어요')
         setIsSubmit(false)
@@ -138,10 +133,11 @@ export default function FreeBoardWritingForm() {
       setIsSubmit(false)
     }
   }
+
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="fixed top-0 z-[1010] w-full max-w-[768px] bg-white h-[54px]" style={{ margin: '0 auto' }}>
+        <div className="fixed top-0 z-[1010] w-full max-w-[766px] bg-white h-[54px]" style={{ margin: '0 auto' }}>
           <div className="flex-col justify-center">
             <div className="w-full h-[53px] custom-border-b-1 bg-white">
               <div className="flex justify-between items-center">
@@ -156,7 +152,7 @@ export default function FreeBoardWritingForm() {
                   <h1 className="text-[16px] select-none">글쓰기</h1>
                   <h1 className="text-[13px] text-gray-3 select-none">포럼</h1>
                 </div>
-                <div className="h-[53px] w-[53px] flex justify-center items-center select-none">
+                <div className="h-[53px] w-[80px] flex justify-center items-center select-none">
                   <button onClick={handleSubmit}>
                     <span>등록</span>
                   </button>
@@ -165,7 +161,7 @@ export default function FreeBoardWritingForm() {
             </div>
           </div>
         </div>
-        <div className="w-full mt-[54px] bg-white max-w-[768px]" style={{ margin: '0 auto' }}>
+        <div className="w-full pt-[54px] bg-white max-w-[768px]">
           <div className="flex justify-center w-full h-[3rem] my-[0.2rem]">
             <input
               className="w-full max-w-[800px] h-[3rem] py-[12px] px-[15px] outline-none overflow-auto text-[17px] weight-700 placeholder:text-gray-3"
@@ -176,7 +172,7 @@ export default function FreeBoardWritingForm() {
               onKeyDown={handleKeyDown}
             ></input>
           </div>
-          <div className="flex w-full max-w-[768px] justify-center" style={{ margin: '0 auto' }}>
+          <div className="flex w-full max-w-[768px] justify-center">
             <QuillEditor quillRef={editorRef} value={value} onChange={setValue} placeholder="내용을 입력하세요." />
           </div>
         </div>

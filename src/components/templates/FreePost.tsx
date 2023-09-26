@@ -50,7 +50,7 @@ export default function FreePost({ nickname, title, content, view, createdAt, up
       })
 
       if (res.status === 200) {
-        alert('게시글을 삭제했어요')
+        // alert('게시글을 삭제했어요')
         router.back()
       } else if (res.status === 401) {
         alert('권한이 없어요')
@@ -95,17 +95,19 @@ export default function FreePost({ nickname, title, content, view, createdAt, up
             </div>
           </div>
           <div className="flex items-center justify-center w-[50px] h-[50px]">
-            <ConfirmModal onClick={deletePost} isAuthor={author}>
-              <button className="flex items-center justify-center w-[40px] h-[40px] transition-colors duration-200 rounded-full hover:bg-gray-1">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`w-5 h-5`}>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                  />
-                </svg>
-              </button>
-            </ConfirmModal>
+            {author && (
+              <ConfirmModal onClick={deletePost} isAuthor={author}>
+                <button className="flex items-center justify-center w-[40px] h-[40px] transition-colors duration-200 rounded-full hover:bg-gray-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`w-5 h-5`}>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                    />
+                  </svg>
+                </button>
+              </ConfirmModal>
+            )}
           </div>
         </div>
         <div className="mt-[11px] min-h-[100px] h-full">

@@ -7,6 +7,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
   // const path = request.nextUrl.pathname
   const pageIndex = searchParams.get('pageIndex')
+  const userId = searchParams.get('userId')
   const boardId = searchParams.get('boardId')
   const keyW = searchParams.get('kw')
   const keyX = searchParams.get('kx')
@@ -22,7 +23,7 @@ export async function GET(request: NextRequest) {
     try {
       // revalidatePath(path)
 
-      const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/photo?pageIndex=${pageIndex}`, {
+      const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/photo?pageIndex=${pageIndex}&userId=${userId}`, {
         method: 'GET',
         cache: 'no-store',
       })

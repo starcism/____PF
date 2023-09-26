@@ -21,6 +21,7 @@ export interface PhotoBoard extends Board {
   tag: string
   post_tag: string
   user_id: number
+  user_like: boolean
   photo_url: string[]
 }
 
@@ -58,6 +59,7 @@ export interface VideoBoard {
   user_id: number
   tag: string
   post_tag: string
+  user_like: boolean
 }
 
 export interface IPostItem {
@@ -89,6 +91,8 @@ export interface Card {
   boardType: string
   accessToken: string | null
   setDelete: () => void
+  userLike: boolean
+  isProfilePage?: boolean
 }
 
 export interface PhotoCard extends Omit<Card, 'setDelete'> {

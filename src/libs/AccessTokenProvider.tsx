@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import checkEnvironment from './checkEnvironment'
 
 interface Props {
@@ -28,7 +28,7 @@ export default function AccessTokenProvider({ children }: Props) {
   const [accessToken, setAccessToken] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
-  const fetchData = useCallback(async () => {
+  const fetchData = async () => {
     try {
       const res = await fetch(checkEnvironment().concat('/api/auth/verification/authv4'), {
         method: 'POST',
@@ -46,7 +46,7 @@ export default function AccessTokenProvider({ children }: Props) {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }
 
   useEffect(() => {
     if (accessToken) {

@@ -31,24 +31,20 @@ export default function ModalContainer({ children, id, onClick = undefined }: Pr
   const openModal = () => {
     setIsModal(true)
     document.body.style.cssText = `
-      position: fixed; 
-      top: -${window.scrollY}px;
-      overflow-y: scroll;
-      width: 100%;`
+      height: 100%;
+      width: 100%;
+      overflow-y: hidden;
+      `
   }
 
   const closeModal = () => {
     setIsModal(false)
-    const scrollY = document.body.style.top
     document.body.style.cssText = ''
-    window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
   }
 
   useEffect(() => {
     return () => {
-      const scrollY = document.body.style.top
       document.body.style.cssText = ''
-      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
     }
   }, [])
 
@@ -81,17 +77,15 @@ export function ModalSetVideo({ children, setUrl }: SetVideoProps) {
   const openModal = () => {
     setIsModal(true)
     document.body.style.cssText = `
-      position: fixed; 
-      top: -${window.scrollY}px;
-      overflow-y: scroll;
-      width: 100%;`
+      height: 100%;
+      width: 100%;
+      overflow-y: hidden;
+      `
   }
 
   const closeModal = () => {
     setIsModal(false)
-    const scrollY = document.body.style.top
     document.body.style.cssText = ''
-    window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
   }
 
   const urlCheck = (s: string) => {
@@ -112,9 +106,7 @@ export function ModalSetVideo({ children, setUrl }: SetVideoProps) {
 
   useEffect(() => {
     return () => {
-      const scrollY = document.body.style.top
       document.body.style.cssText = ''
-      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
     }
   }, [])
 
@@ -151,7 +143,9 @@ export function ModalSetVideo({ children, setUrl }: SetVideoProps) {
                 }
               }}
               type="button"
-              className={`flex font-sans font-700 ${isValid ? 'text-turquoise' : 'text-gray-2 cursor-default'} justify-center items-center h-[44px] w-[64px] text-[14px]`}
+              className={`flex font-sans font-700 ${
+                isValid ? 'text-turquoise' : 'text-gray-2 cursor-default'
+              } justify-center items-center h-[44px] w-[64px] text-[14px]`}
             >
               등록
             </button>
@@ -177,24 +171,20 @@ export function ConfirmModal({ isAuthor, children, confirmType = 'post', onClick
   const openModal = () => {
     setIsModal(true)
     document.body.style.cssText = `
-      position: fixed; 
-      top: -${window.scrollY}px;
-      overflow-y: scroll;
-      width: 100%;`
+      height: 100%;
+      width: 100%;
+      overflow-y: hidden;
+      `
   }
 
   const closeModal = () => {
     setIsModal(false)
-    const scrollY = document.body.style.top
     document.body.style.cssText = ''
-    window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
   }
 
   useEffect(() => {
     return () => {
-      const scrollY = document.body.style.top
       document.body.style.cssText = ''
-      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
     }
   }, [])
 
@@ -202,7 +192,7 @@ export function ConfirmModal({ isAuthor, children, confirmType = 'post', onClick
     <>
       {isModal && (
         <Modal show={isModal} close={closeModal}>
-          <div className="flex items-center justify-center w-[200px] h-[200px] bg-white rounded-[10px]">{message}</div>
+          <div className="flex pt-[20px] justify-center w-[200px] h-[80px] bg-white rounded-[10px]">{message}</div>
           <div>
             <button
               onClick={(e) => {
@@ -210,7 +200,7 @@ export function ConfirmModal({ isAuthor, children, confirmType = 'post', onClick
                 onClick(e)
               }}
               type="button"
-              className={`w-1/2 h-[50px] ${isAuthor ? 'text-turquoise' : 'text-gray-3'}`}
+              className={`w-1/2 h-[20px] text-turquoise`}
             >
               확인
             </button>
@@ -220,7 +210,75 @@ export function ConfirmModal({ isAuthor, children, confirmType = 'post', onClick
                 closeModal()
               }}
               type="button"
-              className="w-1/2 h-[50px]"
+              className="w-1/2 h-[20px] text-gray-3"
+            >
+              취소
+            </button>
+          </div>
+        </Modal>
+      )}
+      <div
+        onClick={(e) => {
+          e.stopPropagation()
+          openModal()
+        }}
+      >
+        {children}
+      </div>
+    </>
+  )
+}
+
+export function ResignModal({ children, onClick }: ConfirmProps) {
+  const [isModal, setIsModal] = useState(false)
+  const openModal = () => {
+    setIsModal(true)
+    document.body.style.cssText = `
+      height: 100%;
+      width: 100%;
+      overflow-y: hidden;
+      `
+  }
+
+  const closeModal = () => {
+    setIsModal(false)
+    document.body.style.cssText = ''
+  }
+
+  useEffect(() => {
+    return () => {
+      document.body.style.cssText = ''
+    }
+  }, [])
+
+  return (
+    <>
+      {isModal && (
+        <Modal show={isModal} close={closeModal}>
+          <div className="min-w-[240px] h-[90px] bg-white rounded-[10px]">
+            <h1 className="text-[16px] font-500">정말 탈퇴하시겠어요?</h1>
+            <h2 className="text-[14px] text-gray-4 py-[20px]">작성하신 글은 삭제되지 않아요</h2>
+          </div>
+          <div className="text-center w-1/2 float-left h-[20px]">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onClick(e)
+              }}
+              type="button"
+              className={`text-red-500`}
+            >
+              탈퇴하기
+            </button>
+          </div>
+          <div className="text-center w-1/2 float-right h-[20px]">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                closeModal()
+              }}
+              type="button"
+              className="text-turquoise"
             >
               취소
             </button>

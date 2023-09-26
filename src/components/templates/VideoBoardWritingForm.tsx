@@ -136,9 +136,9 @@ export default function PhotoBoardWritingForm() {
   return (
     <>
       <form onSubmit={submitPost}>
-        <div className="fixed left-0 top-0 z-[1010] bg-white w-full max-w-[768px] h-[54px]">
+        <div className="fixed top-0 z-[1010] w-full max-w-[766px] h-[54px]" style={{ margin: '0 auto' }}>
           <div className="flex-col justify-center">
-            <div className="w-[100vw] h-[53px] custom-border-b-1 bg-white">
+            <div className="w-full h-[53px] custom-border-b-1 bg-white">
               <div className="flex justify-between items-center">
                 <div className="h-[53px] w-[53px] flex justify-center items-center">
                   <button type="button" className="justify-center items-center" onClick={handleWritingForm}>
@@ -151,7 +151,7 @@ export default function PhotoBoardWritingForm() {
                   <h1 className="text-[16px] select-none">글쓰기</h1>
                   <h1 className="text-[13px] text-gray-3 select-none">영상</h1>
                 </div>
-                <div className="h-[53px] w-[53px] flex justify-center items-center select-none">
+                <div className="h-[53px] w-[80px] flex justify-center items-center select-none">
                   <button type="submit">
                     <span>등록</span>
                   </button>
@@ -160,10 +160,10 @@ export default function PhotoBoardWritingForm() {
             </div>
           </div>
         </div>
-        <div className="w-full mt-[54px] bg-white">
-          <div className="flex w-[100vw] justify-center">
+        <div className="w-full pt-[54px] bg-white">
+          <div className="flex max-w-[768px] w-full justify-center">
             <>
-              <div className="flex-col w-[100vw] max-w-[800px]">
+              <div className="flex-col w-full max-w-[768px]">
                 {youtubeUrl ? (
                   <YoutubeThumbnail url={youtubeUrl} deleteButton={getYoutubeUrl} />
                 ) : (
@@ -187,9 +187,9 @@ export default function PhotoBoardWritingForm() {
                     </ModalSetVideo>
                   </div>
                 )}
-                <div className="flex overflow-hidden max-w-[800px] justify-center w-[100vw] my-[0.2rem]">
+                <div className="flex overflow-hidden max-w-[768px] justify-center w-full my-[0.2rem]">
                   <input
-                    className="flex w-[100vw] h-[50px] leading-[26px] max-w-[800px] px-[15px] outline-none resize-none text-[16px] scrollbar-hide font-350 placeholder:text-gray-3"
+                    className="flex h-[50px] w-full leading-[26px] max-w-[768x] px-[15px] outline-none resize-none text-[16px] scrollbar-hide font-400 placeholder:text-gray-3"
                     placeholder="제목 입력"
                     maxLength={50}
                     onKeyDown={PreventKeyDown}

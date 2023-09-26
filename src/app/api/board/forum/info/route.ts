@@ -13,9 +13,6 @@ export async function POST(request: Request) {
     if (accessToken) {
       const verifyingRes = await fetch('https://6ietu7gzmk.execute-api.ap-northeast-2.amazonaws.com/20230717/v0', {
         method: 'POST',
-        next: {
-          revalidate: 3600 * 23,
-        }, 
         headers: {
           Authorization: `${accessToken}`,
         },

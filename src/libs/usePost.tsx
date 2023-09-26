@@ -6,6 +6,7 @@ import { FreePost } from '@/types/types'
 
 export default function usePost(boardId: string) {
   const [post, setPost] = useState<FreePost | null>(null)
+  const [deleted, setDeleted] = useState(false)
 
   const getPost = useCallback(async (boardId: string) => {
     try {
@@ -17,12 +18,13 @@ export default function usePost(boardId: string) {
         const data = await res.json()
         setPost(data.post)
       } else if (res.status === 204) {
+        setDeleted(true)
         return null
       } else {
         return null
       }
     } catch (error) {
-      console.log(error)
+      return null
     }
   }, [])
 
@@ -30,5 +32,5 @@ export default function usePost(boardId: string) {
     getPost(boardId)
   }, [getPost, boardId])
 
-  return { post }
+  return { post, deleted }
 }

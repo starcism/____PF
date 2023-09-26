@@ -101,7 +101,7 @@ export default function PhotoViewer({ photoUrls, boardId }: Props) {
                   width={430}
                   height={viewportHeight * 0.3}
                   priority
-                  className="relative w-full h-full object-cover"
+                  className="relative w-full h-full object-cover max-h-[500px]"
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN89x8AAuEB74Y0o2cAAAAASUVORK5CYII="
                 />

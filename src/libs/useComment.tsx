@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAccessTokenState } from './AccessTokenProvider'
 import checkEnvironment from './checkEnvironment'
 import { Comments } from '@/types/types'
@@ -22,38 +22,35 @@ export default function useComment(boardId: string) {
     }
   }
 
-  const getCommentArea = useCallback(
-    async (boardId: string, refresh?: boolean) => {
-      try {
-        const res = await fetch(checkEnvironment().concat(`/api/board/forum/info?boardId=${boardId}`), {
-          method: 'POST',
-          headers: {
-            Authorization: `${accessToken}`,
-          },
-        })
-        if (refresh && res.status === 200) {
-          const { comments } = await res.json()
-          setCommentList(comments)
-          return
-        }
-        if (res.status === 200) {
-          const { userLike, comments } = await res.json()
-          setLike(userLike)
-          setCommentList(comments)
-        } else {
-          return
-        }
-      } catch (error) {
+  const getCommentArea = async (boardId: string, refresh?: boolean) => {
+    try {
+      const res = await fetch(checkEnvironment().concat(`/api/board/forum/info?boardId=${boardId}`), {
+        method: 'POST',
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      })
+      if (refresh && res.status === 200) {
+        const { comments } = await res.json()
+        setCommentList(comments)
         return
-      } finally {
-        setCommentAreaLoading(false)
-        setRefresh(false)
       }
-    },
-    [accessToken],
-  )
+      if (res.status === 200) {
+        const { userLike, comments } = await res.json()
+        setLike(userLike)
+        setCommentList(comments)
+      } else {
+        return
+      }
+    } catch (error) {
+      return
+    } finally {
+      setCommentAreaLoading(false)
+      setRefresh(false)
+    }
+  }
 
-  const fetchData = useCallback(async () => {
+  const fetchData = async () => {
     try {
       //액세스 토큰 먼저 검증
       const verifyingRes = await fetch(checkEnvironment().concat('/api/auth/verification/authv2'), {
@@ -96,7 +93,7 @@ export default function useComment(boardId: string) {
     } finally {
       setUserInfoLoading(false)
     }
-  }, [accessToken, setAccessToken])
+  }
 
   useEffect(() => {
     if (!loading && accessToken) {
