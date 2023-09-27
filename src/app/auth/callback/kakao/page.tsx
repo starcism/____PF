@@ -5,34 +5,41 @@ import axios from 'axios'
 import { useRouter, useSearchParams } from 'next/navigation'
 import checkEnvironment from '@/libs/checkEnvironment'
 
-export default function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+export default function Page() {
   const router = useRouter()
   const params = useSearchParams()
   const code = params.get('code')
+  const error = params.get('error')
 
   useEffect(() => {
     const tokenRequest = async () => {
       try {
         const response = await axios.post(checkEnvironment().concat('/api/auth/login'), {
-          code: searchParams.code,
+          code: code,
         })
         if (response.status === 200) {
-          router.replace('/notice/0')
+          window.opener ? (window.opener.location.href = checkEnvironment().concat('/')) : router.replace('/')
+          window.close()
         } else {
-          router.replace('/notice/1')
+          window.opener ? (window.opener.location.href = checkEnvironment().concat('/auth')) : router.replace('/')
+          window.close()
         }
       } catch (error) {
-        router.replace('/notice/2')
+        window.opener ? (window.opener.location.href = checkEnvironment().concat('/auth')) : router.replace('/')
+        window.close()
       }
     }
 
-    if (searchParams.code) {
+    if (code) {
       tokenRequest()
-    } else if (searchParams.error) {
-      router.replace('/notice/3')
+    } else if (error) {
+      window.opener ? (window.opener.location.href = checkEnvironment().concat('/auth')) : router.replace('/')
+      window.close()
+    } else {
+      router.replace('/')
     }
-    console.log('searchParams:', searchParams, 'code:', code)
-  }, [searchParams])
+    
+  }, [])
 
-  return <>{searchParams.code}</>
+  return
 }
