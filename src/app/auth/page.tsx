@@ -33,7 +33,7 @@ export default function Page() {
       try {
         const response = await axios.get(checkEnvironment().concat('/api/auth/login'))
         if (response.status === 200) {
-          window.open(response.data.authUrl, '카카오계정으로 로그인', 'width=400px,height=600px,scrollbars=yes')
+          router.push(response.data.authUrl)
         } else {
           return
         }
