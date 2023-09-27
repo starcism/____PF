@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 const clientId = process.env.KAKAO_CLIENT_ID
-const redirectUri = 'http://localhost:3000/auth/callback/kakao'
+const redirectUri = process.env.KAKAO_REDIRECT_URI
 
 export async function GET(request: Request) {
   try {
