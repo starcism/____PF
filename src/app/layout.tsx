@@ -6,7 +6,6 @@ import AccessTokenProvider from '@/libs/AccessTokenProvider'
 import MainMenuProvider from '@/libs/MainMenuProvider'
 import { cls } from '@/libs/cls'
 import QuillProvider from '@/libs/QuillProvider'
-import Head from 'next/head'
 import UserProvider from '@/libs/UserProvider'
 
 export const metadata = {
