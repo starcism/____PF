@@ -30,7 +30,7 @@ export default async function middleware(request: NextRequest) {
   if (cookie) {
     const refreshToken = cookie.value
     try {
-      const decoded = await verifyToken(refreshToken, secretKey)//리프레시 토큰 검증
+      const decoded = await verifyToken(refreshToken, secretKey) //리프레시 토큰 검증
       if (!decoded) {
         response.cookies.set({
           name: '_Authv4',
