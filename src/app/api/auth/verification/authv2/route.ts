@@ -20,8 +20,7 @@ export async function POST(request: Request) {
         return NextResponse.json({ message: '인증 완료', data, status: res.status })
       } else {
         //res.status === 401 토큰만료, res.status === 403 토큰변조
-        const data = await res.json()
-        return NextResponse.json({ error: data.message }, { status: res.status })
+        return NextResponse.json({ error: 'Unauthorized' }, { status: res.status })
       }
     } catch (error) {
       return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
