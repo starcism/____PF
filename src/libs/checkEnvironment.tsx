@@ -1,5 +1,5 @@
 export default function checkEnvironment() {
-  const base_url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'http://localhost:3000'
+  const base_url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://lovedive-starcism.vercel.app'
 
   return base_url
 }
