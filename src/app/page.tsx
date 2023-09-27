@@ -1,11 +1,13 @@
 'use client'
 
 import LoadingSpinner from '@/components/atoms/LoadingSpinner'
+import checkEnvironment from '@/libs/checkEnvironment'
 import generateRandomSecretKey from '@/libs/generateSecretKey'
 import Image from 'next/image'
 
 export default function Home() {
-
+  const a = checkEnvironment()
+  console.log(a)
   return (
     <>
       <div className="w-full aspect-[1000/666] max-h-[511px] relative">
