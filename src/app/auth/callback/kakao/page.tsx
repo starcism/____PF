@@ -14,19 +14,23 @@ export default function Page({ params, searchParams }: { params: { slug: string 
           code: searchParams.code,
         })
         if (response.status === 200) {
-          router.replace('/')
+          window.opener ? (window.opener.location.href = checkEnvironment().concat('/')) : router.replace('/')
+          window.close()
         } else {
-          router.replace('/auth')
+          window.opener ? (window.opener.location.href = checkEnvironment().concat('/auth')) : router.replace('/')
+          window.close()
         }
       } catch (error) {
-        router.replace('/auth')
+        window.opener ? (window.opener.location.href = checkEnvironment().concat('/auth')) : router.replace('/')
+        window.close()
       }
     }
 
     if (searchParams.code) {
       tokenRequest()
     } else if (searchParams.error) {
-      router.replace('/auth')
+      window.opener ? (window.opener.location.href = checkEnvironment().concat('/auth')) : router.replace('/')
+      window.close()
     } else {
       router.replace('/')
     }
