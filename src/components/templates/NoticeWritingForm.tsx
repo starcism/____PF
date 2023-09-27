@@ -33,7 +33,6 @@ export default function NoticeWritingForm() {
   const [onChange, setOnChange] = useState('')
   const handleInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
-    console.log(e.target.value)
   }
   const titleRef = useRef<HTMLInputElement>(null) // useRef에 대한 타입 지정
   const editorRef = useRef<ReactQuill>(null)
@@ -41,14 +40,6 @@ export default function NoticeWritingForm() {
     e.preventDefault()
     const title = titleRef.current?.value ?? ''
     const content = editorRef.current?.getEditor().getContents() ?? ''
-
-    // try {
-    //   const response = await axios.post('/api/posts', { title, content })
-    //   console.log(response.data) // 성공적으로 저장된 데이터 확인
-    //   // 여기서 필요한 추가 작업을 수행하세요 (예: 리다이렉션)
-    // } catch (error) {
-    //   console.error(error)
-    // }
   }
 
   return (

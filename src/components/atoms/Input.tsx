@@ -55,7 +55,6 @@ export default function Input({ size, type, placeholder, inputBorder = undefined
   const [inputValue, setInputValue] = useState('')
   const handleInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
-    console.log(e.target.value)
   }
 
   return (

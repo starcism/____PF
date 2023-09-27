@@ -101,7 +101,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
       {loading && <LoadingSpinner />}
       {!loading &&
         boardType === 'forum' &&
-        (posts ? (
+        (posts && posts.length !== 0 ? (
           posts.map((post: Board, index: number) =>
             post.deleted_at === null ? (
               <PostItem
@@ -124,7 +124,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
         ))}
       {!loading && boardType === 'photo' && (
         <BoardLayout>
-          {posts ? (
+          {posts && posts.length !== 0 ? (
             posts.map(
               (post: PhotoBoard, index: number) =>
                 post.deleted_at === null && (
@@ -145,7 +145,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
                       postTag={post.post_tag}
                       accessToken={accessToken as string | null}
                       UID={userId as number | null}
-                      isProfilePage = {true}
+                      isProfilePage={true}
                     />
                   </div>
                 ),
@@ -157,7 +157,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
       )}
       {!loading && boardType === 'video' && (
         <BoardLayout>
-          {posts ? (
+          {posts && posts.length !== 0 ? (
             posts.map(
               (post: VideoBoard, index: number) =>
                 post.deleted_at === null && (
@@ -178,7 +178,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
                       postTag={post.post_tag}
                       accessToken={accessToken as string | null}
                       UID={userId as number | null}
-                      isProfilePage = {true}
+                      isProfilePage={true}
                     />
                   </div>
                 ),

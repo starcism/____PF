@@ -6,18 +6,21 @@ const verified = process.env.VERIFYING_KEY
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
   const pageIndex = searchParams.get('pageIndex')
+  const userId = searchParams.get('userId')
+  const req = searchParams.get('req')
+  const total = searchParams.get('total')
   // const boardId = searchParams.get('boardId')
 
   if (pageIndex) {
     try {
-      const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/video?pageIndex=${pageIndex}`, {
+      const res = await fetch(`https://df6pvglhk0.execute-api.ap-northeast-2.amazonaws.com/20230817/board/video?pageIndex=${pageIndex}&userId=${userId}&req=${req}&total=${total}`, {
         method: 'GET',
         cache: 'no-store',
       })
       if (res.status === 200) {
-        const { result, totalPages } = await res.json()
+        const { posts, totalPages, isLastPage, next } = await res.json()
 
-        return NextResponse.json({ posts: result, totalPages })
+        return NextResponse.json({ posts, totalPages, isLastPage, next })
       } else if (res.status === 204) {
         return NextResponse.json({ message: '게시물 없음' }, { status: 204 })
       } else {

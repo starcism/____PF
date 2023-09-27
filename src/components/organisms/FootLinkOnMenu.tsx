@@ -49,12 +49,12 @@ export default function FootLinkOnMenu({ session = null, loading = false }: { se
         {(session) => (
           <div className="flex w-full h-full">
             {session ? (
-              <div className="flex w-full justify-center items-center">
-                <span className="text-[1.1rem] text-gray-5 weight-400">로그아웃</span>
+              <div className="flex w-full justify-center text-gray-5 hover:text-gray-2 duration-100 items-center">
+                <span className="text-[1.1rem] weight-400">로그아웃</span>
               </div>
             ) : (
-              <div className="flex w-full justify-center items-center">
-                <span className="text-[1.1rem] weight-400 text-gray-5">회원가입</span>
+              <div className="flex w-full justify-center text-gray-5 hover:text-gray-2 duration-100 items-center">
+                <span className="text-[1.1rem] weight-400">회원가입</span>
               </div>
             )}
           </div>

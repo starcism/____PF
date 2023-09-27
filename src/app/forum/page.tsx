@@ -23,47 +23,49 @@ export default function Page() {
 
   return (
     <>
-      <BoardNotice />
-      {postData ? (
-        postData.posts.map((post: Board, index: number) =>
-          post.deleted_at === null ? (
-            <PostItem
-              key={index}
-              boardid={post.board_id}
-              title={post.title}
-              view={post.view}
-              likeCount={post.liked}
-              commentCount={post.comment_count}
-              createdAt={post.created_at}
-              updatedAt={post.updated_at}
-              nickname={post.nickname}
-            />
-          ) : (
-            <></>
-          ),
-        )
-      ) : (
-        <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">게시물 없음</div>
-      )}
-      {nextData &&
-        nextData.map((post: Board, index: number) =>
-          post.deleted_at === null ? (
-            <PostItem
-              key={index}
-              boardid={post.board_id}
-              title={post.title}
-              view={post.view}
-              likeCount={post.liked}
-              commentCount={post.comment_count}
-              createdAt={post.created_at}
-              updatedAt={post.updated_at}
-              nickname={post.nickname}
-            />
-          ) : (
-            <></>
-          ),
+      <div className='min-h-[100vh]'>
+        <BoardNotice />
+        {postData ? (
+          postData.posts.map((post: Board, index: number) =>
+            post.deleted_at === null ? (
+              <PostItem
+                key={index}
+                boardid={post.board_id}
+                title={post.title}
+                view={post.view}
+                likeCount={post.liked}
+                commentCount={post.comment_count}
+                createdAt={post.created_at}
+                updatedAt={post.updated_at}
+                nickname={post.nickname}
+              />
+            ) : (
+              <></>
+            ),
+          )
+        ) : (
+          <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">게시물 없음</div>
         )}
-      {!isLastPage && <Observer prev={nextData} totalPages={totalPage} boardType='forum' next={next} setNextData={setData}/>}
+        {nextData &&
+          nextData.map((post: Board, index: number) =>
+            post.deleted_at === null ? (
+              <PostItem
+                key={index + 20}
+                boardid={post.board_id}
+                title={post.title}
+                view={post.view}
+                likeCount={post.liked}
+                commentCount={post.comment_count}
+                createdAt={post.created_at}
+                updatedAt={post.updated_at}
+                nickname={post.nickname}
+              />
+            ) : (
+              <></>
+            ),
+          )}
+      </div>
+      {!isLastPage && <Observer prev={nextData} totalPages={totalPage} boardType="forum" next={next} setNextData={setData} />}
     </>
   )
 }

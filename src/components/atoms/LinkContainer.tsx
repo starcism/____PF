@@ -38,7 +38,7 @@ const linkVariants = {
 
 const styles = {
   container: ({ size }: { size: ContainerVariant }) => [containerVariants[size], 'bg-white'].filter(Boolean).join(' '),
-  link: ({ size }: { size: LinkVariant }) => [linkVariants[size], 'w-full h-full bg-white'].filter(Boolean).join(' '),
+  link: ({ size }: { size: LinkVariant }) => [linkVariants[size], `w-full h-full bg-white`].filter(Boolean).join(' '),
 }
 
 export default function LinkContainer({ children, href, size, onClick = undefined }: ILinkContainer) {

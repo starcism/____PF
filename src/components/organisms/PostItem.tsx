@@ -14,7 +14,7 @@ export default function PostItem({ nickname, boardid, title, view, likeCount, co
   return (
     <>
       <Link href={`/forum/${boardid}`} prefetch>
-        <div className="flex w-full h-[72px] justify-between items-center py-[12px] px-[11px] cursor-pointer">
+        <div className="flex w-full h-[72px] justify-between items-center py-[12px] px-[11px] cursor-pointer hover:bg-gray-1 duration-100">
           <div className="flex items-center">
             <UserIcon />
             <div className="mx-[11px]">

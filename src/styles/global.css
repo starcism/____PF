@@ -71,6 +71,7 @@
 .layout-border {
   border-left: 1px solid #eeeeee;
   border-right: 1px solid #eeeeee;
+  border-bottom: none;
 }
 
 html,

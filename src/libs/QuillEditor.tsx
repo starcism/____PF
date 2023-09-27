@@ -10,25 +10,6 @@ interface IQuillEditor {
   onChange: React.Dispatch<React.SetStateAction<string>>
   placeholder: string
 }
-// const uploadImage = async (file: File) => {
-//   try {
-//     const url = 'YOUR_LAMBDA_ENDPOINT_URL' // 실제 Lambda 함수의 엔드포인트 URL로 대체되어야 합니다.
-//     const formData = new FormData()
-//     formData.append('image', file)
-//     const response = await fetch(url, {
-//       method: 'POST',
-//       body: formData,
-//     })
-
-//     const data = await response.json()
-//     const imageUrl = data.imageUrl
-//     console.log('Uploaded image URL:', imageUrl)
-//     return imageUrl
-//   } catch (error) {
-//     console.log('Image upload failed:', error)
-//     throw error
-//   }
-// }
 
 export default function QuillEditor({ quillRef, value, onChange, placeholder }: IQuillEditor) {
   // const imageHandler = () => {

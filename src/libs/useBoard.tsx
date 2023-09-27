@@ -26,24 +26,12 @@ export default function useBoard(boardType: string, pageIndex: number) {
         cache: 'no-store',
       })
       if (res.status === 200) {
-        if (boardType === 'forum') {
-          const { posts, totalPages, isLastPage, next } = await res.json()
-          const data = { posts, totalPages }
-          setPostData(data)
-          setTotalPage(totalPages)
-          setLastPage(isLastPage)
-          setNext(next)
-        } else if (boardType === 'photo') {
-          const { photoUrls, posts, totalPages } = await res.json()
-          const data = { photoUrls, posts }
-          setPostData(data)
-          setTotalPage(totalPages)
-        } else if (boardType === 'video') {
-          const { posts, totalPages } = await res.json()
-          const data = { posts, totalPages }
-          setPostData(data)
-          setTotalPage(totalPages)
-        }
+        const { posts, totalPages, isLastPage, next } = await res.json()
+        const data = { posts }
+        setPostData(data)
+        setTotalPage(totalPages)
+        setLastPage(isLastPage)
+        setNext(next)
       } else if (res.status === 204) {
         return null
       } else {

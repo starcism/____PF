@@ -181,7 +181,6 @@ export default function PhotoBoardWritingForm() {
         return
       } else {
         const response1 = await res.json()
-        console.log(response1)
         alert('글 작성에 실패했어요1')
         return
       }

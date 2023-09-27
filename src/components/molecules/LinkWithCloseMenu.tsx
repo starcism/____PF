@@ -10,7 +10,7 @@ export default function LinkWithCloseMenu({ pageHref, pageName }: { pageHref: st
   const pathname = usePathname()
   const router = useRouter()
   const boardType = ['/notice', '/forum', '/photo', '/video']
-  const fontStyle = pathname === pageHref ? 'text-turquoise weight-500' : 'text-gray-4 weight-400'
+  const fontStyle = pathname === pageHref ? 'text-turquoise weight-500' : 'text-gray-4 weight-400 hover:text-gray-2 duration-100'
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function LinkWithCloseMenu({ pageHref, pageName }: { pageHref: st
             handleMainMenu(false)
           }}
         >
-          <span className={`ml-4 text-[1rem] leading-[0.8] ${fontStyle}`}>{pageName}</span>
+          <span className={`ml-4 text-[1rem] leading-[0.8] flex items-center h-full w-full ${fontStyle}`}>{pageName}</span>
         </LinkContainer>
       </div>
     </>

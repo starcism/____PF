@@ -110,7 +110,6 @@ export default function PhotoBoardWritingForm() {
       })
       if (res.status === 200) {
         const data = await res.json()
-        console.log(data)
 
         router.push('/video')
       } else if (res.status === 401) {
@@ -121,7 +120,6 @@ export default function PhotoBoardWritingForm() {
         return
       } else {
         const response1 = await res.json()
-        console.log(response1)
         alert('글 작성에 실패했어요1')
         return
       }

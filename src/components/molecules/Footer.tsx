@@ -18,7 +18,7 @@ export default function Footer() {
             </LinkContainer>
           </div>
           <div className="w-1/3 flex justify-center">
-            <LinkContainer href="/" size="m_menu_footer_small">
+            <LinkContainer href="mailto:laugh120@gmail.com" size="m_menu_footer_small">
               <span className="text-[0.9rem] weight-350 text-viva-gray-1">문의</span>
             </LinkContainer>
           </div>

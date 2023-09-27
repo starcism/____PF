@@ -34,8 +34,6 @@ export default function ProfileSetter({ accessToken, nickname, setNickname, prof
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value.replace(/\s| /gi, '')
     const newNickname = nicknameRef.current?.value.trim() ?? ''
-    console.log(inputValue)
-    console.log(newNickname)
     setValue(inputValue)
 
     const isValid = inputRegex.test(inputValue)
@@ -109,7 +107,7 @@ export default function ProfileSetter({ accessToken, nickname, setNickname, prof
         setAlertMessage(`${error}`)
       }
     } catch (error) {
-      console.log('error', error)
+      return
     } finally {
       setLoading(false)
     }

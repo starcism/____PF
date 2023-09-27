@@ -37,11 +37,9 @@ export default function PhotoViewer({ photoUrls, boardId }: Props) {
         setImages(signatureUrls)
       } else {
         const data = await res.json()
-        console.log(data)
         return
       }
     } catch (error) {
-      console.log('error:', error)
       return
     } finally {
       setLoad(false)

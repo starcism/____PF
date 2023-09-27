@@ -10,7 +10,7 @@ interface Props {
   next: number
   setNextData: React.Dispatch<SetStateAction<any[] | null>>
   boardType: string
-  userId?: number
+  userId?: number | null
   totalPages: number
 }
 
@@ -57,16 +57,8 @@ const getPost = async (boardType: string, url: string) => {
       cache: 'no-store',
     })
     if (res.status === 200) {
-      if (boardType === 'forum') {
-        const { posts, totalPages, isLastPage, next } = await res.json()
-        return { posts, totalPages, isLastPage, next }
-      } else if (boardType === 'photo') {
-        const { photoUrls, posts, totalPages } = await res.json()
-        return { photoUrls, posts, totalPages }
-      } else if (boardType === 'video') {
-        const { posts, totalPages } = await res.json()
-        return { posts, totalPages }
-      }
+      const { posts, totalPages, isLastPage, next } = await res.json()
+      return { posts, totalPages, isLastPage, next }
     } else {
       throw new Error()
     }
@@ -75,7 +67,7 @@ const getPost = async (boardType: string, url: string) => {
   }
 }
 
-export default function Observer({ prev, next, setNextData, totalPages, boardType, userId = undefined }: Props) {
+export default function Observer({ prev, next, setNextData, totalPages, boardType, userId = null }: Props) {
   const { target, postData, promise, setPromise, isLastPage } = useObserver(prev, getPost, totalPages, next, boardType, userId)
 
   useEffect(() => {
@@ -88,6 +80,10 @@ export default function Observer({ prev, next, setNextData, totalPages, boardTyp
   }, [promise])
 
   if (isLastPage) {
+    return <div className="w-full h-[120px] text-gray-2 flex justify-center items-center select-none">마지막 페이지에요</div>
+  }
+
+  if (next === 0) {
     return <></>
   }
 
