@@ -27,10 +27,9 @@ export default function Page({ params, searchParams }: { params: { slug: string 
       tokenRequest()
     } else if (searchParams.error) {
       router.replace('/notice/3')
-    } else {
-      router.replace('/notice/4')
     }
-  }, [])
+    
+  }, [searchParams])
 
   return
 }
