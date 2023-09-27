@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import login_kakao from '@/utils/login_kakao.png'
 import login_naver from '@/utils/login_naver.png'
 import axios from 'axios'
@@ -64,17 +64,12 @@ export default function Page() {
   //   }
   // }, [])
 
-  const [randomIndex, setRandomIndex] = useState<number | null>(null)
-
-  useEffect(() => {
-    const idx = Math.floor(Math.random() * 6)
-    setRandomIndex(idx)
-  }, [])
+  const [randomIndex, setRandomIndex] = useState<number>(Math.floor(Math.random() * 6))
 
   return (
     <div className="fixed w-full max-w-[767px] h-full bg-gray-0">
       <div className="relative w-full max-w-[767px] h-full">
-        {randomIndex !== null && <Image src={imgUrlsMobile[randomIndex]} width={500} height={500} alt="_ive" className="relative w-full h-full object-cover" />}
+        {<Image src={imgUrlsMobile[randomIndex]} width={500} height={500} alt="_ive" className="relative w-full h-full object-cover" />}
       </div>
       {/* <div className="max-w-[1000px] max-h-[1500px]">
           <Image
