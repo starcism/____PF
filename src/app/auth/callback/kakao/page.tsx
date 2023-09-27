@@ -2,11 +2,14 @@
 
 import { useEffect } from 'react'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import checkEnvironment from '@/libs/checkEnvironment'
 
-export default function Page({ params, searchParams }: { params: { slug: string }; searchParams: { [key: string]: string | string[] | undefined } }) {
+export default function Page({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const router = useRouter()
+  const params = useSearchParams()
+  const code = params.get('code')
+
   useEffect(() => {
     const tokenRequest = async () => {
       try {
@@ -28,8 +31,8 @@ export default function Page({ params, searchParams }: { params: { slug: string 
     } else if (searchParams.error) {
       router.replace('/notice/3')
     }
-    
+    console.log('searchParams:', searchParams, 'code:', code)
   }, [searchParams])
 
-  return
+  return <>{searchParams.code}</>
 }
