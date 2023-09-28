@@ -17,7 +17,7 @@ export default function PostCard({
   createdAt,
   tag,
   postTag,
-  profile_image,
+  icon,
   nickname,
   liked,
   userLike,
@@ -25,7 +25,7 @@ export default function PostCard({
   accessToken,
   UID,
   setDelete,
-  isProfilePage = false
+  isProfilePage = false,
 }: Card) {
   const [like, setLike] = useState(userLike)
   const [initialLiked, setInitialLiked] = useState(liked)
@@ -57,7 +57,7 @@ export default function PostCard({
     if (!accessToken) {
       return
     }
-    
+
     if (isSubmit) {
       return
     }
@@ -121,7 +121,7 @@ export default function PostCard({
           <div className="flex items-center w-auto h-[50px]">
             <button onClick={handleNameClick}>
               <div className="flex items-center px-[4px]">
-                <UserIcon size="28" />
+                <UserIcon size="28" profile_image={icon} />
                 <span className="ml-2 text-[14px] mb-[2px] font-700 text-gray-4 select-none overflow-hidden h-[14px] text-ellipsis">{nickname}</span>
               </div>
             </button>

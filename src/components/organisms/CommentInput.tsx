@@ -7,6 +7,7 @@ import checkEnvironment from '@/libs/checkEnvironment'
 
 interface Props {
   nested?: boolean
+  profile_image: string
   accessToken: string | null
   loggedIn: boolean
   boardId: string
@@ -14,7 +15,7 @@ interface Props {
   refresh: () => Promise<void>
 }
 
-export default function CommentInput({ nested = false, accessToken, loggedIn, boardId, commentId = 0, refresh }: Props) {
+export default function CommentInput({ nested = false, profile_image, accessToken, loggedIn, boardId, commentId = 0, refresh }: Props) {
   const [textareaValue, setTextareaValue] = useState<string>('')
   const [isSubmit, setSubmit] = useState(false)
   const router = useRouter()
@@ -55,10 +56,10 @@ export default function CommentInput({ nested = false, accessToken, loggedIn, bo
       <div className="px-[13px]">
         {loggedIn ? (
           <form onSubmit={handleSubmit}>
-            <UserComment nested={nested} value={textareaValue} setValue={setTextareaValue} onSubmit={handleSubmit} loggedIn={true} />
+            <UserComment nested={nested} profile_image={profile_image} value={textareaValue} setValue={setTextareaValue} onSubmit={handleSubmit} loggedIn={true} />
           </form>
         ) : (
-          <UserComment nested={nested} value={textareaValue} setValue={setTextareaValue} loggedIn={false} getLogIn={() => router.push('/auth')} />
+          <UserComment nested={nested} profile_image={profile_image} value={textareaValue} setValue={setTextareaValue} loggedIn={false} getLogIn={() => router.push('/auth')} />
         )}
       </div>
     </>

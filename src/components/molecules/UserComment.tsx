@@ -3,6 +3,7 @@ import UserIcon from '../atoms/UserIcon'
 
 interface Props {
   nested: boolean
+  profile_image: string
   value: string
   setValue: React.Dispatch<SetStateAction<string>>
   onSubmit?: (e: React.FormEvent) => void
@@ -10,7 +11,7 @@ interface Props {
   getLogIn?: () => void
 }
 
-export default function UserComment({ nested, value, setValue, onSubmit = () => {}, loggedIn, getLogIn = () => {} }: Props) {
+export default function UserComment({ nested, profile_image, value, setValue, onSubmit = () => {}, loggedIn, getLogIn = () => {} }: Props) {
   const handleTextareaValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value)
   }
@@ -61,7 +62,7 @@ export default function UserComment({ nested, value, setValue, onSubmit = () => 
     <>
       <div className={`flex w-full py-[8px] pr-[8px] ${nested && 'pl-[36px]'}`}>
         <div className="h-full w-[40px] pt-[4px] mr-[8px] flex">
-          <UserIcon />
+          <UserIcon profile_image={profile_image}/>
         </div>
         <div className="flex border border-solid border-gray-3 rounded-[20px] w-full" onClick={getLogIn}>
           <textarea

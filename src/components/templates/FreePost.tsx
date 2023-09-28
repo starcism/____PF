@@ -10,7 +10,7 @@ import ModalContainer, { ConfirmModal } from '../atoms/ModalContainer'
 import { useRouter } from 'next/navigation'
 
 interface Props {
-  profileImage?: string
+  icon: string
   nickname: string
   UID: number | null
   userId: number
@@ -25,7 +25,7 @@ interface Props {
   updatedAt?: string
 }
 
-export default function FreePost({ nickname, title, content, view, createdAt, updatedAt, UID, userId, accessToken, boardId }: Props) {
+export default function FreePost({ nickname, icon, title, content, view, createdAt, updatedAt, UID, userId, accessToken, boardId }: Props) {
   const { reader, setValue } = useContext(QuillContext)
   const createdDate = createdAt && formatDate(createdAt)
   const router = useRouter()
@@ -80,7 +80,7 @@ export default function FreePost({ nickname, title, content, view, createdAt, up
       <div className="w-full px-[13px] pt-[17px]">
         <div className="flex w-full h-[50px] pb-[10px] items-center justify-between">
           <div className="flex items-center">
-            <UserIcon />
+            <UserIcon profile_image={icon} />
             <div>
               <div className="flex mb-[6px] ml-[12px] mr-[12px] overflow-hidden max-h-[40px]">
                 <h1 className="font-700 leading-[22px] text-[16px]">{`${title}`}</h1>

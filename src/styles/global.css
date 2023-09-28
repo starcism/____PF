@@ -242,6 +242,13 @@ lightblue: '#56cdfa', */
   grid-row-gap: 0px;
 }
 
+.grid-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  grid-gap: 0px;
+  grid-row-gap: 0px;
+}
+
 .tagButton {
   box-sizing: content-box;
   border: 3px solid transparent;
@@ -253,7 +260,7 @@ lightblue: '#56cdfa', */
 
 .unTagButton {
   box-sizing: content-box;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   background-image: linear-gradient(#fff, #fff), linear-gradient(to left, #cccccc 0%, #eeeeee 100%);
   background-origin: border-box;
   background-clip: content-box, border-box;

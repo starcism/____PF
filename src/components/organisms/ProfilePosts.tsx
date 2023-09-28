@@ -114,6 +114,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
                 createdAt={post.created_at}
                 updatedAt={post.updated_at}
                 nickname={post.nickname}
+                icon={post.icon}
               />
             )
           )
@@ -136,6 +137,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
                       view={post.view}
                       createdAt={post.created_at}
                       nickname={post.nickname}
+                      icon={post.icon}
                       liked={post.liked}
                       userLike={post.user_like}
                       commentCount={post.comment_count}
@@ -169,6 +171,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
                       view={post.view}
                       createdAt={post.created_at}
                       nickname={post.nickname}
+                      icon={post.icon}
                       liked={post.liked}
                       userLike={post.user_like}
                       commentCount={post.comment_count}

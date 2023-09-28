@@ -7,7 +7,7 @@ import formatDate from '@/libs/getFormDate'
 import { IPostItem } from '@/types/types'
 import { useRouter } from 'next/navigation'
 
-export default function PostItem({ nickname, boardid, title, view, likeCount, commentCount, createdAt }: IPostItem) {
+export default function PostItem({ nickname, icon, boardid, title, view, likeCount, commentCount, createdAt }: IPostItem) {
   const createdDate = createdAt && formatDate(createdAt)
   const router = useRouter()
 
@@ -16,7 +16,7 @@ export default function PostItem({ nickname, boardid, title, view, likeCount, co
       <Link href={`/forum/${boardid}`} prefetch>
         <div className="flex w-full h-[72px] justify-between items-center py-[12px] px-[11px] cursor-pointer hover:bg-gray-1 duration-100">
           <div className="flex items-center">
-            <UserIcon />
+            <UserIcon profile_image={icon}/>
             <div className="mx-[11px]">
               <h1 className="max-h-[35px] text-[14px] leading-[19px] weight-500 select-none">{title}</h1>
               <div className="mt-[4px] max-h-[15px] leading-[15px] overflow-hidden">

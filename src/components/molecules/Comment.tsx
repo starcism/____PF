@@ -12,7 +12,7 @@ interface Props {
     reply: string
     nickname?: string
     user_id?: number
-    icon?: string
+    icon: string
     is_author?: boolean
     comment_id: string
     deleted_at?: null | string
@@ -89,7 +89,7 @@ export default function Comment({ boardId, accessToken, comment, handleReplyInde
       >
         <div className="flex max-w-[calc(100vw-76px)] h-full">
           <div className="pt-[7px]">
-            <UserIcon />
+            <UserIcon profile_image={comment.icon}/>
           </div>
           <div>
             <div className="flex items-center">

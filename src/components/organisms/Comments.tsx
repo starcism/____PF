@@ -7,13 +7,14 @@ import CommentInput from './CommentInput'
 
 interface Props {
   commentList: Comments[]
+  profile_image: string
   accessToken: string | null
   loggedIn: boolean
   boardId: string
   refresh: () => Promise<void>
 }
 
-export default function Comments({ commentList, accessToken, loggedIn, boardId, refresh }: Props) {
+export default function Comments({ commentList, profile_image, accessToken, loggedIn, boardId, refresh }: Props) {
   const [nestedReply, setNestedReply] = useState<number | null>(null)
   const commentLength = commentList.filter((comment) => comment.deleted_at === null).length
   const isOriginComment = (commentId: string) => {
@@ -53,7 +54,7 @@ export default function Comments({ commentList, accessToken, loggedIn, boardId, 
             <div key={index}>
               <Comment accessToken={accessToken} boardId={boardId} comment={comment} handleReplyIndex={handleReplyIndex} refresh={refresh} />
               {isOriginComment(comment.comment_id) && commentIndex(comment.comment_id) === nestedReply ? (
-                <CommentInput commentId={nestedReply} nested={true} boardId={boardId} accessToken={accessToken} loggedIn={loggedIn} refresh={refresh} />
+                <CommentInput commentId={nestedReply} nested={true} profile_image={profile_image} boardId={boardId} accessToken={accessToken} loggedIn={loggedIn} refresh={refresh} />
               ) : (
                 <></>
               )}

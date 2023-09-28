@@ -11,7 +11,7 @@ import { useUserState } from '@/libs/UserProvider'
 type BlockInteractionEvent = MouseEvent | TouchEvent | WheelEvent
 
 export default function MainMenu() {
-  const { accessToken, nickname, userId, isLoading, error } = useUserState()
+  const { accessToken, nickname, profileImage, userId, isLoading, error } = useUserState()
 
   useEffect(() => {
     const blockInteraction = (e: BlockInteractionEvent) => {
@@ -34,7 +34,7 @@ export default function MainMenu() {
         onMouseDown={(e) => e.stopPropagation()}
         className="fixed top-[52px] h-[calc(100vh-52px)] w-full max-w-[479px] bg-white z-[1000] border-r-[0.5px] shadow-2xl border-solid border-r-gray-2"
       >
-        {isLoading ? <ProfileLinkOnMenu loading={true} /> : <ProfileLinkOnMenu nickname={nickname} session={accessToken} />}
+        {isLoading ? <ProfileLinkOnMenu loading={true} /> : <ProfileLinkOnMenu nickname={nickname} profile_image={profileImage} session={accessToken} />}
         <PageLinkOnMenu />
         {isLoading ? <FootLinkOnMenu loading={true} /> : <FootLinkOnMenu session={accessToken} />}
         <Footer />

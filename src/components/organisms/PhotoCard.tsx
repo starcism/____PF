@@ -14,6 +14,7 @@ export default function PhotoCard({
   tag,
   postTag,
   nickname,
+  icon,
   liked = 0,
   userLike,
   commentCount = 0,
@@ -41,6 +42,7 @@ export default function PhotoCard({
           title={title}
           createdAt={createdAt}
           nickname={nickname}
+          icon={icon}
           liked={liked}
           userLike={userLike}
           postTag={postTag}

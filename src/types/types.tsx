@@ -13,6 +13,7 @@ export interface Board {
   updated_at?: string
   deleted_at?: string | null
   nickname: string
+  icon: string
   liked: number
   comment_count: number
 }
@@ -53,6 +54,7 @@ export interface VideoBoard {
   updated_at?: string
   deleted_at?: string | null
   nickname: string
+  icon: string
   liked: number
   comment_count: number
   youtube_url: string
@@ -65,13 +67,14 @@ export interface VideoBoard {
 export interface IPostItem {
   key: number
   boardid: number
-  title?: string
-  view?: number
-  likeCount?: number
-  commentCount?: number
-  createdAt?: string
+  title: string
+  view: number
+  likeCount: number
+  commentCount: number
+  createdAt: string
   updatedAt?: string
-  nickname?: string
+  nickname: string
+  icon: string
 }
 
 export interface Card {
@@ -79,7 +82,7 @@ export interface Card {
   userId: number
   title: string
   view?: number
-  profile_image?: string
+  icon: string
   nickname: string
   liked: number
   commentCount: number

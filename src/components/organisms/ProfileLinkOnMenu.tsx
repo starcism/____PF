@@ -7,10 +7,12 @@ import ConditionalLink from '../molecules/ConditionalLink'
 
 export default function ProfileLinkOnMenu({
   nickname = '',
+  profile_image = 'default',
   session = null,
   loading = false,
 }: {
   nickname?: string | null
+  profile_image?: string
   session?: string | null
   loading?: boolean
 }) {
@@ -21,7 +23,7 @@ export default function ProfileLinkOnMenu({
         <div className="h-[5rem] flex items-center">
           <div className="flex w-full justify-between mx-[1rem]">
             <div className="flex items-center">
-              <UserIcon />
+            <UserIcon profile_image={profile_image} />
               <div className="ml-4 text-[1rem] weight-600 leading-[0.8]" />
             </div>
             <div className="flex items-center">
@@ -44,7 +46,7 @@ export default function ProfileLinkOnMenu({
             {session ? (
               <div className="flex w-full justify-between mx-[1rem]">
                 <div className="flex items-center">
-                  <UserIcon />
+                  <UserIcon profile_image={profile_image} />
                   <span className="font-sans ml-4 text-[1rem] weight-500 leading-[0.8]">{nickname}</span>
                 </div>
                 <div className="flex items-center">

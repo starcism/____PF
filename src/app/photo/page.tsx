@@ -41,6 +41,7 @@ export default function Page() {
                     view={post.view}
                     createdAt={post.created_at}
                     nickname={post.nickname}
+                    icon={post.icon}
                     liked={post.liked}
                     userLike={post.user_like}
                     commentCount={post.comment_count}
@@ -68,6 +69,7 @@ export default function Page() {
                   view={post.view}
                   createdAt={post.created_at}
                   nickname={post.nickname}
+                  icon={post.icon}
                   liked={post.liked}
                   userLike={post.user_like}
                   commentCount={post.comment_count}

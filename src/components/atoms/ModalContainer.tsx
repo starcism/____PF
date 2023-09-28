@@ -1,12 +1,19 @@
 'use client'
+import Image from 'next/image'
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
+import { CircleImageButton } from './Button'
 
 interface Props {
   children?: React.ReactNode
   id?: number
   confirmType?: string
-  onClick?: () => void
+  onClick: () => void
+}
+
+interface ProfileImageProps {
+  children: React.ReactNode
+  onClick: (unit: string, close:() => void) => void
 }
 
 interface SetVideoProps {
@@ -25,7 +32,7 @@ interface ModalProps {
   children: React.ReactNode
 }
 
-export default function ModalContainer({ children, id, onClick = undefined }: Props) {
+export default function ModalContainer({ children, id, onClick }: Props) {
   const [isModal, setIsModal] = useState(false)
 
   const openModal = () => {
@@ -56,6 +63,107 @@ export default function ModalContainer({ children, id, onClick = undefined }: Pr
         </Modal>
       )}
       <div onClick={() => openModal()}>{children}</div>
+    </>
+  )
+}
+
+export function ProfileImageModal({ children, onClick }: ProfileImageProps) {
+  const [isModal, setIsModal] = useState(false)
+  const [unit, setUnit] = useState('default')
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const tagButtonUrl = [
+    '/images/profile_yujin.jpeg',
+    '/images/profile_gaeul.jpeg',
+    '/images/profile_rei.jpeg',
+    '/images/profile_wonyo.jpeg',
+    '/images/profile_liz.jpeg',
+    '/images/profile_leeseo.jpeg',
+  ]
+  const setTagByIndex = (index: number) => {
+    setSelectedIndex(index)
+    if (index === 0) {
+      setUnit('yujin')
+    } else if (index === 1) {
+      setUnit('gaeul')
+    } else if (index === 2) {
+      setUnit('rei')
+    } else if (index === 3) {
+      setUnit('wonyo')
+    } else if (index === 4) {
+      setUnit('liz')
+    } else if (index === 5) {
+      setUnit('leeseo')
+    }
+  }
+
+  const openModal = () => {
+    setIsModal(true)
+    document.body.style.cssText = `
+      height: 100%;
+      width: 100%;
+      overflow-y: hidden;
+      `
+  }
+
+  const closeModal = () => {
+    setIsModal(false)
+    document.body.style.cssText = ''
+  }
+
+  useEffect(() => {
+    return () => {
+      document.body.style.cssText = ''
+    }
+  }, [])
+
+  return (
+    <>
+      {isModal && (
+        <Modal show={isModal} close={closeModal}>
+          <div className="min-w-[220px] h-[220px] bg-white rounded-[10px]">
+            <div className="w-full h-[40px]">
+              <h1 className="font-500 text-black text-[16px]">프로필 사진 변경</h1>
+            </div>
+            <div className="grid-buttons w-[220px] h-[150px]">
+              {tagButtonUrl.map((url, i) => (
+                <div className="w-auto h-auto" key={i}>
+                  <CircleImageButton src={url} onClick={() => setTagByIndex(i)} selected={selectedIndex === i ? true : false} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onClick(unit, closeModal)
+              }}
+              type="button"
+              className={`w-1/2 h-[20px] text-turquoise`}
+            >
+              확인
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                closeModal()
+              }}
+              type="button"
+              className="w-1/2 h-[20px] text-gray-3"
+            >
+              취소
+            </button>
+          </div>
+        </Modal>
+      )}
+      <div
+        onClick={(e) => {
+          e.stopPropagation()
+          openModal()
+        }}
+      >
+        {children}
+      </div>
     </>
   )
 }

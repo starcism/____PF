@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export default function Page() {
-  const { accessToken, nickname, setNickname, createdAt, userId, isLoading, error } = useUserState()
+  const { accessToken, nickname, setNickname, profileImage, setProfileImage, createdAt, userId, isLoading, error } = useUserState()
   const router = useRouter()
 
   if (isLoading) {
@@ -27,7 +27,8 @@ export default function Page() {
           nickname={nickname}
           setNickname={setNickname}
           createdAt={createdAt}
-          profile_image="/images/liz1.jpeg"
+          profile_image={profileImage}
+          setProfileImage={setProfileImage}
         />
       </>
     )

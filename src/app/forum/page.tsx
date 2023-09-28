@@ -38,6 +38,7 @@ export default function Page() {
                 createdAt={post.created_at}
                 updatedAt={post.updated_at}
                 nickname={post.nickname}
+                icon={post.icon}
               />
             )
           )
@@ -57,6 +58,7 @@ export default function Page() {
                 createdAt={post.created_at}
                 updatedAt={post.updated_at}
                 nickname={post.nickname}
+                icon={post.icon}
               />
             ) : (
               <></>

@@ -11,6 +11,7 @@ interface Props {
   nickname: string
   setNickname: React.Dispatch<React.SetStateAction<string | null>>
   profile_image: string
+  setProfileImage: React.Dispatch<React.SetStateAction<string>>
 }
 
 const regex = /^[a-zA-Z0-9가-힣]+$/
@@ -18,7 +19,7 @@ const inputRegex = /^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]+$/
 const NICKNAME_MIN_LENGTH = 2
 const NICKNAME_MAX_LENGTH = 12
 
-export default function ProfileSetter({ accessToken, nickname, setNickname, profile_image }: Props) {
+export default function ProfileSetter({ accessToken, nickname, setNickname, profile_image, setProfileImage }: Props) {
   const [onInput, setOnInput] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [canSubmit, setCanSubmit] = useState(false)
@@ -60,11 +61,28 @@ export default function ProfileSetter({ accessToken, nickname, setNickname, prof
     }
   }
 
+  const changeProfileImage = async (unit: string, close: () => void) => {
+    try {
+      const res = await fetch(checkEnvironment().concat(`/api/user/icon`), {
+        method: 'POST',
+        body: JSON.stringify({ unit: unit }),
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      })
+      if (res.ok) {
+        const { icon } = await res.json()
+        setProfileImage(icon)
+        close()
+      }
+    } catch (error) {}
+  }
+
   const submitNickname = async () => {
-    if(loading) {
+    if (loading) {
       return
     }
-    
+
     setLoading(true)
     const newNickname = nicknameRef.current?.value.trim() ?? ''
 
@@ -121,7 +139,7 @@ export default function ProfileSetter({ accessToken, nickname, setNickname, prof
     <div className="flex w-full h-full bg-white">
       <div className="flex w-full">
         <div className="flex items-center w-full">
-          <ChangableProfileImage size="60" />
+          <ChangableProfileImage size="60" profile_image={profile_image} onClick={changeProfileImage} />
           {onInput && (
             <div className="ml-4 relative w-full">
               <input
