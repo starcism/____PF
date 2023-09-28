@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useAccessTokenState } from './AccessTokenProvider'
 import checkEnvironment from './checkEnvironment'
 
@@ -10,7 +10,7 @@ export default function useAuth() {
   const { accessToken, setAccessToken, loading } = useAccessTokenState()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<boolean>(false)
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       //액세스 토큰 먼저 검증
       const verifyingRes = await fetch(checkEnvironment().concat('/api/auth/verification/authv1'), {
@@ -19,7 +19,6 @@ export default function useAuth() {
           Authorization: `${accessToken}`,
         },
       })
-
       if (verifyingRes.ok) {
         return
 
@@ -52,7 +51,7 @@ export default function useAuth() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [accessToken, setAccessToken])
 
   useEffect(() => {
     if (!loading && accessToken) {

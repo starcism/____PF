@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       return new Response('', {
         status: 200,
         headers: {
-          'Set-Cookie': `_Authv4=${refreshToken}; max-age:${60 * 60 * 24 * 60}; HttpOnly; Path=/`,
+          'Set-Cookie': `_Authv4=${refreshToken}; Max-Age=${60 * 60 * 24 * 60}; HttpOnly; Path=/`,
         },
       })
     } else {

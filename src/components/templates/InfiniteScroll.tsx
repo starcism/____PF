@@ -20,7 +20,6 @@ async function getPost(pageIndex: number) {
       return { posts: undefined }
     }
   } catch (error) {
-    console.log(error)
     return { posts: undefined }
   }
 }
