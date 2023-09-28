@@ -45,7 +45,7 @@ export default function LinkContainer({ children, href, size, onClick = undefine
   return (
     <>
       <div className={styles.container({ size })}>
-        <Link href={href} className={styles.link({ size })} onClick={onClick} prefetch={true}>
+        <Link href={href} className={styles.link({ size })} onClick={onClick}>
           {children}
         </Link>
       </div>

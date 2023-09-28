@@ -26,7 +26,7 @@ export default function PhotoBoardWritingForm() {
   const postTags = ['트위터', '인스타', '공카', 'SNS', '직찍', '타팬', '팬사진']
   const [postTagIndex, setPostTagIndex] = useState<number | null>(null)
 
-  const tagButtonUrl = ['/images/yujin.jpeg', '/images/gaeul.jpeg', '/images/rei.jpeg', '/images/wonyo.jpeg', '/images/liz.jpeg', '/images/leeseo.jpeg']
+  const tagButtonUrl = ['/images/profile_yujin.jpeg', '/images/profile_gaeul.jpeg', '/images/profile_rei.jpeg', '/images/profile_wonyo.jpeg', '/images/profile_liz.jpeg', '/images/profile_leeseo.jpeg']
   const setTagByIndex = (index: number) => {
     if (selectAll) {
       setSelectAll(false)

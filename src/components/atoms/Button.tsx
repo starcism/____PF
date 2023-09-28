@@ -20,7 +20,7 @@ export function CircleImageButton({ onClick, src, selected }: CIProps) {
     <div className="h-[68px] w-[68px] flex justify-center items-center">
       <button type="button" onClick={onClick}>
         <div className={`relative w-[54px] h-[54px] rounded-[100%] aspect-square ${selected ? 'tagButton' : 'unTagButton'} transform-gpu transition-all duration-100`}>
-          <Image draggable={false} src={src} width={54} height={54} priority={true} alt="tag" className="w-full h-full rounded-full select-none" />
+          <Image draggable={false} src={src} width={54} height={54} priority={true} alt={`tag_${src}`} className="w-full h-full rounded-full select-none" />
         </div>
       </button>
     </div>
