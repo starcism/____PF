@@ -192,7 +192,7 @@ export function ConfirmModal({ isAuthor, children, confirmType = 'post', onClick
     <>
       {isModal && (
         <Modal show={isModal} close={closeModal}>
-          <div className="flex pt-[20px] justify-center w-[200px] h-[80px] bg-white rounded-[10px]">{message}</div>
+          <div className="flex font-500 w-[200px] h-[50px] bg-white rounded-[10px]">{message}</div>
           <div>
             <button
               onClick={(e) => {
@@ -255,7 +255,7 @@ export function ResignModal({ children, onClick }: ConfirmProps) {
     <>
       {isModal && (
         <Modal show={isModal} close={closeModal}>
-          <div className="min-w-[240px] h-[90px] bg-white rounded-[10px]">
+          <div className="min-w-[240px] h-[100px] bg-white rounded-[10px]">
             <h1 className="text-[16px] font-500">정말 탈퇴하시겠어요?</h1>
             <h2 className="text-[14px] text-gray-4 py-[20px]">작성하신 글은 삭제되지 않아요</h2>
           </div>
@@ -278,7 +278,7 @@ export function ResignModal({ children, onClick }: ConfirmProps) {
                 closeModal()
               }}
               type="button"
-              className="text-turquoise"
+              className="text-gray-4"
             >
               취소
             </button>

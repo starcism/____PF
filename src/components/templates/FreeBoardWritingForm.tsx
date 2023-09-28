@@ -6,6 +6,7 @@ import ReactQuill from 'react-quill'
 import { useRouter } from 'next/navigation'
 import checkEnvironment from '@/libs/checkEnvironment'
 import { useAccessTokenState } from '@/libs/AccessTokenProvider'
+import LoadingSpinner from '../atoms/LoadingSpinner'
 
 const QuillEditor = dynamic(() => import('@/libs/QuillEditor'), {
   ssr: false,
@@ -112,17 +113,10 @@ export default function FreeBoardWritingForm() {
       })
       if (res.status === 401) {
         alert('권한이 만료되었어요')
-        setIsSubmit(false)
         router.replace('/forum')
       } else if (res.status === 400) {
         alert('제출 형식이 잘못되었어요')
       } else if (res.ok) {
-        // const revalidate = await fetch(checkEnvironment().concat('/api/revalidate'), {
-        //   method: 'GET',
-        // })
-        // alert('글 작성을 완료했어요')
-        setIsSubmit(false)
-        router.refresh()
         router.replace('/forum')
       } else {
         alert('글 작성에 실패했어요')
@@ -132,6 +126,14 @@ export default function FreeBoardWritingForm() {
     } finally {
       setIsSubmit(false)
     }
+  }
+
+  if (isSubmit) {
+    return (
+      <>
+        <LoadingSpinner />
+      </>
+    )
   }
 
   return (

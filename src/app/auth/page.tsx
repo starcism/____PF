@@ -69,7 +69,7 @@ export default function Page() {
   return (
     <div className="fixed w-full max-w-[767px] h-full bg-gray-0">
       <div className="relative w-full max-w-[767px] h-full">
-        {<Image src={imgUrlsMobile[randomIndex]} width={500} height={500} alt="_ive" className="relative w-full h-full object-cover" />}
+        {<Image src={imgUrlsMobile[randomIndex]} width={500} height={500} alt="_ive" priority={true} className="relative w-full h-full object-cover" />}
       </div>
       {/* <div className="max-w-[1000px] max-h-[1500px]">
           <Image

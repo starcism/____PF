@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { CircleImageButton, OptionalButton } from '../atoms/Button'
 import Tag from '../atoms/Tag'
 import { useAccessTokenState } from '@/libs/AccessTokenProvider'
+import LoadingSpinner from '../atoms/LoadingSpinner'
 
 export default function PhotoBoardWritingForm() {
   const router = useRouter()
@@ -172,21 +173,17 @@ export default function PhotoBoardWritingForm() {
         },
       })
       if (res.status === 200) {
-        router.push('/photo')
+        router.replace('/photo')
       } else if (res.status === 401) {
         alert('권한이 만료되었어요')
-        return
+        router.replace('/photo')
       } else if (res.status === 400) {
         alert('제출 형식이 잘못되었어요')
-        return
       } else {
-        const response1 = await res.json()
-        alert('글 작성에 실패했어요1')
-        return
+        alert('글 작성에 실패했어요')
       }
     } catch (error) {
-      alert('글 작성에 실패했어요2')
-      console.error(error)
+      alert('글 작성에 실패했어요')
     } finally {
       setIsSubmit(false)
     }
@@ -200,6 +197,14 @@ export default function PhotoBoardWritingForm() {
       })
     }
   }, [])
+
+  if (isSubmit) {
+    return (
+      <>
+        <LoadingSpinner />
+      </>
+    )
+  }
 
   return (
     <>
