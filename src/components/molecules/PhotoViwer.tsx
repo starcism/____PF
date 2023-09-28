@@ -108,10 +108,12 @@ export default function PhotoViewer({ photoUrls, boardId }: Props) {
           : lengthArray.map((i) => (
               <div
                 key={i}
-                className={`bg-gray-1 w-full ${
-                  length === 3 && i === 0 ? 'row-start-1 row-end-3 h-full' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-[30vh]' : 'h-[15vh]'
+                className={`cursor-pointer relative ${
+                  length === 3 && i === 0 ? 'row-start-1 row-end-3 h-[calc(30vh+3px)]' : length === 2 ? 'h-[30vh]' : length === 1 ? 'h-full' : 'h-[15vh]'
                 }`}
-              />
+              >
+                <div className="w-full h-full object-cover" />
+              </div>
             ))}
       </div>
     </div>

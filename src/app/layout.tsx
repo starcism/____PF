@@ -33,7 +33,7 @@ const inter = Inter({
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko" className={cls(notoSansKR.className, inter.variable)}>
-      <body className="scrollbar-hide mx-auto min-h-[100vh] h-full max-w-[768px] shadow-xl shadow-semigold layout-border">
+      <body className="scrollbar-hide overflow-x-hidden mx-auto min-h-[100vh] h-full max-w-[768px] shadow-xl shadow-semigold layout-border">
         <AccessTokenProvider>
           <UserProvider>
             <MainMenuProvider>

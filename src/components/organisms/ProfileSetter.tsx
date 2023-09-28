@@ -61,6 +61,10 @@ export default function ProfileSetter({ accessToken, nickname, setNickname, prof
   }
 
   const submitNickname = async () => {
+    if(loading) {
+      return
+    }
+    
     setLoading(true)
     const newNickname = nicknameRef.current?.value.trim() ?? ''
 
