@@ -29,7 +29,7 @@ export default function Page() {
       <BoardLayout>
         {postData ? (
           postData.posts.map((post: VideoBoard, index: number) =>
-            post.deleted_at === null ? (
+            post.deleted_at === null && (
               <div key={index} className="w-[100vw] max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
                 <VideoCard
                   boardType="photo"
@@ -49,9 +49,7 @@ export default function Page() {
                   UID={userId as number | null}
                 />
               </div>
-            ) : (
-              <div key={index}></div>
-            ),
+            )
           )
         ) : (
           <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">게시물 없음</div>

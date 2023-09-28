@@ -27,7 +27,7 @@ export default function Page() {
         <BoardNotice />
         {postData ? (
           postData.posts.map((post: Board, index: number) =>
-            post.deleted_at === null ? (
+            post.deleted_at === null && (
               <PostItem
                 key={index}
                 boardid={post.board_id}
@@ -39,9 +39,7 @@ export default function Page() {
                 updatedAt={post.updated_at}
                 nickname={post.nickname}
               />
-            ) : (
-              <></>
-            ),
+            )
           )
         ) : (
           <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">게시물 없음</div>

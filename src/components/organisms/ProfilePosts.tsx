@@ -103,7 +103,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
         boardType === 'forum' &&
         (posts && posts.length !== 0 ? (
           posts.map((post: Board, index: number) =>
-            post.deleted_at === null ? (
+            post.deleted_at === null && (
               <PostItem
                 key={index}
                 boardid={post.board_id}
@@ -115,9 +115,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
                 updatedAt={post.updated_at}
                 nickname={post.nickname}
               />
-            ) : (
-              <></>
-            ),
+            )
           )
         ) : (
           <div className="w-full h-[200px] text-gray-3 flex justify-center items-center select-none">아직 작성한 글이 없어요</div>
