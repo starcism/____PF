@@ -21,6 +21,7 @@ export default function Page() {
             경우에는 일정기간 동안 회원정보를 안전하게 보관합니다.
           </p>
         </div>
+        
         {/* <div className="text-[14px] text-gray-5 p-[10px]">
           <h2 className="font-700">개인정보의 파기 절차 및 파기 방법</h2>
           <p>- 회원 가입시 수집한 정보는 </p>
