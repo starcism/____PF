@@ -109,5 +109,11 @@ export default function useComment(boardId: string) {
     }
   }, [loading])
 
+  // useEffect(() => {
+  //   if (refresh) {
+  //     getCommentArea(boardId)
+  //   }
+  // }, [refresh])
+
   return { userInfoLoading, commentAreaLoading, loggedIn, like, commentList, accessToken, refresh, refreshComments, UID }
 }

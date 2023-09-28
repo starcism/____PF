@@ -162,7 +162,7 @@ export async function PUT(request: Request) {
         if (res.ok) {
           return NextResponse.json({ message: '게시글을 삭제했어요' }, { status: 200 })
         } else {
-          return NextResponse.json({ error: 'Unauthorized' }, { status: 500 })
+          return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
       } else {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

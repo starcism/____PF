@@ -107,7 +107,6 @@ export default function PostCard({
       } else if (res.status === 401) {
         alert('권한이 없어요')
       } else {
-        const data = await res.json()
         alert('삭제에 실패했어요')
       }
     } catch (error) {
