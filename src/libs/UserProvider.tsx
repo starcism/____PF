@@ -13,6 +13,7 @@ interface UserContextProps {
   userId: number | null
   nickname: string | null
   setNickname: React.Dispatch<React.SetStateAction<string | null>>
+  createdAt: string | null
   isLoading: boolean
   error: boolean
 }
@@ -24,6 +25,7 @@ const UserContext = createContext<UserContextProps>({
   userId: null,
   nickname: null,
   setNickname: (): void => {},
+  createdAt: null,
   isLoading: true,
   error: false,
 })
@@ -36,6 +38,7 @@ export default function UserProvider({ children }: Props) {
   const { accessToken, setAccessToken, loading } = useAccessTokenState()
   const [userId, setUserId] = useState<number | null>(null)
   const [nickname, setNickname] = useState<string | null>(null)
+  const [createdAt, setCreatedAt] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<boolean>(false)
 
@@ -53,6 +56,7 @@ export default function UserProvider({ children }: Props) {
         const { data } = await verifyingRes.json()
         setUserId(data.userId)
         setNickname(data.nickname)
+        setCreatedAt(data.createdAt)
       } else {
         setError(true)
       }
@@ -72,5 +76,5 @@ export default function UserProvider({ children }: Props) {
     }
   }, [loading, fetchData])
 
-  return <UserContext.Provider value={{ accessToken, userId, nickname, setNickname, isLoading, error }}>{children}</UserContext.Provider>
+  return <UserContext.Provider value={{ accessToken, userId, nickname, setNickname, createdAt, isLoading, error }}>{children}</UserContext.Provider>
 }

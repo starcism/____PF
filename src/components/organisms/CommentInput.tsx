@@ -16,9 +16,15 @@ interface Props {
 
 export default function CommentInput({ nested = false, accessToken, loggedIn, boardId, commentId = 0, refresh }: Props) {
   const [textareaValue, setTextareaValue] = useState<string>('')
+  const [isSubmit, setSubmit] = useState(false)
   const router = useRouter()
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (isSubmit) {
+      return
+    }
+
+    setSubmit(true)
     try {
       const res = await fetch(checkEnvironment().concat('/api/board/forum/comment'), {
         method: 'POST',
@@ -40,6 +46,7 @@ export default function CommentInput({ nested = false, accessToken, loggedIn, bo
       return
     } finally {
       setTextareaValue('')
+      setSubmit(false)
     }
   }
 

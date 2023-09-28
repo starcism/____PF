@@ -11,6 +11,7 @@ interface Props {
 export default function PostInfo({ boardType, boardId, accessToken, liked, userLike }: Props) {
   const [like, setLike] = useState(false)
   const [initialLiked, setInitialLiked] = useState(liked)
+  const [isSubmit, setSubmit] = useState(false)
   const handleLiked = () => {
     if (like) {
       setLike(false)
@@ -27,6 +28,12 @@ export default function PostInfo({ boardType, boardId, accessToken, liked, userL
     if (!accessToken) {
       return
     }
+
+    if (isSubmit) {
+      return
+    }
+    
+    setSubmit(true)
 
     try {
       const res = await fetch(checkEnvironment().concat('/api/board/like'), {
@@ -48,6 +55,8 @@ export default function PostInfo({ boardType, boardId, accessToken, liked, userL
       }
     } catch (error) {
       // alert('좋아요 설정에 실패했어요2')
+    } finally {
+      setSubmit(false)
     }
   }
 

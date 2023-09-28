@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export default function Page() {
-  const { accessToken, nickname, setNickname, userId, isLoading, error } = useUserState()
+  const { accessToken, nickname, setNickname, createdAt, userId, isLoading, error } = useUserState()
   const router = useRouter()
 
   if (isLoading) {
@@ -16,12 +16,19 @@ export default function Page() {
         <LoadingSpinner />
       </>
     )
-  } else if (!accessToken || !nickname || error || !userId) {
+  } else if (!accessToken || !nickname || error || !userId || !createdAt) {
     router.push('/auth')
   } else {
     return (
       <>
-        <ProfileLayout accessToken={accessToken} userId={userId} nickname={nickname} setNickname={setNickname} profile_image="/images/liz1.jpeg" />
+        <ProfileLayout
+          accessToken={accessToken}
+          userId={userId}
+          nickname={nickname}
+          setNickname={setNickname}
+          createdAt={createdAt}
+          profile_image="/images/liz1.jpeg"
+        />
       </>
     )
   }
