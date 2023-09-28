@@ -10,6 +10,8 @@ import Tag from '../atoms/Tag'
 import { useAccessTokenState } from '@/libs/AccessTokenProvider'
 import LoadingSpinner from '../atoms/LoadingSpinner'
 
+const MAX_TOTAL_FILE_SIZE = 5 * 1000 * 1000
+
 export default function PhotoBoardWritingForm() {
   const router = useRouter()
   const { accessToken } = useAccessTokenState()
@@ -26,7 +28,14 @@ export default function PhotoBoardWritingForm() {
   const postTags = ['트위터', '인스타', '공카', 'SNS', '직찍', '타팬', '팬사진']
   const [postTagIndex, setPostTagIndex] = useState<number | null>(null)
 
-  const tagButtonUrl = ['/images/profile_yujin.jpeg', '/images/profile_gaeul.jpeg', '/images/profile_rei.jpeg', '/images/profile_wonyo.jpeg', '/images/profile_liz.jpeg', '/images/profile_leeseo.jpeg']
+  const tagButtonUrl = [
+    '/images/profile_yujin.jpeg',
+    '/images/profile_gaeul.jpeg',
+    '/images/profile_rei.jpeg',
+    '/images/profile_wonyo.jpeg',
+    '/images/profile_liz.jpeg',
+    '/images/profile_leeseo.jpeg',
+  ]
   const setTagByIndex = (index: number) => {
     if (selectAll) {
       setSelectAll(false)
@@ -53,6 +62,7 @@ export default function PhotoBoardWritingForm() {
     file: [],
     blob: [],
   })
+  const [totalSize, setTotalSize] = useState(0)
 
   //pc환경 중복 업로드 체크
   const isDuplicateFile = (selectedFile: File, uploadedFiles: File[]): boolean => {
@@ -80,8 +90,15 @@ export default function PhotoBoardWritingForm() {
     const files = e.target.files
     const fileArray = Array.from(files)
     const newFiles = fileArray.filter((file) => !isDuplicateFile(file, images.file))
+    const totalFileSize = images.file.reduce((total, file) => total + file.size, 0) + newFiles.reduce((total, file) => total + file.size, 0)
+    console.log(totalFileSize)
+    if (totalFileSize > MAX_TOTAL_FILE_SIZE) {
+      alert('이미지의 총 크기는 5MB를 초과할 수 없어요')
+      return
+    }
 
     if (images.file.length + newFiles.length > 4) {
+      alert('최대 4개까지 업로드 가능해요')
       return
     }
 
