@@ -180,7 +180,7 @@ export default function PhotoBoardWritingForm() {
     if (postTag) {
       formData.append('postTag', postTag)
     }
-
+    
     try {
       const res = await fetch(checkEnvironment().concat('/api/board/photo'), {
         method: 'POST',
