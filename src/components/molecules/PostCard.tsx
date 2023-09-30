@@ -30,13 +30,13 @@ export default function PostCard({
   const [like, setLike] = useState(userLike)
   const [initialLiked, setInitialLiked] = useState(liked)
   const [isSubmit, setSubmit] = useState(false)
-  const handleLiked = () => {
-    if (like) {
-      setLike(false)
-      setInitialLiked(initialLiked - 1)
-    } else {
+  const handleLiked = (e: boolean) => {
+    if (e) {
       setLike(true)
       setInitialLiked(initialLiked + 1)
+    } else {
+      setLike(false)
+      setInitialLiked(initialLiked - 1)
     }
   }
 
@@ -62,6 +62,7 @@ export default function PostCard({
       return
     }
 
+    handleLiked(!like)
     setSubmit(true)
 
     try {
@@ -76,7 +77,7 @@ export default function PostCard({
 
       if (res.status === 200) {
         const { userLike } = await res.json()
-        handleLiked()
+        handleLiked(userLike)
       } else if (res.status === 401) {
         // alert('권한이 없어요')
       } else {
