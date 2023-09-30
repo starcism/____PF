@@ -127,7 +127,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
             posts.map(
               (post: PhotoBoard, index: number) =>
                 post.deleted_at === null && (
-                  <div key={index} className="w-[100vw] max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
+                  <div key={index} className="w-full max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
                     <PhotoCard
                       boardType="photo"
                       userId={post.user_id}
@@ -151,7 +151,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
                 ),
             )
           ) : (
-            <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">아직 작성한 글이 없어요</div>
+            <div className="w-full max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">아직 작성한 글이 없어요</div>
           )}
         </BoardLayout>
       )}
@@ -161,7 +161,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
             posts.map(
               (post: VideoBoard, index: number) =>
                 post.deleted_at === null && (
-                  <div key={index} className="w-[100vw] max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
+                  <div key={index} className="w-full max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
                     <VideoCard
                       boardType="photo"
                       userId={post.user_id}
@@ -185,7 +185,7 @@ export default function ProfilePosts({ accessToken, userId }: Props) {
                 ),
             )
           ) : (
-            <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">아직 작성한 글이 없어요</div>
+            <div className="w-full max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">아직 작성한 글이 없어요</div>
           )}
         </BoardLayout>
       )}

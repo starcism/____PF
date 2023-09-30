@@ -43,7 +43,7 @@ export default function Page() {
             )
           )
         ) : (
-          <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">게시물 없음</div>
+          <div className="w-full max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">게시물 없음</div>
         )}
         {nextData &&
           nextData.map((post: Board, index: number) =>

@@ -112,12 +112,6 @@ export default function FreePost({ nickname, icon, title, content, view, created
         </div>
         <div className="mt-[11px] min-h-[100px] h-full">
           {reader}
-          {/* <textarea
-            readOnly
-            className="flex w-[100vw] leading-[26px] max-w-[800px] outline-none resize-none text-[16px] scrollbar-hide font-400 placeholder:text-gray-3"
-            defaultValue={content}
-            ref={textRef}
-          /> */}
         </div>
       </div>
     </>

@@ -116,7 +116,7 @@ export default function PostCard({
 
   return (
     <>
-      <div className={`w-[calc(100vw-30px)] sm:w-[100vw] h-[200px] mb-[25px] max-w-[430px] md:max-w-[354px]`}>
+      <div className={`w-full h-[200px] mb-[25px] max-w-[430px] md:max-w-[354px]`}>
         <div className="flex w-full h-[50px] items-center justify-between mt-[4px]">
           <div className="flex items-center w-auto h-[50px]">
             <button onClick={handleNameClick}>

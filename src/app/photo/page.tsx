@@ -31,7 +31,7 @@ export default function Page() {
           postData.posts.map(
             (post: PhotoBoard, index: number) =>
               post.deleted_at === null && (
-                <div key={index} className="w-[100vw] max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
+                <div key={index} className="w-full max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
                   <PhotoCard
                     boardType="photo"
                     userId={post.user_id}
@@ -54,12 +54,12 @@ export default function Page() {
               ),
           )
         ) : (
-          <div className="w-[100vw] max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">게시물 없음</div>
+          <div className="w-full max-w-[768px] h-[200px] text-gray-3 flex justify-center items-center select-none">게시물 없음</div>
         )}
         {nextData &&
           nextData.map((post: PhotoBoard, index: number) =>
             post.deleted_at === null ? (
-              <div key={index + 10} className="w-[100vw] max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
+              <div key={index + 10} className="w-full max-w-[430px] px-[15px] sm:px-[0px] sm:mx-[auto] md:max-w-[354px]">
                 <PhotoCard
                   boardType="photo"
                   userId={post.user_id}

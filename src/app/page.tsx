@@ -3,6 +3,7 @@
 import Image from 'next/image'
 
 export default function Home() {
+
   return (
     <>
       <div className="w-full aspect-[1000/666] max-h-[511px] relative">

@@ -9,7 +9,7 @@ const QuillEditor = dynamic(() => import('@/libs/QuillEditor'), {
   ssr: false,
   loading: () => (
     <>
-      <div className="h-[470px] w-[100vw] max-w-[800px]">
+      <div className="h-[470px] w-[100vw] max-w-[768px]">
         <div className="flex items-center h-[40px] w-[100vw] py-[12px] px-[9px] max-w-[800px] bg-viva-8">
           <div className="bg-viva-6 w-[98px] h-[19px] ml-[4px] rounded-[5px]"></div>
           <div className="bg-viva-7 w-[108px] h-[19px] ml-[24px] rounded-[5px]"></div>

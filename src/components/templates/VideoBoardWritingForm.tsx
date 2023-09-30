@@ -27,7 +27,14 @@ export default function PhotoBoardWritingForm() {
   const postTags = ['공튜브', '자컨', '콘서트', '팬싸', '팬튜브', '기타']
   const [postTagIndex, setPostTagIndex] = useState<number | null>(null)
 
-  const tagButtonUrl = ['/images/yujin.jpeg', '/images/gaeul.jpeg', '/images/rei.jpeg', '/images/wonyo.jpeg', '/images/liz.jpeg', '/images/leeseo.jpeg']
+  const tagButtonUrl = [
+    '/images/profile_yujin.jpeg',
+    '/images/profile_gaeul.jpeg',
+    '/images/profile_rei.jpeg',
+    '/images/profile_wonyo.jpeg',
+    '/images/profile_liz.jpeg',
+    '/images/profile_leeseo.jpeg',
+  ]
   const setTagByIndex = (index: number) => {
     if (selectAll) {
       setSelectAll(false)
@@ -202,8 +209,8 @@ export default function PhotoBoardWritingForm() {
                     ref={titleRef}
                   />
                 </div>
-                <div className="w-[100vw] max-w-[800px] h-[68px] grid place-content-center-center custom-border-b-0 overflow-x-auto scrollbar-hide flex-nowrap">
-                  <div className="w-[calc(100vw-26px)] max-w-[800px] min-h-[68px] place-content-center mx-[13px] grid-tags custom-border-b-0">
+                <div className="w-full max-w-[768px] h-[68px] grid place-content-center-center custom-border-b-0 overflow-x-auto scrollbar-hide flex-nowrap">
+                  <div className="w-[calc(100vw-26px)] max-w-[768px] min-h-[68px] place-content-center mx-[13px] grid-tags custom-border-b-0">
                     {nameTags.map(
                       (tag, index) =>
                         selectedIndex[index] === 1 && (
